@@ -1,29 +1,26 @@
 [
   {
     "id": 1,
-    "name": "Squad Hoodie Black",
+    "name": "Product Test Image",
     "price": 120,
     "mediaType": "image",
     "mediaUrl": "https://i.imgur.com/EXAMPLE1.jpg",
-    "category": "hoodie"
+    "category": "test"
   },
   {
     "id": 2,
-    "name": "Squad Sneakers Limited",
+    "name": "Product Test Video",
     "price": 180,
     "mediaType": "video",
     "mediaUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
-    "category": "shoes"
-  }
-  [
+    "category": "test"
+  },
   {
     "id": 3,
-    "name": "Squad Item Example",
-    "price": 120,
+    "name": "MY REAL PRODUCT",
+    "price": 99,
     "mediaType": "image",
     "mediaUrl": "https://i.imgur.com/rORSEaL.png",
     "category": "stock"
   }
-]
-
 ]
