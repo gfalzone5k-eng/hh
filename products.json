@@ -5,7 +5,7 @@
     "price": 120,
     "mediaType": "image",
     "mediaUrl": "https://i.imgur.com/EXAMPLE1.jpg",
-    "category": "test"
+    "category": "stock1"
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "price": 180,
     "mediaType": "video",
     "mediaUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
-    "category": "test"
+    "category": "stock1"
   },
   {
     "id": 3,
@@ -21,6 +21,16 @@
     "price": 99,
     "mediaType": "image",
     "mediaUrl": "https://i.imgur.com/rORSEaL.png",
-    "category": "stock"
+    "category": "stock1"
+  },
+
+  {
+    "id": 4,
+    "name": "SECOND STOCK – Example Product",
+    "price": 150,
+    "mediaType": "image",
+    "mediaUrl": "https://i.imgur.com/rORSEaL.png",
+    "category": "stock2"
   }
 ]
+
