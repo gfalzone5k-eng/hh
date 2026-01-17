@@ -2,37 +2,60 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Squad Mini App</title>
-
-  <!-- Telegram WebApp -->
+  <title>Gas Cloud – Mini App</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0e0e0e;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top, #2b2b2b, #000);
       color: #fff;
     }
 
     .container {
       padding: 16px;
+      padding-bottom: 90px;
     }
 
+    /* LOGO */
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 140px;
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+    }
+
+    /* WELCOME BOX */
     .welcome {
-      background: #1a1a1a;
-      border-radius: 16px;
+      background: rgba(20, 20, 20, 0.85);
+      border-radius: 18px;
       padding: 20px;
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 0, 0, 0.2);
     }
 
     .welcome h1 {
       font-size: 18px;
       margin: 0;
-      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ff2b2b;
     }
 
+    .welcome p {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-top: 10px;
+    }
+
+    /* GRID */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -40,44 +63,52 @@
     }
 
     .card {
-      background: #1a1a1a;
+      background: linear-gradient(145deg, #1a1a1a, #0b0b0b);
       border-radius: 20px;
-      padding: 16px;
+      padding: 20px 12px;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.15s ease;
+      border: 1px solid rgba(255, 0, 0, 0.15);
+      box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .card:active {
-      transform: scale(0.97);
-    }
-
-    .card img {
-      width: 80px;
-      margin-bottom: 10px;
+      transform: scale(0.96);
+      box-shadow: 0 0 18px rgba(255, 0, 0, 0.4);
     }
 
     .card span {
       display: block;
       font-weight: bold;
-      margin-top: 6px;
+      font-size: 13px;
+      margin-top: 10px;
+      letter-spacing: 0.5px;
     }
 
+    /* ICON */
+    .icon {
+      font-size: 28px;
+    }
+
+    /* BOTTOM BAR */
     .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: #1a1a1a;
+      background: rgba(10, 10, 10, 0.95);
       display: flex;
       justify-content: space-around;
       padding: 12px 0;
+      border-top: 1px solid rgba(255, 0, 0, 0.2);
     }
 
     .bottom-btn {
       text-align: center;
       font-size: 12px;
       cursor: pointer;
+      color: #ff2b2b;
     }
   </style>
 </head>
@@ -85,48 +116,57 @@
 <body>
 <div class="container">
 
-  <!-- WELCOME -->
-  <div class="welcome">
-    <h1>WELCOME TO THE SQUAD BCN<br>OFFICIAL BOT</h1>
-    <p>To open the catalogue press on the Mini App button.</p>
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="https://i.imgur.com/rORSEaL.png" alt="Gas Cloud Logo">
   </div>
 
-  <!-- GRID BUTTONS -->
+  <!-- WELCOME -->
+  <div class="welcome">
+    <h1>WELCOME TO GAS CLOUD</h1>
+    <p>Tap a section below to explore the catalogue and available stock.</p>
+  </div>
+
+  <!-- MENU -->
   <div class="grid">
 
-    <div class="card" onclick="openContacts()">
-      <img src="https://i.imgur.com/8QZQZQZ.png">
-      <span>OUR OFFICIAL CONTACTS 📱</span>
-    </div>
-
-    <div class="card" onclick="openChannels()">
-      <img src="https://i.imgur.com/8QZQZQZ.png">
-      <span>FOLLOW THE CHANNELS 📢</span>
-    </div>
-
     <div class="card" onclick="openStock()">
-      <img src="https://i.imgur.com/8QZQZQZ.png">
+      <div class="icon">📦</div>
       <span>STOCK</span>
     </div>
 
+    <div class="card" onclick="openContacts()">
+      <div class="icon">📱</div>
+      <span>CONTACTS</span>
+    </div>
+
+    <div class="card" onclick="openChannels()">
+      <div class="icon">📢</div>
+      <span>CHANNELS</span>
+    </div>
+
     <div class="card" onclick="openOrders()">
-      <img src="https://i.imgur.com/8QZQZQZ.png">
+      <div class="icon">🛒</div>
       <span>ORDERS</span>
     </div>
 
   </div>
 </div>
 
-<!-- BOTTOM BAR -->
+<!-- BOTTOM -->
 <div class="bottom-bar">
-  <div class="bottom-btn" onclick="openSignal()">✍️<br>SIGNAL</div>
-  <div class="bottom-btn" onclick="openTelegram()">📩<br>TELEGRAM</div>
+  <div class="bottom-btn" onclick="openSignal()">SIGNAL</div>
+  <div class="bottom-btn" onclick="openTelegram()">TELEGRAM</div>
 </div>
 
 <script>
   const tg = window.Telegram.WebApp;
   tg.ready();
   tg.expand();
+
+  function openStock() {
+    window.location.href = "stock.html";
+  }
 
   function openContacts() {
     tg.sendData(JSON.stringify({ action: "contacts" }));
@@ -135,10 +175,6 @@
   function openChannels() {
     tg.sendData(JSON.stringify({ action: "channels" }));
   }
-
-  function openStock() {
-  window.location.href = "stock.html";
-}
 
   function openOrders() {
     tg.sendData(JSON.stringify({ action: "orders" }));
@@ -155,4 +191,5 @@
 
 </body>
 </html>
+
 
