@@ -15,4 +15,15 @@
     "mediaUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
     "category": "shoes"
   }
+  [
+  {
+    "id": 3,
+    "name": "Squad Item Example",
+    "price": 120,
+    "mediaType": "image",
+    "mediaUrl": "https://i.imgur.com/rORSEaL.png",
+    "category": "stock"
+  }
+]
+
 ]
