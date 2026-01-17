@@ -2,28 +2,157 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Telegram Mini App</title>
+  <title>Squad Mini App</title>
+
+  <!-- Telegram WebApp -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+    }
+
+    .container {
+      padding: 16px;
+    }
+
+    .welcome {
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .welcome h1 {
+      font-size: 18px;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border-radius: 20px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .card:active {
+      transform: scale(0.97);
+    }
+
+    .card img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .card span {
+      display: block;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1a1a1a;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+    }
+
+    .bottom-btn {
+      text-align: center;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
+<div class="container">
 
-<h2>👋 Ciao Telegram</h2>
+  <!-- WELCOME -->
+  <div class="welcome">
+    <h1>WELCOME TO THE SQUAD BCN<br>OFFICIAL BOT</h1>
+    <p>To open the catalogue press on the Mini App button.</p>
+  </div>
 
-<button onclick="sendData()">Invia dati al bot</button>
+  <!-- GRID BUTTONS -->
+  <div class="grid">
+
+    <div class="card" onclick="openContacts()">
+      <img src="https://i.imgur.com/8QZQZQZ.png">
+      <span>OUR OFFICIAL CONTACTS 📱</span>
+    </div>
+
+    <div class="card" onclick="openChannels()">
+      <img src="https://i.imgur.com/8QZQZQZ.png">
+      <span>FOLLOW THE CHANNELS 📢</span>
+    </div>
+
+    <div class="card" onclick="openStock()">
+      <img src="https://i.imgur.com/8QZQZQZ.png">
+      <span>STOCK</span>
+    </div>
+
+    <div class="card" onclick="openOrders()">
+      <img src="https://i.imgur.com/8QZQZQZ.png">
+      <span>ORDERS</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="bottom-btn" onclick="openSignal()">✍️<br>SIGNAL</div>
+  <div class="bottom-btn" onclick="openTelegram()">📩<br>TELEGRAM</div>
+</div>
 
 <script>
   const tg = window.Telegram.WebApp;
-
   tg.ready();
   tg.expand();
 
-  function sendData() {
-    tg.sendData(JSON.stringify({
-      messaggio: "Ciao bot!",
-      data: new Date().toISOString()
-    }));
+  function openContacts() {
+    tg.sendData(JSON.stringify({ action: "contacts" }));
+  }
+
+  function openChannels() {
+    tg.sendData(JSON.stringify({ action: "channels" }));
+  }
+
+  function openStock() {
+    tg.sendData(JSON.stringify({ action: "stock" }));
+  }
+
+  function openOrders() {
+    tg.sendData(JSON.stringify({ action: "orders" }));
+  }
+
+  function openSignal() {
+    window.open("https://signal.me", "_blank");
+  }
+
+  function openTelegram() {
+    window.open("https://t.me", "_blank");
   }
 </script>
 
 </body>
 </html>
+
