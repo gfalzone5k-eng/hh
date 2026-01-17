@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<h2>👋 Ciao Telegram</h2>
+
+<button onclick="sendData()">Invia dati al bot</button>
+
+<script>
+  const tg = window.Telegram.WebApp;
+
+  tg.ready();
+  tg.expand();
+
+  function sendData() {
+    tg.sendData(JSON.stringify({
+      messaggio: "Ciao bot!",
+      data: new Date().toISOString()
+    }));
+  }
+</script>
+
+</body>
+</html>
