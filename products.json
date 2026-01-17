@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Squad Hoodie Black",
+    "price": 120,
+    "mediaType": "image",
+    "mediaUrl": "https://i.imgur.com/EXAMPLE1.jpg",
+    "category": "hoodie"
+  },
+  {
+    "id": 2,
+    "name": "Squad Sneakers Limited",
+    "price": 180,
+    "mediaType": "video",
+    "mediaUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "category": "shoes"
+  }
+]
