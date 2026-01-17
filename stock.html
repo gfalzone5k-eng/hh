@@ -2,107 +2,83 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Stock</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <title>Gas Cloud – Stock</title>
+  <script src="https://telegram.org/js/telegram-web-app.js?v=3"></script>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0e0e0e;
+      font-family: Arial, Helvetica, sans-serif;
       color: #fff;
+      background:
+        radial-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+        url("https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png");
+      background-size: 400px;
+      background-repeat: no-repeat;
+      background-position: center top;
     }
 
     .header {
-      padding: 16px;
+      padding: 18px;
       text-align: center;
       font-size: 18px;
       font-weight: bold;
+      letter-spacing: 1px;
+      color: #ff2b2b;
     }
 
+    /* GRID */
     .products {
       padding: 16px;
       display: grid;
-      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
     .product {
-      background: #1a1a1a;
-      border-radius: 16px;
-      padding: 12px;
-    }
-
-    img, video {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
-
-    .price {
-      font-size: 18px;
-      font-weight: bold;
-      color: #00ff99;
-    }
-
-    .buy {
-      margin-top: 10px;
-      padding: 12px;
-      background: #00ff99;
-      color: #000;
-      text-align: center;
-      border-radius: 12px;
+      background: rgba(20, 20, 20, 0.9);
+      border-radius: 18px;
+      padding: 10px;
+      border: 1px solid rgba(255, 0, 0, 0.2);
       cursor: pointer;
-      font-weight: bold;
     }
-  </style>
-</head>
 
-<body>
+    .media-box {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* QUADRATO */
+      overflow: hidden;
+      border-radius: 14px;
+      margin-bottom: 8px;
+    }
 
-<div class="header">📦 AVAILABLE STOCK</div>
-<div class="products" id="products"></div>
+    .media-box img,
+    .media-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-<script>
-  const tg = window.Telegram.WebApp;
-  tg.ready();
-  tg.expand();
+    .name {
+      font-size: 13px;
+      text-align: center;
+      opacity: 0.9;
+    }
 
-  fetch("products.json?v=" + Date.now())
-    .then(res => res.json())
-    .then(products => {
-      const container = document.getElementById("products");
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
 
-      products.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "product";
-
-        let media = "";
-        if (p.mediaType === "image") {
-          media = `<img src="${p.mediaUrl}">`;
-        } else if (p.mediaType === "video") {
-          media = `<video src="${p.mediaUrl}" controls></video>`;
-        }
-
-        div.innerHTML = `
-          ${media}
-          <div>${p.name}</div>
-          <div class="price">€${p.price}</div>
-          <div class="buy" onclick="order('${p.name}')">ORDER</div>
-        `;
-
-        container.appendChild(div);
-      });
-    });
-
-  function order(product) {
-    tg.sendData(JSON.stringify({
-      action: "order",
-      product: product
-    }));
-    tg.close();
-  }
-</script>
-
-</body>
-</html>
+    .modal-content {
+      background: #111;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 360px;
+      padding: 16px;
 
