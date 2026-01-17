@@ -3,58 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <title>Gas Cloud – Mini App</title>
-  <script src="https://telegram.org/js/telegram-web-app.js?v=2"></script>
+
+  <!-- Telegram WebApp -->
+  <script src="https://telegram.org/js/telegram-web-app.js?v=3"></script>
+
   <style>
+    /* BASE */
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(circle at top, #2b2b2b, #000);
       color: #fff;
+      background: radial-gradient(circle at top, #1c1c1c 0%, #000 70%);
     }
 
     .container {
       padding: 16px;
-      padding-bottom: 90px;
+      padding-bottom: 110px;
     }
 
-    /* LOGO */
-    .logo {
+    /* HERO LOGO */
+    .hero-logo {
       display: flex;
       justify-content: center;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      align-items: center;
+      padding: 50px 0 30px 0;
     }
 
-    .logo img {
-      width: 140px;
+    .hero-logo img {
+      width: 280px;               /* LOGO GRANDE */
+      max-width: 90%;
+      height: auto;
       border-radius: 50%;
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+      background: #000;
+      box-shadow:
+        0 0 30px rgba(255, 0, 0, 0.7),
+        0 0 70px rgba(255, 0, 0, 0.45),
+        0 0 140px rgba(255, 0, 0, 0.25);
     }
 
-    /* WELCOME BOX */
+    /* WELCOME */
     .welcome {
-      background: rgba(20, 20, 20, 0.85);
-      border-radius: 18px;
-      padding: 20px;
+      background: rgba(15, 15, 15, 0.85);
+      border-radius: 20px;
+      padding: 22px;
       text-align: center;
-      margin-bottom: 24px;
-      border: 1px solid rgba(255, 0, 0, 0.2);
+      margin-bottom: 26px;
+      border: 1px solid rgba(255, 0, 0, 0.25);
     }
 
     .welcome h1 {
-      font-size: 18px;
       margin: 0;
-      letter-spacing: 1px;
+      font-size: 20px;
+      letter-spacing: 1.5px;
       color: #ff2b2b;
     }
 
     .welcome p {
+      margin-top: 12px;
       font-size: 14px;
       opacity: 0.85;
-      margin-top: 10px;
     }
 
-    /* GRID */
+    /* GRID MENU */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -62,32 +72,31 @@
     }
 
     .card {
-      background: linear-gradient(145deg, #1a1a1a, #0b0b0b);
-      border-radius: 20px;
-      padding: 20px 12px;
+      background: linear-gradient(145deg, #161616, #0a0a0a);
+      border-radius: 22px;
+      padding: 26px 12px;
       text-align: center;
       cursor: pointer;
-      border: 1px solid rgba(255, 0, 0, 0.15);
-      box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.05);
+      border: 1px solid rgba(255, 0, 0, 0.2);
+      box-shadow: inset 0 0 25px rgba(255, 0, 0, 0.06);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .card:active {
-      transform: scale(0.96);
-      box-shadow: 0 0 18px rgba(255, 0, 0, 0.4);
+      transform: scale(0.95);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.45);
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 10px;
     }
 
     .card span {
       display: block;
-      font-weight: bold;
       font-size: 13px;
-      margin-top: 10px;
-      letter-spacing: 0.5px;
-    }
-
-    /* ICON */
-    .icon {
-      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 0.8px;
     }
 
     /* BOTTOM BAR */
@@ -96,67 +105,69 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(10, 10, 10, 0.95);
+      background: rgba(8, 8, 8, 0.96);
       display: flex;
       justify-content: space-around;
-      padding: 12px 0;
-      border-top: 1px solid rgba(255, 0, 0, 0.2);
+      padding: 14px 0;
+      border-top: 1px solid rgba(255, 0, 0, 0.25);
     }
 
     .bottom-btn {
-      text-align: center;
       font-size: 12px;
+      font-weight: bold;
       cursor: pointer;
       color: #ff2b2b;
+      letter-spacing: 0.6px;
     }
   </style>
 </head>
 
 <body>
-<div class="container">
 
-  <!-- LOGO -->
-  <div class="logo">
-    <img src="https://i.imgur.com/rORSEaL.png" alt="Gas Cloud Logo">
+  <!-- HERO LOGO -->
+  <div class="hero-logo">
+    <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
   </div>
 
-  <!-- WELCOME -->
-  <div class="welcome">
-    <h1>WELCOME TO GAS CLOUD</h1>
-    <p>Tap a section below to explore the catalogue and available stock.</p>
+  <div class="container">
+
+    <!-- WELCOME -->
+    <div class="welcome">
+      <h1>WELCOME TO GAS CLOUD</h1>
+      <p>Tap a section below to explore the catalogue and available stock.</p>
+    </div>
+
+    <!-- MENU -->
+    <div class="grid">
+
+      <div class="card" onclick="openStock()">
+        <div class="icon">📦</div>
+        <span>STOCK</span>
+      </div>
+
+      <div class="card" onclick="openContacts()">
+        <div class="icon">📱</div>
+        <span>CONTACTS</span>
+      </div>
+
+      <div class="card" onclick="openChannels()">
+        <div class="icon">📢</div>
+        <span>CHANNELS</span>
+      </div>
+
+      <div class="card" onclick="openOrders()">
+        <div class="icon">🛒</div>
+        <span>ORDERS</span>
+      </div>
+
+    </div>
   </div>
 
-  <!-- MENU -->
-  <div class="grid">
-
-    <div class="card" onclick="openStock()">
-      <div class="icon">📦</div>
-      <span>STOCK</span>
-    </div>
-
-    <div class="card" onclick="openContacts()">
-      <div class="icon">📱</div>
-      <span>CONTACTS</span>
-    </div>
-
-    <div class="card" onclick="openChannels()">
-      <div class="icon">📢</div>
-      <span>CHANNELS</span>
-    </div>
-
-    <div class="card" onclick="openOrders()">
-      <div class="icon">🛒</div>
-      <span>ORDERS</span>
-    </div>
-
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="bottom-btn" onclick="openSignal()">SIGNAL</div>
+    <div class="bottom-btn" onclick="openTelegram()">TELEGRAM</div>
   </div>
-</div>
-
-<!-- BOTTOM -->
-<div class="bottom-bar">
-  <div class="bottom-btn" onclick="openSignal()">SIGNAL</div>
-  <div class="bottom-btn" onclick="openTelegram()">TELEGRAM</div>
-</div>
 
 <script>
   const tg = window.Telegram.WebApp;
@@ -190,5 +201,6 @@
 
 </body>
 </html>
+
 
 
