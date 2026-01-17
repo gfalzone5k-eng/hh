@@ -3,194 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <title>Gas Cloud – Stock</title>
-  <script src="https://telegram.org/js/telegram-web-app.js?v=4"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js?v=5"></script>
 
-<style>
-* {
-  box-sizing: border-box;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  color: #fff;
-  background-color: #000;
-}
-<div class="logo-container">
-  <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
-</div>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: #fff;
+      background-color: #000;
+    }
 
+    /* LOGO */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0 6px;
+    }
 
-/* HEADER */
-.header {
-  padding: 26px 16px 18px;
-  text-align: center;
-}
+    .logo-container img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
 
-.header-title {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
+    /* HEADER */
+    .header {
+      padding: 12px 16px 18px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
 
-.header-sub {
-  margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.85;
-}
+    /* LIST */
+    .products {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
 
-/* LIST */
-.products {
-  padding: 14px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
+    /* CARD */
+    .product {
+      background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
+      border-radius: 22px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+    }
 
-/* CARD */
-.product {
-  background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
-  border-radius: 22px;
-  padding: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-}
+    /* MEDIA */
+    .media-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 18px;
+      position: relative;
+    }
 
-/* MEDIA */
-.media-box {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 18px;
-  position: relative;
-}
+    .media-box img,
+    .media-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.media-box img,
-.media-box video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    /* TITLE */
+    .name {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
 
-/* PLAY ICON */
-.media-box video::after {
-  content: "▶";
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 42px;
-  color: rgba(255,255,255,0.85);
-}
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 999;
+    }
 
-/* TITLE */
-.name {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
+    .modal-content {
+      background: #111;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 420px;
+      padding: 18px;
+      animation: slideUp 0.25s ease;
+    }
 
-/* MODAL */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: none;
-  justify-content: center;
-  align-items: flex-end;
-  z-index: 999;
-}
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
 
-.modal-content {
-  background: #111;
-  border-radius: 24px 24px 0 0;
-  width: 100%;
-  max-width: 420px;
-  padding: 18px;
-  animation: slideUp 0.25s ease;
-}
+    .modal-media {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 18px;
+      margin-bottom: 14px;
+    }
 
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
+    .modal-media img,
+    .modal-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-.modal-media {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 18px;
-  margin-bottom: 14px;
-}
+    .price {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: #00ff99;
+      margin-bottom: 14px;
+    }
 
-.modal-media img,
-.modal-media video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
+    .order {
+      padding: 16px;
+      background: #00ff99;
+      color: #000;
+      text-align: center;
+      border-radius: 18px;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+    }
 
-.price {
-  text-align: center;
-  font-size: 22px;
-  font-weight: 800;
-  color: #00ff99;
-  margin-bottom: 14px;
-}
-
-.order {
-  padding: 16px;
-  background: #00ff99;
-  color: #000;
-  text-align: center;
-  border-radius: 18px;
-  font-weight: 900;
-  font-size: 15px;
-}
-
-.close {
-  text-align: center;
-  margin-top: 12px;
-  font-size: 13px;
-  opacity: 0.6;
-}
-  .logo-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
-  margin-bottom: 6px;
-}
-
-.logo-container img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-}
-
-</style>
-
+    .close {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      opacity: 0.6;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="header">📦 AVAILABLE STOCK</div>
-<div class="products" id="products"></div>
-
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <div class="modal-media" id="modalMedia"></div>
-    <div class="price" id="modalPrice"></div>
-    <div class="order" onclick="order()">ORDER</div>
-    <div class="close" onclick="closeModal()">Close</div>
+  <!-- LOGO -->
+  <div class="logo-container">
+    <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
   </div>
-</div>
+
+  <div class="header">📦 AVAILABLE STOCK</div>
+
+  <div class="products" id="products"></div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <div class="modal-media" id="modalMedia"></div>
+      <div class="price" id="modalPrice"></div>
+      <div class="order" onclick="order()">ORDER</div>
+      <div class="close" onclick="closeModal()">Close</div>
+    </div>
+  </div>
 
 <script>
   const tg = window.Telegram.WebApp;
   tg.ready();
   tg.expand();
+
+  const CATEGORY = "stock1";   // 🔥 PRIMO STOCK
 
   let selectedProduct = null;
 
@@ -199,22 +185,24 @@ body {
     .then(products => {
       const container = document.getElementById("products");
 
-      products.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "product";
+      products
+        .filter(p => p.category === CATEGORY)
+        .forEach(p => {
+          const card = document.createElement("div");
+          card.className = "product";
 
-        let media = p.mediaType === "video"
-          ? `<video src="${p.mediaUrl}" muted></video>`
-          : `<img src="${p.mediaUrl}">`;
+          const media = p.mediaType === "video"
+            ? `<video src="${p.mediaUrl}" muted></video>`
+            : `<img src="${p.mediaUrl}">`;
 
-        card.innerHTML = `
-          <div class="media-box">${media}</div>
-          <div class="name">${p.name}</div>
-        `;
+          card.innerHTML = `
+            <div class="media-box">${media}</div>
+            <div class="name">${p.name}</div>
+          `;
 
-        card.onclick = () => openModal(p);
-        container.appendChild(card);
-      });
+          card.onclick = () => openModal(p);
+          container.appendChild(card);
+        });
     });
 
   function openModal(p) {
@@ -244,5 +232,6 @@ body {
 
 </body>
 </html>
+
 
 
