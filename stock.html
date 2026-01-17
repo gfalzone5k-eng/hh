@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Stock</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+    }
+
+    .header {
+      padding: 16px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .products {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .product {
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .product img,
+    .product video {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #00ff99;
+    }
+
+    .buy {
+      margin-top: 10px;
+      padding: 12px;
+      background: #00ff99;
+      color: #000;
+      text-align: center;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header">📦 AVAILABLE STOCK</div>
+
+<div class="products">
+
+  <!-- PRODUCT 1 -->
+  <div class="product">
+    <img src="https://i.imgur.com/EXAMPLE.jpg">
+    <div>🔥 Product Name 1</div>
+    <div class="price">€120</div>
+    <div class="buy" onclick="order('Product Name 1')">ORDER</div>
+  </div>
+
+  <!-- PRODUCT 2 (VIDEO) -->
+  <div class="product">
+    <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
+    <div>🔥 Product Name 2</div>
+    <div class="price">€180</div>
+    <div class="buy" onclick="order('Product Name 2')">ORDER</div>
+  </div>
+
+</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  tg.expand();
+
+  function order(product) {
+    tg.sendData(JSON.stringify({
+      action: "order",
+      product: product
+    }));
+    tg.close();
+  }
+</script>
+
+</body>
+</html>
