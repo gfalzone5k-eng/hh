@@ -1,210 +1,99 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Gas Cloud – Mini App</title>
+<meta charset="UTF-8">
+<title>Gas Cloud – Home</title>
+<script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
-  <!-- Telegram WebApp -->
-  <script src="https://telegram.org/js/telegram-web-app.js?v=5"></script>
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(circle at top, rgba(255,0,0,0.25), transparent 60%),
+    linear-gradient(180deg, #050505, #0f0f0f);
+}
 
-  <style>
-    /* =========================
-       BASE
-       ========================= */
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: #0b0b0b;
-      color: #fff;
-    }
+.container { padding: 20px; padding-bottom: 120px; }
 
-    /* SAFE AREA MOBILE */
-    .container {
-      padding: 20px;
-      padding-bottom: calc(120px + env(safe-area-inset-bottom));
-    }
+.hero-logo {
+  display: flex;
+  justify-content: center;
+  padding: 36px 0 20px;
+}
 
-    /* =========================
-       LOGO GRANDE
-       ========================= */
-    .hero-logo {
-      display: flex;
-      justify-content: center;
-      padding: 36px 20px 20px;
-    }
+.hero-logo img {
+  width: 220px;
+  box-shadow: 0 0 40px rgba(255,0,0,0.6);
+}
 
-    .hero-logo img {
-      width: 240px;
-      max-width: 90%;
-      box-shadow:
-        0 0 30px rgba(255,0,0,0.6),
-        0 0 80px rgba(255,0,0,0.35);
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
 
-    /* =========================
-       WELCOME BOX
-       ========================= */
-    .welcome {
-      background: #2a2a2a;
-      border-radius: 20px;
-      padding: 22px;
-      text-align: center;
-      margin-bottom: 24px;
-    }
+.card {
+  aspect-ratio: 1/1;
+  background: #1c1c1c;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
-    .welcome h1 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .welcome p {
-      margin-top: 10px;
-      font-size: 14px;
-      opacity: 0.85;
-    }
-
-    /* =========================
-       GRID
-       ========================= */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      padding: 0 4px;
-    }
-
-    /* =========================
-       CARD
-       ========================= */
-    .card {
-      aspect-ratio: 1 / 1;
-      background: #1c1c1c;
-      border-radius: 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .card:active {
-      transform: scale(0.96);
-      box-shadow: 0 0 20px rgba(255,0,0,0.25);
-    }
-
-    .card img {
-      width: 350px;
-      height: 350px;
-      object-fit: contain;
-      margin-bottom: 12px;
-    }
-
-    .card span {
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
-    }
-
-    /* =========================
-       BOTTOM BAR
-       ========================= */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #1a1a1a;
-      display: flex;
-      justify-content: space-around;
-      padding: 14px 0 calc(14px + env(safe-area-inset-bottom));
-      z-index: 999;
-    }
-
-    .bottom-btn {
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      opacity: 0.9;
-    }
-  </style>
+.card img { width: 90px; margin-bottom: 10px; }
+.card span { font-weight: 800; }
+</style>
 </head>
 
 <body>
 
-  <!-- LOGO -->
-  <div class="hero-logo">
-    <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
-  </div>
+<div class="hero-logo">
+  <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+</div>
 
-  <div class="container">
-
-    <!-- WELCOME -->
-    <div class="welcome">
-      <h1>WELCOME TO GAS CLOUD</h1>
-      <p>Select an option below.</p>
+<div class="container">
+  <div class="grid">
+    <div class="card" onclick="openCatalog()">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>CATALOG</span>
     </div>
 
-    <!-- GRID -->
-    <div class="grid">
+    <div class="card" onclick="openContacts()">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>CONTACTS</span>
+    </div>
 
-      <!-- CATALOG -->
-      <div class="card" onclick="openCatalog()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>CATALOGO</span>
-      </div>
-
-      <!-- CONTACTS -->
-      <div class="card" onclick="openContacts()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>CONTACTS</span>
-      </div>
-
-      <!-- CHANNELS -->
-      <div class="card" onclick="openChannels()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>CHANNELS</span>
-      </div>
-
+    <div class="card" onclick="openChannels()">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>CHANNELS</span>
     </div>
   </div>
-
-  <!-- BOTTOM BAR -->
-  <div class="bottom-bar">
-    <div class="bottom-btn" onclick="openSignal()">✍️ SIGNAL</div>
-    <div class="bottom-btn" onclick="openTelegram()">📩 TELEGRAM</div>
-  </div>
+</div>
 
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.ready();
-  tg.expand();
+const tg = window.Telegram.WebApp;
+tg.ready(); tg.expand();
 
-  function openCatalog() {
-    window.location.href = "catalog.html";
-  }
-
-  function openContacts() {
-    tg.sendData(JSON.stringify({ action: "contacts" }));
-  }
-
-  function openChannels() {
-    tg.sendData(JSON.stringify({ action: "channels" }));
-  }
-
-  function openSignal() {
-    window.open("https://signal.me", "_blank");
-  }
-
-  function openTelegram() {
-    window.open("https://t.me", "_blank");
-  }
+function openCatalog() {
+  window.location.href = "catalog.html";
+}
+function openContacts() {
+  tg.sendData(JSON.stringify({ action: "contacts" }));
+}
+function openChannels() {
+  tg.sendData(JSON.stringify({ action: "channels" }));
+}
 </script>
 
 </body>
 </html>
+
+
 
 
 
