@@ -4,18 +4,22 @@
   <meta charset="UTF-8">
   <title>Gas Cloud – Mini App</title>
 
-  <!-- Telegram WebApp -->
-  <script src="https://telegram.org/js/telegram-web-app.js?v=5"></script>
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js?v=4"></script>
 
   <style>
     /* =========================
-       BASE
+       BASE / RESET
        ========================= */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: #0b0b0b;
       color: #fff;
+      background: #000;
     }
 
     .container {
@@ -24,40 +28,42 @@
     }
 
     /* =========================
-       LOGO GRANDE IN ALTO
+       HERO LOGO (IN ALTO)
        ========================= */
     .hero-logo {
       display: flex;
       justify-content: center;
-      padding: 36px 0 20px;
+      align-items: center;
+      padding: 36px 0 28px;
     }
 
     .hero-logo img {
-      width: 240px;          /* 🔧 DIMENSIONE LOGO TOP */
-      max-width: 90%;
+      width: clamp(200px, 70vw, 280px); /* 🔥 auto iPhone / Android */
       height: auto;
       object-fit: contain;
+      display: block;
       box-shadow:
-        0 0 30px rgba(255,0,0,0.6),
-        0 0 80px rgba(255,0,0,0.35);
+        0 0 30px rgba(255, 0, 0, 0.6),
+        0 0 70px rgba(255, 0, 0, 0.4);
     }
 
     /* =========================
        WELCOME BOX
        ========================= */
     .welcome {
-      background: #2a2a2a;
-      border-radius: 20px;
+      background: rgba(18, 18, 18, 0.95);
+      border-radius: 22px;
       padding: 22px;
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 26px;
+      border: 1px solid rgba(255, 0, 0, 0.25);
     }
 
     .welcome h1 {
       margin: 0;
       font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 1.4px;
+      color: #ff2b2b;
     }
 
     .welcome p {
@@ -67,45 +73,53 @@
     }
 
     /* =========================
-       GRID QUADRATA (2 COLONNE)
+       GRID MENU (2 COLONNE FISSE)
        ========================= */
     .grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr; /* ⚠️ SEMPRE 2 */
       gap: 16px;
     }
 
     /* =========================
-       CARD QUADRATA
+       CARD / BOTTONI
        ========================= */
     .card {
-      aspect-ratio: 1 / 1;          /* 🔥 QUADRATO PERFETTO */
-      background: #1c1c1c;
+      aspect-ratio: 1 / 1; /* 🔥 quadrato perfetto */
+      background: linear-gradient(160deg, #161616, #0b0b0b);
       border-radius: 22px;
+      border: 1px solid rgba(255, 0, 0, 0.25);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .card:active {
       transform: scale(0.96);
+      box-shadow: 0 0 28px rgba(255, 0, 0, 0.45);
     }
 
-    /* LOGO DENTRO IL BOTTONE */
+    /* =========================
+       LOGO DENTRO I BOTTONI
+       👉 CAMBIA QUI LA DIMENSIONE
+       ========================= */
     .card img {
-      width: 450px;                 /* 🔧 DIMENSIONE LOGO CARD */
-      height: 450px;
+      width: clamp(60px, 18vw, 100px);  /* AUTO RESPONSIVE */
+      height: clamp(60px, 18vw, 100px);
       object-fit: contain;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
+    /* =========================
+       TESTO BOTTONI
+       ========================= */
     .card span {
-      font-size: 14px;
+      font-size: clamp(11px, 3vw, 14px);
       font-weight: 800;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.7px;
     }
 
     /* =========================
@@ -116,70 +130,78 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: #1a1a1a;
+      background: rgba(10, 10, 10, 0.96);
       display: flex;
       justify-content: space-around;
       padding: 14px 0;
+      border-top: 1px solid rgba(255, 0, 0, 0.25);
     }
 
     .bottom-btn {
       font-size: 12px;
       font-weight: bold;
       cursor: pointer;
-      opacity: 0.9;
+      color: #ff2b2b;
+      letter-spacing: 0.6px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- LOGO GRANDE -->
+  <!-- =========================
+       HERO LOGO
+       ========================= -->
   <div class="hero-logo">
     <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
   </div>
 
   <div class="container">
 
-    <!-- WELCOME -->
+    <!-- =========================
+         WELCOME
+         ========================= -->
     <div class="welcome">
       <h1>WELCOME TO GAS CLOUD</h1>
-      <p>To open the catalogue press on the stock you want.</p>
+      <p>Tap a stock below to open the catalogue.</p>
     </div>
 
-    <!-- GRID -->
+    <!-- =========================
+         MENU / STOCK
+         ========================= -->
     <div class="grid">
 
-      <!-- STOCK 1 -->
-      <div class="card" onclick="openStock1()">
+      <!-- 🔹 STOCK 1 -->
+      <div class="card" onclick="openStock('stock.html')">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 1</span>
       </div>
 
-      <!-- STOCK 2 -->
-      <div class="card" onclick="openStock2()">
+      <!-- 🔹 STOCK 2 -->
+      <div class="card" onclick="openStock('stock-2.html')">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 2</span>
       </div>
 
-      <!-- STOCK 3 -->
-      <div class="card" onclick="openStock3()">
+      <!-- 🔹 STOCK 3 -->
+      <div class="card" onclick="openStock('stock-3.html')">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 3</span>
       </div>
 
-      <!-- STOCK 4 -->
-      <div class="card" onclick="openStock4()">
+      <!-- 🔹 STOCK 4 -->
+      <div class="card" onclick="openStock('stock-4.html')">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 4</span>
       </div>
 
-      <!-- CONTACTS -->
+      <!-- 🔹 CONTACTS -->
       <div class="card" onclick="openContacts()">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>CONTACTS</span>
       </div>
 
-      <!-- CHANNELS -->
+      <!-- 🔹 CHANNELS -->
       <div class="card" onclick="openChannels()">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>CHANNELS</span>
@@ -188,24 +210,29 @@
     </div>
   </div>
 
-  <!-- BOTTOM -->
+  <!-- =========================
+       BOTTOM BAR
+       ========================= -->
   <div class="bottom-bar">
-    <div class="bottom-btn" onclick="openSignal()">✍️ SIGNAL</div>
-    <div class="bottom-btn" onclick="openTelegram()">📩 TELEGRAM</div>
+    <div class="bottom-btn" onclick="openSignal()">SIGNAL</div>
+    <div class="bottom-btn" onclick="openTelegram()">TELEGRAM</div>
   </div>
 
 <script>
+  /* =========================
+     TELEGRAM INIT
+     ========================= */
   const tg = window.Telegram.WebApp;
   tg.ready();
   tg.expand();
 
-  /* ===== STOCK LINKS ===== */
-  function openStock1() { window.location.href = "stock.html"; }
-  function openStock2() { window.location.href = "stock-2.html"; }
-  function openStock3() { window.location.href = "stock-3.html"; }
-  function openStock4() { window.location.href = "stock-4.html"; }
+  /* =========================
+     NAVIGATION
+     ========================= */
+  function openStock(page) {
+    window.location.href = page;
+  }
 
-  /* ===== BOT ACTIONS ===== */
   function openContacts() {
     tg.sendData(JSON.stringify({ action: "contacts" }));
   }
@@ -225,6 +252,7 @@
 
 </body>
 </html>
+
 
 
 
