@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Gas Cloud – Stock 1</title>
 
-<!-- Telegram Mini App SDK -->
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
@@ -46,10 +45,15 @@ body {
 }
 
 /* =========================
-   PRODUCT CARD
+   PRODUCT CARD (LOGO BG)
    ========================= */
 .product {
-  background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.9)),
+    url("https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png");
+  background-size: 140px;
+  background-repeat: no-repeat;
+  background-position: center;
   border-radius: 18px;
   padding: 10px;
   cursor: pointer;
@@ -64,7 +68,7 @@ body {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 14px;
-  background: #000;
+  background: rgba(0,0,0,0.85);
 }
 
 .media img,
@@ -88,10 +92,7 @@ body {
 
 <body>
 
-<!-- BACK -->
 <div class="back" onclick="goBack()">⬅ BACK</div>
-
-<!-- PRODUCTS -->
 <div class="products" id="products"></div>
 
 <script>
@@ -102,17 +103,16 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-/* BACK TELEGRAM */
 tg.BackButton.show();
 tg.BackButton.onClick(goBack);
 
 /* =========================
-   CONFIG
+   CONFIG (CAMBIA SOLO QUESTO)
    ========================= */
 const CATEGORY = "stock1";
 
 /* =========================
-   NAVIGATION
+   BACK
    ========================= */
 function goBack() {
   tg.BackButton.hide();
@@ -150,6 +150,7 @@ fetch("products.json?v=" + Date.now())
 
 </body>
 </html>
+
 
 
 
