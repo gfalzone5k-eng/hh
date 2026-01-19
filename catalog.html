@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Gas Cloud – Catalog</title>
+
+<!-- Telegram WebApp -->
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
@@ -15,7 +17,7 @@ body {
     linear-gradient(180deg, #080808, #121212);
 }
 
-/* BACK */
+/* BACK BUTTON */
 .back-btn {
   position: fixed;
   top: calc(12px + env(safe-area-inset-top));
@@ -30,6 +32,7 @@ body {
   cursor: pointer;
 }
 
+/* CONTAINER */
 .container {
   padding: 70px 20px 20px;
 }
@@ -80,14 +83,13 @@ h1 {
 
 <body>
 
-<!-- BACK -->
+<!-- BACK CUSTOM -->
 <div class="back-btn" onclick="goBack()">⬅ BACK</div>
 
 <div class="container">
   <h1>CATALOG</h1>
 
   <div class="grid">
-
     <div class="stock-card" onclick="openStock('stock.html')">
       <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
       <span>STOCK 1</span>
@@ -107,27 +109,35 @@ h1 {
       <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
       <span>STOCK 4</span>
     </div>
-
   </div>
 </div>
 
 <script>
+/* =========================
+   TELEGRAM INIT
+   ========================= */
 const tg = window.Telegram.WebApp;
-tg.ready(); 
+tg.ready();
 tg.expand();
 
-/* BACK NATIVO TELEGRAM */
+/* BACK BUTTON TELEGRAM */
 tg.BackButton.show();
 tg.BackButton.onClick(goBack);
 
+/* =========================
+   NAVIGATION
+   ========================= */
 function goBack() {
+  tg.BackButton.hide();   // 🔒 evita loop
   window.location.href = "index.html";
 }
 
 function openStock(page) {
+  tg.BackButton.hide();   // 🔥 FIX CRITICO
   window.location.href = page;
 }
 </script>
 
 </body>
 </html>
+
