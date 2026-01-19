@@ -1,294 +1,144 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Gas Cloud – Stock</title>
+<meta charset="UTF-8">
+<title>Gas Cloud – Mini App</title>
+<script src="https://telegram.org/js/telegram-web-app.js?v=5"></script>
 
-  <!-- Telegram Mini App SDK -->
-  <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
-
-  <style>
-    /* =========================
-       RESET & BASE
-       ========================= */
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      color: #fff;
-      background-color: #000; /* 🔧 cambia colore sfondo */
-    }
-
-    /* =========================
-       LOGO IN ALTO
-       ========================= */
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      margin: 14px 0 6px;
-    }
-
-    .logo-container img {
-      width: 110px;   /* 🔧 dimensione logo */
-      height: 110px;
-      border-radius: 50%; /* 🔧 0 se non lo vuoi rotondo */
-    }
-
-    /* =========================
-       TITOLO PAGINA
-       ========================= */
-    .header {
-      padding: 8px 16px 16px;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    /* =========================
-       GRIGLIA PRODOTTI
-       ========================= */
-    .products {
-      padding: 14px;
-      display: grid;
-      grid-template-columns: 1fr 1fr; /* 🔧 1fr = 1 colonna, 1fr 1fr = 2 colonne */
-      gap: 14px;
-    }
-
-    /* =========================
-       CARD PRODOTTO
-       ========================= */
-    .product {
-      background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
-      border-radius: 18px;
-      padding: 10px;
-      border: 1px solid rgba(255,255,255,0.08);
-      cursor: pointer;
-    }
-
-    /* =========================
-       MEDIA (IMG / VIDEO)
-       ========================= */
-    .media-box {
-      width: 100%;
-      aspect-ratio: 1 / 1; /* 🔧 rende il media QUADRATO */
-      overflow: hidden;
-      border-radius: 14px;
-      background: #000;
-    }
-
-    .media-box img,
-    .media-box video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* 🔧 contain se non vuoi tagli */
-    }
-
-    /* =========================
-       NOME PRODOTTO
-       ========================= */
-    .name {
-      margin-top: 8px;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-
-    /* =========================
-       MODAL (DETTAGLIO)
-       ========================= */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      display: none; /* 🔧 viene aperto via JS */
-      justify-content: center;
-      align-items: flex-end;
-      z-index: 999;
-    }
-
-    .modal-content {
-  background: #111;
-  border-radius: 26px 26px 0 0;
-  width: 100%;
-  height: 92vh;              /* 🔥 quasi tutto lo schermo */
-  max-width: 520px;
-  padding: 18px;
-  animation: slideUp 0.25s ease;
-  display: flex;
-  flex-direction: column;
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(circle at top, rgba(255,0,0,0.25), transparent 60%),
+    linear-gradient(180deg, #050505, #0f0f0f);
 }
 
+.container {
+  padding: 20px;
+  padding-bottom: calc(120px + env(safe-area-inset-bottom));
+}
 
-    /* Animazione apertura modal */
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
+/* LOGO */
+.hero-logo {
+  display: flex;
+  justify-content: center;
+  padding: 36px 20px 20px;
+}
 
-    /* Titolo prodotto nel modal */
-    .modal-title {
-      text-align: center;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
+.hero-logo img {
+  width: 240px;
+  box-shadow: 0 0 40px rgba(255,0,0,0.6);
+}
 
-    /* Media grande nel modal */
-    .modal-media {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      border-radius: 18px;
-      margin-bottom: 14px;
-      background: #000;
-    }
+/* WELCOME */
+.welcome {
+  background: rgba(30,30,30,0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 22px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 28px;
+}
 
-    .modal-media img,
-    .modal-media video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
 
-    /* Prezzo */
-    .price {
-      text-align: center;
-      font-size: 22px;
-      font-weight: 800;
-      color: #00ff99; /* 🔧 colore prezzo */
-      margin-bottom: 14px;
-    }
+.card {
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
 
-    /* Bottone ordine */
-    .order {
-      padding: 16px;
-      background: #00ff99;
-      color: #000;
-      text-align: center;
-      border-radius: 18px;
-      font-weight: 900;
-      font-size: 15px;
-      cursor: pointer;
-    }
+.card:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 30px rgba(255,0,0,0.4);
+}
 
-    /* Chiudi modal */
-    .close {
-      text-align: center;
-      margin-top: 12px;
-      font-size: 13px;
-      opacity: 0.6;
-      cursor: pointer;
-    }
-  </style>
+.card img {
+  width: 90px;
+  margin-bottom: 12px;
+}
+
+.card span {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* BOTTOM BAR */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(20,20,20,0.95);
+  display: flex;
+  justify-content: space-around;
+  padding: 14px 0 calc(14px + env(safe-area-inset-bottom));
+}
+.bottom-btn { font-size: 12px; font-weight: bold; }
+</style>
 </head>
 
 <body>
 
-  <!-- LOGO -->
-  <div class="logo-container">
-    <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
+<div class="hero-logo">
+  <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+</div>
+
+<div class="container">
+
+  <div class="welcome">
+    <h1>WELCOME TO GAS CLOUD</h1>
+    <p>Access the catalogue and explore available stocks.</p>
   </div>
 
-  <!-- TITOLO -->
-  <div class="header">📦 AVAILABLE STOCK</div>
+  <div class="grid">
 
-  <!-- LISTA PRODOTTI -->
-  <div class="products" id="products"></div>
-
-  <!-- MODAL -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <div class="modal-title" id="modalTitle"></div>
-      <div class="modal-media" id="modalMedia"></div>
-      <div class="price" id="modalPrice"></div>
-      <div class="order" onclick="order()">ORDER</div>
-      <div class="close" onclick="closeModal()">Close</div>
+    <div class="card" onclick="openCatalog()">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>CATALOG</span>
     </div>
+
+    <div class="card" onclick="openContacts()">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>CONTACTS</span>
+    </div>
+
+    <div class="card" onclick="openChannels()">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>CHANNELS</span>
+    </div>
+
   </div>
+</div>
+
+<div class="bottom-bar">
+  <div class="bottom-btn" onclick="openSignal()">✍️ SIGNAL</div>
+  <div class="bottom-btn" onclick="openTelegram()">📩 TELEGRAM</div>
+</div>
 
 <script>
-  /* =========================
-     TELEGRAM INIT
-     ========================= */
-  const tg = window.Telegram.WebApp;
-  tg.ready();
-  tg.expand();
+const tg = window.Telegram.WebApp;
+tg.ready(); tg.expand();
 
-  /* =========================
-     CONFIG STOCK
-     🔧 cambia QUI per stock2
-     ========================= */
-  const CATEGORY = "stock1";
-
-  let selectedProduct = null;
-
-  /* =========================
-     CARICAMENTO PRODOTTI
-     ========================= */
-  fetch("products.json?v=" + Date.now()) // 🔧 evita cache
-    .then(res => res.json())
-    .then(products => {
-      const container = document.getElementById("products");
-
-      products
-        .filter(p => p.category === CATEGORY) // 🔧 filtro stock
-        .forEach(p => {
-          const card = document.createElement("div");
-          card.className = "product";
-
-          const media = p.mediaType === "video"
-            ? `<video src="${p.mediaUrl}" muted></video>`
-            : `<img src="${p.mediaUrl}">`;
-
-          card.innerHTML = `
-            <div class="media-box">${media}</div>
-            <div class="name">${p.name}</div>
-          `;
-
-          card.onclick = () => openModal(p);
-          container.appendChild(card);
-        });
-    });
-
-  /* =========================
-     APERTURA MODAL
-     ========================= */
-  function openModal(p) {
-    selectedProduct = p;
-
-    document.getElementById("modalTitle").innerText = p.name;
-    document.getElementById("modalPrice").innerText = "€" + p.price;
-
-    const box = document.getElementById("modalMedia");
-    box.innerHTML = p.mediaType === "video"
-      ? `<video src="${p.mediaUrl}" controls autoplay></video>`
-      : `<img src="${p.mediaUrl}">`;
-
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  /* =========================
-     CHIUSURA MODAL
-     ========================= */
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-  /* =========================
-     ORDINE → BOT TELEGRAM
-     ========================= */
-  function order() {
-    tg.sendData(JSON.stringify({
-      action: "order",
-      product: selectedProduct
-    }));
-    tg.close();
-  }
+function openCatalog() { window.location.href = "catalog.html"; }
+function openContacts() { tg.sendData(JSON.stringify({action:"contacts"})); }
+function openChannels() { tg.sendData(JSON.stringify({action:"channels"})); }
+function openSignal() { window.open("https://signal.me","_blank"); }
+function openTelegram() { window.open("https://t.me","_blank"); }
 </script>
 
 </body>
