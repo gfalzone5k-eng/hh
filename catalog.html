@@ -9,14 +9,10 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #fff;
   background:
     radial-gradient(circle at top, rgba(255,0,0,0.25), transparent 60%),
     linear-gradient(180deg, #080808, #121212);
-  color: #fff;
-}
-
-.container {
-  padding: 60px 20px 20px;
 }
 
 /* BACK */
@@ -24,17 +20,24 @@ body {
   position: fixed;
   top: calc(12px + env(safe-area-inset-top));
   left: 12px;
+  z-index: 1000;
   background: rgba(20,20,20,0.9);
-  padding: 10px 14px;
+  backdrop-filter: blur(10px);
   border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  z-index: 1000;
+}
+
+.container {
+  padding: 70px 20px 20px;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
+  letter-spacing: 1px;
 }
 
 /* GRID */
@@ -44,45 +47,76 @@ h1 {
   gap: 16px;
 }
 
-/* STOCK BUTTON */
-.stock {
-  aspect-ratio: 1/1;
-  background: #1c1c1c;
-  border-radius: 22px;
+/* STOCK CARD */
+.stock-card {
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+  border-radius: 24px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-weight: 900;
   cursor: pointer;
-  transition: 0.15s;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.stock:active {
+.stock-card:active {
   transform: scale(0.96);
-  box-shadow: 0 0 20px rgba(255,0,0,0.3);
+  box-shadow: 0 0 30px rgba(255,0,0,0.4);
+}
+
+.stock-card img {
+  width: 90px;
+  margin-bottom: 12px;
+}
+
+.stock-card span {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- BACK -->
 <div class="back-btn" onclick="goBack()">⬅ BACK</div>
 
 <div class="container">
   <h1>CATALOG</h1>
 
   <div class="grid">
-    <div class="stock" onclick="openStock('stock.html')">STOCK 1</div>
-    <div class="stock" onclick="openStock('stock-2.html')">STOCK 2</div>
-    <div class="stock" onclick="openStock('stock-3.html')">STOCK 3</div>
-    <div class="stock" onclick="openStock('stock-4.html')">STOCK 4</div>
+
+    <div class="stock-card" onclick="openStock('stock.html')">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>STOCK 1</span>
+    </div>
+
+    <div class="stock-card" onclick="openStock('stock-2.html')">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>STOCK 2</span>
+    </div>
+
+    <div class="stock-card" onclick="openStock('stock-3.html')">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>STOCK 3</span>
+    </div>
+
+    <div class="stock-card" onclick="openStock('stock-4.html')">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>STOCK 4</span>
+    </div>
+
   </div>
 </div>
 
 <script>
 const tg = window.Telegram.WebApp;
-tg.ready(); tg.expand();
+tg.ready(); 
+tg.expand();
 
+/* BACK NATIVO TELEGRAM */
 tg.BackButton.show();
 tg.BackButton.onClick(goBack);
 
