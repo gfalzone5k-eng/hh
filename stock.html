@@ -65,12 +65,15 @@ body {
 
 <script>
 const tg = window.Telegram.WebApp;
-tg.ready(); tg.expand();
+tg.ready();
+tg.expand();
 
 tg.BackButton.show();
 tg.BackButton.onClick(goBack);
 
-const CATEGORY = "stock";
+/* 🔥 CATEGORIA DINAMICA */
+const params = new URLSearchParams(window.location.search);
+const CATEGORY = params.get("cat");
 
 function goBack() {
   tg.BackButton.hide();
@@ -81,25 +84,27 @@ fetch("products.json?v=" + Date.now())
   .then(r => r.json())
   .then(products => {
     const box = document.getElementById("products");
-    products.filter(p => p.category === CATEGORY).forEach(p => {
-      const el = document.createElement("div");
-      el.className = "product";
-      el.innerHTML = `
-        <div class="media">
-          ${p.mediaType === "video"
-            ? `<video src="${p.mediaUrl}" muted></video>`
-            : `<img src="${p.mediaUrl}">`}
-        </div>
-        <div class="name">${p.name} – €${p.price}</div>
-      `;
-      box.appendChild(el);
-    });
+
+    products
+      .filter(p => p.category === CATEGORY)
+      .forEach(p => {
+        const el = document.createElement("div");
+        el.className = "product";
+        el.innerHTML = `
+          <div class="media">
+            ${p.mediaType === "video"
+              ? `<video src="${p.mediaUrl}" muted></video>`
+              : `<img src="${p.mediaUrl}">`}
+          </div>
+          <div class="name">${p.name} – €${p.price}</div>
+        `;
+        box.appendChild(el);
+      });
   });
 </script>
 
 </body>
 </html>
-
 
 
 
