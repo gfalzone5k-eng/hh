@@ -25,7 +25,7 @@
     }
 
     /* =========================
-       LOGO GRANDE IN ALTO
+       LOGO GRANDE
        ========================= */
     .hero-logo {
       display: flex;
@@ -36,8 +36,6 @@
     .hero-logo img {
       width: 240px;
       max-width: 90%;
-      height: auto;
-      object-fit: contain;
       box-shadow:
         0 0 30px rgba(255,0,0,0.6),
         0 0 80px rgba(255,0,0,0.35);
@@ -51,7 +49,7 @@
       border-radius: 20px;
       padding: 22px;
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .welcome h1 {
@@ -68,22 +66,13 @@
     }
 
     /* =========================
-       GRID RESPONSIVE
+       CATALOG BUTTON
        ========================= */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      padding: 0 4px;
-    }
-
-    /* =========================
-       CARD QUADRATA
-       ========================= */
-    .card {
-      aspect-ratio: 1 / 1;
+    .catalog-btn {
+      width: 100%;
+      height: 160px;
       background: #1c1c1c;
-      border-radius: 22px;
+      border-radius: 24px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -92,26 +81,24 @@
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .card:active {
-      transform: scale(0.96);
+    .catalog-btn:active {
+      transform: scale(0.97);
       box-shadow: 0 0 20px rgba(255,0,0,0.25);
     }
 
-    .card img {
-      width: 450px;
-      height: 450px;
-      object-fit: contain;
+    .catalog-btn img {
+      width: 90px;
       margin-bottom: 12px;
     }
 
-    .card span {
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
+    .catalog-btn span {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 1px;
     }
 
     /* =========================
-       BOTTOM BAR (SAFE AREA)
+       BOTTOM BAR
        ========================= */
     .bottom-bar {
       position: fixed;
@@ -136,7 +123,7 @@
 
 <body>
 
-  <!-- LOGO GRANDE -->
+  <!-- LOGO -->
   <div class="hero-logo">
     <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
   </div>
@@ -146,43 +133,15 @@
     <!-- WELCOME -->
     <div class="welcome">
       <h1>WELCOME TO GAS CLOUD</h1>
-      <p>To open the catalogue press on the stock you want.</p>
+      <p>Press the button below to open the catalog.</p>
     </div>
 
-    <!-- GRID -->
-    <div class="grid">
-
-      <div class="card" onclick="openStock1()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>STOCK 1</span>
-      </div>
-
-      <div class="card" onclick="openStock2()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>STOCK 2</span>
-      </div>
-
-      <div class="card" onclick="openStock3()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>STOCK 3</span>
-      </div>
-
-      <div class="card" onclick="openStock4()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>STOCK 4</span>
-      </div>
-
-      <div class="card" onclick="openContacts()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>CONTACTS</span>
-      </div>
-
-      <div class="card" onclick="openChannels()">
-        <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
-        <span>CHANNELS</span>
-      </div>
-
+    <!-- CATALOG BUTTON -->
+    <div class="catalog-btn" onclick="openCatalog()">
+      <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+      <span>CATALOG</span>
     </div>
+
   </div>
 
   <!-- BOTTOM BAR -->
@@ -196,17 +155,8 @@
   tg.ready();
   tg.expand();
 
-  function openStock1() { window.location.href = "stock.html"; }
-  function openStock2() { window.location.href = "stock-2.html"; }
-  function openStock3() { window.location.href = "stock-3.html"; }
-  function openStock4() { window.location.href = "stock-4.html"; }
-
-  function openContacts() {
-    tg.sendData(JSON.stringify({ action: "contacts" }));
-  }
-
-  function openChannels() {
-    tg.sendData(JSON.stringify({ action: "channels" }));
+  function openCatalog() {
+    window.location.href = "catalog.html";
   }
 
   function openSignal() {
@@ -220,6 +170,7 @@
 
 </body>
 </html>
+
 
 
 
