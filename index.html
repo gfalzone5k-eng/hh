@@ -9,7 +9,7 @@
 
   <style>
     /* =========================
-       BASE / RESET
+       BASE
        ========================= */
     body {
       margin: 0;
@@ -24,14 +24,33 @@
     }
 
     /* =========================
-       WELCOME BOX (IN ALTO)
+       LOGO GRANDE IN ALTO
+       ========================= */
+    .hero-logo {
+      display: flex;
+      justify-content: center;
+      padding: 36px 0 20px;
+    }
+
+    .hero-logo img {
+      width: 240px;          /* 🔧 DIMENSIONE LOGO TOP */
+      max-width: 90%;
+      height: auto;
+      object-fit: contain;
+      box-shadow:
+        0 0 30px rgba(255,0,0,0.6),
+        0 0 80px rgba(255,0,0,0.35);
+    }
+
+    /* =========================
+       WELCOME BOX
        ========================= */
     .welcome {
       background: #2a2a2a;
       border-radius: 20px;
       padding: 22px;
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .welcome h1 {
@@ -48,7 +67,7 @@
     }
 
     /* =========================
-       GRID CARDS (2 COLONNE)
+       GRID QUADRATA (2 COLONNE)
        ========================= */
     .grid {
       display: grid;
@@ -57,32 +76,33 @@
     }
 
     /* =========================
-       CARD STILE SQUAD
+       CARD QUADRATA
        ========================= */
     .card {
+      aspect-ratio: 1 / 1;          /* 🔥 QUADRATO PERFETTO */
       background: #1c1c1c;
       border-radius: 22px;
-      padding: 18px 14px;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
       transition: transform 0.15s ease;
     }
 
     .card:active {
-      transform: scale(0.97);
+      transform: scale(0.96);
     }
 
-    /* LOGO DENTRO LA CARD */
+    /* LOGO DENTRO IL BOTTONE */
     .card img {
-      width: 90px;            /* 🔧 DIMENSIONE LOGO */
-      height: 90px;
+      width: 80px;                 /* 🔧 DIMENSIONE LOGO CARD */
+      height: 80px;
       object-fit: contain;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
-    /* TESTO SOTTO */
     .card span {
-      display: block;
       font-size: 14px;
       font-weight: 800;
       letter-spacing: 0.8px;
@@ -113,6 +133,11 @@
 
 <body>
 
+  <!-- LOGO GRANDE -->
+  <div class="hero-logo">
+    <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
+  </div>
+
   <div class="container">
 
     <!-- WELCOME -->
@@ -124,25 +149,25 @@
     <!-- GRID -->
     <div class="grid">
 
-      <!-- 🔥 STOCK 1 -->
+      <!-- STOCK 1 -->
       <div class="card" onclick="openStock1()">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 1</span>
       </div>
 
-      <!-- 🔥 STOCK 2 -->
+      <!-- STOCK 2 -->
       <div class="card" onclick="openStock2()">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 2</span>
       </div>
 
-      <!-- 🔥 STOCK 3 -->
+      <!-- STOCK 3 -->
       <div class="card" onclick="openStock3()">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 3</span>
       </div>
 
-      <!-- 🔥 STOCK 4 -->
+      <!-- STOCK 4 -->
       <div class="card" onclick="openStock4()">
         <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
         <span>STOCK 4</span>
@@ -174,13 +199,13 @@
   tg.ready();
   tg.expand();
 
-  /* ======== LINK AGLI STOCK ======== */
+  /* ===== STOCK LINKS ===== */
   function openStock1() { window.location.href = "stock.html"; }
   function openStock2() { window.location.href = "stock-2.html"; }
   function openStock3() { window.location.href = "stock-3.html"; }
   function openStock4() { window.location.href = "stock-4.html"; }
 
-  /* ======== AZIONI BOT ======== */
+  /* ===== BOT ACTIONS ===== */
   function openContacts() {
     tg.sendData(JSON.stringify({ action: "contacts" }));
   }
@@ -200,6 +225,7 @@
 
 </body>
 </html>
+
 
 
 
