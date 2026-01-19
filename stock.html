@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Gas Cloud – Stock</title>
-  <script src="https://telegram.org/js/telegram-web-app.js?v=5"></script>
+
+  <!-- Telegram Mini App SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
   <style>
+    /* =========================
+       RESET & BASE
+       ========================= */
     * {
       box-sizing: border-box;
     }
@@ -14,79 +19,93 @@
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       color: #fff;
-      background-color: #000;
+      background-color: #000; /* 🔧 cambia colore sfondo */
     }
 
-    /* LOGO */
+    /* =========================
+       LOGO IN ALTO
+       ========================= */
     .logo-container {
       display: flex;
       justify-content: center;
-      margin: 16px 0 6px;
+      margin: 14px 0 6px;
     }
 
     .logo-container img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
+      width: 110px;   /* 🔧 dimensione logo */
+      height: 110px;
+      border-radius: 50%; /* 🔧 0 se non lo vuoi rotondo */
     }
 
-    /* HEADER */
+    /* =========================
+       TITOLO PAGINA
+       ========================= */
     .header {
-      padding: 12px 16px 18px;
+      padding: 8px 16px 16px;
       text-align: center;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: 1px;
     }
 
-    /* LIST */
+    /* =========================
+       GRIGLIA PRODOTTI
+       ========================= */
     .products {
       padding: 14px;
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
+      grid-template-columns: 1fr 1fr; /* 🔧 1fr = 1 colonna, 1fr 1fr = 2 colonne */
+      gap: 14px;
     }
 
-    /* CARD */
+    /* =========================
+       CARD PRODOTTO
+       ========================= */
     .product {
       background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
-      border-radius: 22px;
-      padding: 14px;
+      border-radius: 18px;
+      padding: 10px;
       border: 1px solid rgba(255,255,255,0.08);
       cursor: pointer;
     }
 
-    /* MEDIA */
+    /* =========================
+       MEDIA (IMG / VIDEO)
+       ========================= */
     .media-box {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1 / 1; /* 🔧 rende il media QUADRATO */
       overflow: hidden;
-      border-radius: 18px;
-      position: relative;
+      border-radius: 14px;
+      background: #000;
     }
 
     .media-box img,
     .media-box video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* 🔧 contain se non vuoi tagli */
     }
 
-    /* TITLE */
+    /* =========================
+       NOME PRODOTTO
+       ========================= */
     .name {
-      margin-top: 10px;
+      margin-top: 8px;
       text-align: center;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.3px;
     }
 
-    /* MODAL */
+    /* =========================
+       MODAL (DETTAGLIO)
+       ========================= */
     .modal {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.9);
-      display: none;
+      display: none; /* 🔧 viene aperto via JS */
       justify-content: center;
       align-items: flex-end;
       z-index: 999;
@@ -94,24 +113,35 @@
 
     .modal-content {
       background: #111;
-      border-radius: 24px 24px 0 0;
+      border-radius: 26px 26px 0 0;
       width: 100%;
-      max-width: 420px;
+      max-width: 480px; /* 🔧 larghezza max su schermi grandi */
       padding: 18px;
       animation: slideUp 0.25s ease;
     }
 
+    /* Animazione apertura modal */
     @keyframes slideUp {
       from { transform: translateY(100%); }
       to { transform: translateY(0); }
     }
 
+    /* Titolo prodotto nel modal */
+    .modal-title {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* Media grande nel modal */
     .modal-media {
       width: 100%;
       aspect-ratio: 1 / 1;
       overflow: hidden;
       border-radius: 18px;
       margin-bottom: 14px;
+      background: #000;
     }
 
     .modal-media img,
@@ -121,14 +151,16 @@
       object-fit: contain;
     }
 
+    /* Prezzo */
     .price {
       text-align: center;
       font-size: 22px;
       font-weight: 800;
-      color: #00ff99;
+      color: #00ff99; /* 🔧 colore prezzo */
       margin-bottom: 14px;
     }
 
+    /* Bottone ordine */
     .order {
       padding: 16px;
       background: #00ff99;
@@ -140,6 +172,7 @@
       cursor: pointer;
     }
 
+    /* Chiudi modal */
     .close {
       text-align: center;
       margin-top: 12px;
@@ -157,13 +190,16 @@
     <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
   </div>
 
+  <!-- TITOLO -->
   <div class="header">📦 AVAILABLE STOCK</div>
 
+  <!-- LISTA PRODOTTI -->
   <div class="products" id="products"></div>
 
   <!-- MODAL -->
   <div class="modal" id="modal">
     <div class="modal-content">
+      <div class="modal-title" id="modalTitle"></div>
       <div class="modal-media" id="modalMedia"></div>
       <div class="price" id="modalPrice"></div>
       <div class="order" onclick="order()">ORDER</div>
@@ -172,21 +208,31 @@
   </div>
 
 <script>
+  /* =========================
+     TELEGRAM INIT
+     ========================= */
   const tg = window.Telegram.WebApp;
   tg.ready();
   tg.expand();
 
-  const CATEGORY = "stock1";   // 🔥 PRIMO STOCK
+  /* =========================
+     CONFIG STOCK
+     🔧 cambia QUI per stock2
+     ========================= */
+  const CATEGORY = "stock1";
 
   let selectedProduct = null;
 
-  fetch("products.json?v=" + Date.now())
+  /* =========================
+     CARICAMENTO PRODOTTI
+     ========================= */
+  fetch("products.json?v=" + Date.now()) // 🔧 evita cache
     .then(res => res.json())
     .then(products => {
       const container = document.getElementById("products");
 
       products
-        .filter(p => p.category === CATEGORY)
+        .filter(p => p.category === CATEGORY) // 🔧 filtro stock
         .forEach(p => {
           const card = document.createElement("div");
           card.className = "product";
@@ -205,22 +251,33 @@
         });
     });
 
+  /* =========================
+     APERTURA MODAL
+     ========================= */
   function openModal(p) {
     selectedProduct = p;
-    const box = document.getElementById("modalMedia");
 
+    document.getElementById("modalTitle").innerText = p.name;
+    document.getElementById("modalPrice").innerText = "€" + p.price;
+
+    const box = document.getElementById("modalMedia");
     box.innerHTML = p.mediaType === "video"
       ? `<video src="${p.mediaUrl}" controls autoplay></video>`
       : `<img src="${p.mediaUrl}">`;
 
-    document.getElementById("modalPrice").innerText = "€" + p.price;
     document.getElementById("modal").style.display = "flex";
   }
 
+  /* =========================
+     CHIUSURA MODAL
+     ========================= */
   function closeModal() {
     document.getElementById("modal").style.display = "none";
   }
 
+  /* =========================
+     ORDINE → BOT TELEGRAM
+     ========================= */
   function order() {
     tg.sendData(JSON.stringify({
       action: "order",
@@ -232,6 +289,7 @@
 
 </body>
 </html>
+
 
 
 
