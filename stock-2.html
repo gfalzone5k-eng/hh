@@ -1,234 +1,155 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Gas Cloud – Stock</title>
-  <script src="https://telegram.org/js/telegram-web-app.js?v=5"></script>
+<meta charset="UTF-8">
+<title>Gas Cloud – Stock 2</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<!-- Telegram Mini App SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      color: #fff;
-      background-color: #000;
-    }
+<style>
+/* =========================
+   BASE
+   ========================= */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #000;
+  color: #fff;
+}
 
-    /* LOGO */
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      margin: 16px 0 6px;
-    }
+/* =========================
+   BACK BUTTON
+   ========================= */
+.back {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 12px;
+  background: rgba(20,20,20,0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 10;
+}
 
-    .logo-container img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-    }
+/* =========================
+   PRODUCTS GRID
+   ========================= */
+.products {
+  padding: 70px 16px 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
 
-    /* HEADER */
-    .header {
-      padding: 12px 16px 18px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+/* =========================
+   PRODUCT CARD
+   ========================= */
+.product {
+  background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
+  border-radius: 18px;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+}
 
-    /* LIST */
-    .products {
-      padding: 14px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
+/* =========================
+   MEDIA BOX
+   ========================= */
+.media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #000;
+}
 
-    /* CARD */
-    .product {
-      background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
-      border-radius: 22px;
-      padding: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      cursor: pointer;
-    }
+.media img,
+.media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    /* MEDIA */
-    .media-box {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      border-radius: 18px;
-      position: relative;
-    }
-
-    .media-box img,
-    .media-box video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* TITLE */
-    .name {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-
-    /* MODAL */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      justify-content: center;
-      align-items: flex-end;
-      z-index: 999;
-    }
-
-    .modal-content {
-      background: #111;
-      border-radius: 24px 24px 0 0;
-      width: 100%;
-      max-width: 420px;
-      padding: 18px;
-      animation: slideUp 0.25s ease;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-
-    .modal-media {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      border-radius: 18px;
-      margin-bottom: 14px;
-    }
-
-    .modal-media img,
-    .modal-media video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .price {
-      text-align: center;
-      font-size: 22px;
-      font-weight: 800;
-      color: #00ff99;
-      margin-bottom: 14px;
-    }
-
-    .order {
-      padding: 16px;
-      background: #00ff99;
-      color: #000;
-      text-align: center;
-      border-radius: 18px;
-      font-weight: 900;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    .close {
-      text-align: center;
-      margin-top: 12px;
-      font-size: 13px;
-      opacity: 0.6;
-      cursor: pointer;
-    }
-  </style>
+/* =========================
+   PRODUCT NAME
+   ========================= */
+.name {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- LOGO -->
-  <div class="logo-container">
-    <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud Logo">
-  </div>
+<!-- BACK -->
+<div class="back" onclick="goBack()">⬅ BACK</div>
 
-  <div class="header">📦 AVAILABLE STOCK</div>
-
-  <div class="products" id="products"></div>
-
-  <!-- MODAL -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <div class="modal-media" id="modalMedia"></div>
-      <div class="price" id="modalPrice"></div>
-      <div class="order" onclick="order()">ORDER</div>
-      <div class="close" onclick="closeModal()">Close</div>
-    </div>
-  </div>
+<!-- PRODUCTS -->
+<div class="products" id="products"></div>
 
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.ready();
-  tg.expand();
+/* =========================
+   TELEGRAM INIT
+   ========================= */
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
 
-  const CATEGORY = "stock2";   // 🔥 secondo STOCK
+/* BACK TELEGRAM */
+tg.BackButton.show();
+tg.BackButton.onClick(goBack);
 
-  let selectedProduct = null;
+/* =========================
+   CONFIG
+   ========================= */
+const CATEGORY = "stock2";
 
-  fetch("products.json?v=" + Date.now())
-    .then(res => res.json())
-    .then(products => {
-      const container = document.getElementById("products");
+/* =========================
+   NAVIGATION
+   ========================= */
+function goBack() {
+  tg.BackButton.hide();
+  window.location.href = "catalog.html";
+}
 
-      products
-        .filter(p => p.category === CATEGORY)
-        .forEach(p => {
-          const card = document.createElement("div");
-          card.className = "product";
+/* =========================
+   LOAD PRODUCTS
+   ========================= */
+fetch("products.json?v=" + Date.now())
+  .then(res => res.json())
+  .then(products => {
+    const container = document.getElementById("products");
 
-          const media = p.mediaType === "video"
-            ? `<video src="${p.mediaUrl}" muted></video>`
-            : `<img src="${p.mediaUrl}">`;
+    products
+      .filter(p => p.category === CATEGORY)
+      .forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product";
 
-          card.innerHTML = `
-            <div class="media-box">${media}</div>
-            <div class="name">${p.name}</div>
-          `;
+        const media =
+          p.mediaType === "video"
+            ? `<video src="${p.mediaUrl}" muted playsinline></video>`
+            : `<img src="${p.mediaUrl}" alt="${p.name}">`;
 
-          card.onclick = () => openModal(p);
-          container.appendChild(card);
-        });
-    });
+        card.innerHTML = `
+          <div class="media">${media}</div>
+          <div class="name">${p.name} – €${p.price}</div>
+        `;
 
-  function openModal(p) {
-    selectedProduct = p;
-    const box = document.getElementById("modalMedia");
-
-    box.innerHTML = p.mediaType === "video"
-      ? `<video src="${p.mediaUrl}" controls autoplay></video>`
-      : `<img src="${p.mediaUrl}">`;
-
-    document.getElementById("modalPrice").innerText = "€" + p.price;
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-  function order() {
-    tg.sendData(JSON.stringify({
-      action: "order",
-      product: selectedProduct
-    }));
-    tg.close();
-  }
+        container.appendChild(card);
+      });
+  });
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
