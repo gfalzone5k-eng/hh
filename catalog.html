@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Gas Cloud – Catalog</title>
+<script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(255,0,0,0.25), transparent 60%),
+    linear-gradient(180deg, #080808, #121212);
+  color: #fff;
+}
+
+.container {
+  padding: 60px 20px 20px;
+}
+
+/* BACK */
+.back-btn {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 12px;
+  background: rgba(20,20,20,0.9);
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* STOCK BUTTON */
+.stock {
+  aspect-ratio: 1/1;
+  background: #1c1c1c;
+  border-radius: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.stock:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 20px rgba(255,0,0,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<div class="back-btn" onclick="goBack()">⬅ BACK</div>
+
+<div class="container">
+  <h1>CATALOG</h1>
+
+  <div class="grid">
+    <div class="stock" onclick="openStock('stock.html')">STOCK 1</div>
+    <div class="stock" onclick="openStock('stock-2.html')">STOCK 2</div>
+    <div class="stock" onclick="openStock('stock-3.html')">STOCK 3</div>
+    <div class="stock" onclick="openStock('stock-4.html')">STOCK 4</div>
+  </div>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.ready(); tg.expand();
+
+tg.BackButton.show();
+tg.BackButton.onClick(goBack);
+
+function goBack() {
+  window.location.href = "index.html";
+}
+
+function openStock(page) {
+  window.location.href = page;
+}
+</script>
+
+</body>
+</html>
