@@ -9,108 +9,109 @@
 
 <style>
 :root {
-  --red: #ff1a1a;
-  --bg: #0b0b0b;
-  --card: #141414;
+  --red:#ff1a1a;
+  --bg:#0b0b0b;
 }
 
-/* RESET */
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  color: #fff;
-  background-color: var(--bg);
-  overflow-x: hidden;
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:#fff;
+  background:var(--bg);
+  overflow-x:hidden;
 }
 
-/* BACKGROUND LOGO STATICO */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 70%;
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 0;
+/* WATERMARK LOGO */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url("https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png") center / 70% no-repeat;
+  opacity:.05;
+  pointer-events:none;
+  z-index:0;
 }
 
-/* CONTENUTO */
-.container {
-  position: relative;
-  z-index: 1;
-  padding: 20px;
-  padding-bottom: 100px;
+/* HERO LOGO */
+.hero-logo{
+  display:flex;
+  justify-content:center;
+  padding:32px 0 28px;
+  position:relative;
+  z-index:1;
 }
 
-/* LOGO TOP */
-.hero-logo {
-  display: flex;
-  justify-content: center;
-  margin: 32px 0 28px;
+.hero-logo img{
+  width:180px;
+  max-width:70vw;
+  filter:drop-shadow(0 0 30px rgba(255,0,0,.7));
 }
 
-.hero-logo img {
-  width: 180px;
-  max-width: 70vw;
-  filter: drop-shadow(0 0 30px rgba(255,0,0,0.7));
+/* CONTENT */
+.container{
+  position:relative;
+  z-index:1;
+  padding:0 20px 100px;
 }
 
 /* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
 }
 
 /* CARD */
-.card {
-  aspect-ratio: 1 / 1;
-  background: radial-gradient(circle at top, #1e1e1e, #0f0f0f);
-  border-radius: 22px;
-  border: 2px solid var(--red);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 0 18px rgba(255,0,0,0.35);
+.card{
+  aspect-ratio:1/1;
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  border:2px solid var(--red);
+  background:radial-gradient(circle at top,#1e1e1e,#0f0f0f);
+  box-shadow:0 0 18px rgba(255,0,0,.35);
+  cursor:pointer;
+  transition:.15s ease;
 }
 
-.card:active {
-  transform: scale(0.96);
-  box-shadow: 0 0 35px rgba(255,0,0,0.8);
+.card:active{
+  transform:scale(.96);
+  box-shadow:0 0 35px rgba(255,0,0,.8);
 }
 
-/* LOGO NEL BOTTONE */
-.card img {
-  width: 70%;
-  max-width: 140px;
-  margin-bottom: 12px;
-  filter: drop-shadow(0 0 18px rgba(255,0,0,0.6));
+/* LOGO FULL */
+.card img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  opacity:.35;
+  filter:drop-shadow(0 0 30px rgba(255,0,0,.6));
 }
 
-/* TESTO */
-.card span {
-  font-weight: 800;
-  letter-spacing: 1px;
-  font-size: 14px;
-  color: #fff;
+/* TEXT OVERLAY */
+.card span{
+  position:relative;
+  z-index:2;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-shadow:0 0 12px rgba(0,0,0,.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
 }
 
-/* MOBILE EXTRA SMALL */
-@media (max-width: 360px) {
-  .card span {
-    font-size: 12px;
-  }
+/* SMALL */
+@media(max-width:360px){
+  .card span{font-size:13px;}
 }
 </style>
 </head>
@@ -118,11 +119,12 @@ body::before {
 <body>
 
 <div class="hero-logo">
-  <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud">
+  <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
 </div>
 
 <div class="container">
   <div class="grid">
+
     <div class="card" onclick="openCatalog()">
       <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
       <span>CATALOG</span>
@@ -137,25 +139,17 @@ body::before {
       <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
       <span>CHANNELS</span>
     </div>
+
   </div>
 </div>
 
 <script>
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
+const tg=window.Telegram.WebApp;
+tg.ready();tg.expand();
 
-function openCatalog() {
-  window.location.href = "catalog.html";
-}
-
-function openContacts() {
-  tg.sendData(JSON.stringify({ action: "contacts" }));
-}
-
-function openChannels() {
-  tg.sendData(JSON.stringify({ action: "channels" }));
-}
+function openCatalog(){location.href="catalog.html";}
+function openContacts(){tg.sendData(JSON.stringify({action:"contacts"}));}
+function openChannels(){tg.sendData(JSON.stringify({action:"channels"}));}
 </script>
 
 </body>
