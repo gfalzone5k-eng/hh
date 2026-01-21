@@ -2,58 +2,123 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Gas Cloud – Home</title>
+
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
+:root {
+  --red: #ff1a1a;
+  --bg: #0b0b0b;
+  --card: #141414;
+}
+
+/* RESET */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  background:
-    radial-gradient(circle at top, rgba(255,0,0,0.25), transparent 60%),
-    linear-gradient(180deg, #050505, #0f0f0f);
+  background-color: var(--bg);
+  overflow-x: hidden;
 }
 
-.container { padding: 20px; padding-bottom: 120px; }
+/* BACKGROUND LOGO STATICO */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
 
+/* CONTENUTO */
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  padding-bottom: 100px;
+}
+
+/* LOGO TOP */
 .hero-logo {
   display: flex;
   justify-content: center;
-  padding: 36px 0 20px;
+  margin: 32px 0 28px;
 }
 
 .hero-logo img {
-  width: 220px;
-  box-shadow: 0 0 40px rgba(255,0,0,0.6);
+  width: 180px;
+  max-width: 70vw;
+  filter: drop-shadow(0 0 30px rgba(255,0,0,0.7));
 }
 
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
 
+/* CARD */
 .card {
-  aspect-ratio: 1/1;
-  background: #1c1c1c;
+  aspect-ratio: 1 / 1;
+  background: radial-gradient(circle at top, #1e1e1e, #0f0f0f);
   border-radius: 22px;
+  border: 2px solid var(--red);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 0 18px rgba(255,0,0,0.35);
 }
 
-.card img { width: 350px; margin-bottom: 350px; }
-.card span { font-weight: 800; }
+.card:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 35px rgba(255,0,0,0.8);
+}
+
+/* LOGO NEL BOTTONE */
+.card img {
+  width: 70%;
+  max-width: 140px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 18px rgba(255,0,0,0.6));
+}
+
+/* TESTO */
+.card span {
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* MOBILE EXTRA SMALL */
+@media (max-width: 360px) {
+  .card span {
+    font-size: 12px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="hero-logo">
-  <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png">
+  <img src="https://gfalzone5k-eng.github.io/hh/gas-cloud-logo.png" alt="Gas Cloud">
 </div>
 
 <div class="container">
@@ -77,14 +142,17 @@ body {
 
 <script>
 const tg = window.Telegram.WebApp;
-tg.ready(); tg.expand();
+tg.ready();
+tg.expand();
 
 function openCatalog() {
   window.location.href = "catalog.html";
 }
+
 function openContacts() {
   tg.sendData(JSON.stringify({ action: "contacts" }));
 }
+
 function openChannels() {
   tg.sendData(JSON.stringify({ action: "channels" }));
 }
@@ -92,10 +160,6 @@ function openChannels() {
 
 </body>
 </html>
-
-
-
-
 
 
 
