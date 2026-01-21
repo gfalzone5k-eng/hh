@@ -13,6 +13,7 @@
     "price": 180,
     "mediaType": "video",
     "mediaUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "previewImage": "https://i.imgur.com/rORSEaL.png",
     "category": "stock1"
   },
   {
@@ -23,7 +24,6 @@
     "mediaUrl": "https://i.imgur.com/rORSEaL.png",
     "category": "stock1"
   },
-
   {
     "id": 4,
     "name": "SECOND STOCK – Example Product",
@@ -33,4 +33,5 @@
     "category": "stock2"
   }
 ]
+
 
