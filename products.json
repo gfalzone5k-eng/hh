@@ -31,7 +31,15 @@
     "mediaType": "image",
     "mediaUrl": "https://i.imgur.com/rORSEaL.png",
     "category": "stock2"
-  }
+  },
+   {
+   "id": 5,
+    "name": "SECOND STOCK – Example Product",
+    "price": 150,
+    "mediaType": "video",
+    "mediaUrl": "https://res.cloudinary.com/dut9pzwgc/video/upload/v1769021093/IMG_2399_qnu7zh.mp4",
+    "mediaUrl": "https://i.imgur.com/rORSEaL.png",
+    "category": "stock1"  }
 ]
-
+https://res.cloudinary.com/dut9pzwgc/video/upload/v1769021093/IMG_2399_qnu7zh.mp4
 
