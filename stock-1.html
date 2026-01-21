@@ -118,7 +118,87 @@ body {
 
 <body>
 
-<div class="back" onclick
+<div class="back" onclick="goBack()">⬅ BACK</div>
+<div class="products" id="products"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-media" id="modalMedia"></div>
+  <div class="modal-info">
+    <div class="price" id="modalPrice"></div>
+    <div class="order" onclick="order()">ORDINA</div>
+    <div class="close" onclick="closeModal()">Chiudi</div>
+  </div>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+tg.BackButton.show();
+tg.BackButton.onClick(goBack);
+
+const CATEGORY = "stock1";
+const CONTACT_USERNAME = "gascloud2";
+let selectedProduct = null;
+
+function goBack() {
+  tg.BackButton.hide();
+  window.location.href = "catalog.html";
+}
+
+fetch("products.json?v=" + Date.now())
+  .then(res => res.json())
+  .then(products => {
+    const box = document.getElementById("products");
+
+    products
+      .filter(p => p.category === CATEGORY)
+      .forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product";
+
+        const preview =
+          p.mediaType === "video"
+            ? `<img src="${p.previewImage}" alt="${p.name}">`
+            : `<img src="${p.mediaUrl}" alt="${p.name}">`;
+
+        card.innerHTML = `
+          <div class="media">${preview}</div>
+          <div class="name">${p.name}</div>
+        `;
+
+        card.onclick = () => openModal(p);
+        box.appendChild(card);
+      });
+  });
+
+function openModal(p) {
+  selectedProduct = p;
+
+  const mediaBox = document.getElementById("modalMedia");
+  mediaBox.innerHTML =
+    p.mediaType === "video"
+      ? `<video src="${p.mediaUrl}" controls autoplay playsinline></video>`
+      : `<img src="${p.mediaUrl}">`;
+
+  document.getElementById("modalPrice").innerText = "€" + p.price;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+function order() {
+  if (!selectedProduct) return;
+  const message = encodeURIComponent(selectedProduct.name);
+  window.open(`https://t.me/${CONTACT_USERNAME}?text=${message}`, "_blank");
+}
+</script>
+
+</body>
+</html>
+
 
 
 
