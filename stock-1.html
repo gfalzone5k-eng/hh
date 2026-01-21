@@ -2,7 +2,9 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Gas Cloud – Stock 1</title>
+
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
@@ -42,8 +44,9 @@ body {
   cursor: pointer;
 }
 
+/* MEDIA */
 .media {
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
   border-radius: 14px;
   overflow: hidden;
 }
@@ -55,6 +58,7 @@ body {
   object-fit: cover;
 }
 
+/* NAME */
 .name {
   margin-top: 8px;
   text-align: center;
@@ -98,6 +102,7 @@ body {
   margin-bottom: 14px;
 }
 
+/* ORDINA */
 .order {
   background: #00ff99;
   color: #000;
@@ -119,7 +124,10 @@ body {
 
 <body>
 
+<!-- BACK -->
 <div class="back" onclick="goBack()">⬅ BACK</div>
+
+<!-- PRODUCTS -->
 <div class="products" id="products"></div>
 
 <!-- MODAL -->
@@ -142,7 +150,7 @@ tg.BackButton.onClick(goBack);
 
 /* ===== CONFIG ===== */
 const CATEGORY = "stock1";
-const CONTACT_USERNAME = "TUO_USERNAME_TELEGRAM"; // <-- CAMBIA QUI
+const CONTACT_USERNAME = "gascloud2";
 let selectedProduct = null;
 
 /* ===== BACK ===== */
@@ -157,22 +165,24 @@ fetch("products.json?v=" + Date.now())
   .then(products => {
     const box = document.getElementById("products");
 
-    products.filter(p => p.category === CATEGORY).forEach(p => {
-      const card = document.createElement("div");
-      card.className = "product";
+    products
+      .filter(p => p.category === CATEGORY)
+      .forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product";
 
-      const media = p.mediaType === "video"
-        ? `<video src="${p.mediaUrl}" muted></video>`
-        : `<img src="${p.mediaUrl}">`;
+        const media = p.mediaType === "video"
+          ? `<video src="${p.mediaUrl}" muted></video>`
+          : `<img src="${p.mediaUrl}">`;
 
-      card.innerHTML = `
-        <div class="media">${media}</div>
-        <div class="name">${p.name}</div>
-      `;
+        card.innerHTML = `
+          <div class="media">${media}</div>
+          <div class="name">${p.name}</div>
+        `;
 
-      card.onclick = () => openModal(p);
-      box.appendChild(card);
-    });
+        card.onclick = () => openModal(p);
+        box.appendChild(card);
+      });
   });
 
 /* ===== MODAL ===== */
@@ -195,13 +205,16 @@ function closeModal() {
 
 /* ===== ORDER ===== */
 function order() {
-  const text = encodeURIComponent(`Hai scelto: ${selectedProduct.name}`);
-  window.open(`https://t.me/${CONTACT_USERNAME}?text=${text}`, "_blank");
+  if (!selectedProduct) return;
+
+  const message = encodeURIComponent(selectedProduct.name);
+  window.open(`https://t.me/${CONTACT_USERNAME}?text=${message}`, "_blank");
 }
 </script>
 
 </body>
 </html>
+
 
 
 
