@@ -4,7 +4,7 @@
     "name": "Product Test Image",
     "price": 120,
     "mediaType": "image",
-    "mediaUrl": "https://i.imgur.com/EXAMPLE1.jpg",
+    "mediaUrl": "https://i.imgur.com/rORSEaL.png",
     "category": "stock1"
   },
   {
@@ -18,7 +18,7 @@
   },
   {
     "id": 3,
-    "name": "MY REAL PRODUCT",
+    "name": "My Real Product",
     "price": 99,
     "mediaType": "image",
     "mediaUrl": "https://i.imgur.com/rORSEaL.png",
@@ -26,20 +26,9 @@
   },
   {
     "id": 4,
-    "name": "SECOND STOCK – Example Product",
-    "price": 150,
-    "mediaType": "image",
-    "mediaUrl": "https://i.imgur.com/rORSEaL.png",
-    "category": "stock2"
-  },
-   {
-   "id": 5,
-    "name": " – Example Product",
+    "name": "Cloudinary Video",
     "price": 150,
     "mediaType": "video",
     "mediaUrl": "https://res.cloudinary.com/dut9pzwgc/video/upload/v1769021093/IMG_2399_qnu7zh.mp4",
     "previewImage": "https://i.imgur.com/rORSEaL.png",
-    "category": "stock1"  }
-]
-
-
+    "category": "stock1"
