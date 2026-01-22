@@ -174,11 +174,11 @@ fetch("products.json?v=" + Date.now())
 
 function openModal(p) {
   selectedProduct = p;
-
   const mediaBox = document.getElementById("modalMedia");
+
   mediaBox.innerHTML =
     p.mediaType === "video"
-      ? `<video src="${p.mediaUrl}" controls autoplay playsinline></video>`
+      ? `<video src="${p.mediaUrl}" controls playsinline muted></video>`
       : `<img src="${p.mediaUrl}">`;
 
   document.getElementById("modalPrice").innerText = "€" + p.price;
@@ -187,6 +187,7 @@ function openModal(p) {
 
 function closeModal() {
   document.getElementById("modal").style.display = "none";
+  document.getElementById("modalMedia").innerHTML = "";
 }
 
 function order() {
