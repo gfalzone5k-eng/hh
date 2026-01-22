@@ -10,21 +10,9 @@
 <style>
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   background: #000;
   color: #fff;
-}
-
-.back {
-  position: fixed;
-  top: calc(12px + env(safe-area-inset-top));
-  left: 12px;
-  background: rgba(20,20,20,0.9);
-  border-radius: 14px;
-  padding: 10px 14px;
-  font-weight: 700;
-  cursor: pointer;
-  z-index: 10;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 .products {
@@ -46,12 +34,25 @@ body {
   border-radius: 14px;
   overflow: hidden;
   background: #000;
+  position: relative;
 }
 
 .media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: white;
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 .name {
@@ -118,7 +119,6 @@ body {
 
 <body>
 
-<div class="back" onclick="goBack()">⬅ BACK</div>
 <div class="products" id="products"></div>
 
 <div class="modal" id="modal">
@@ -134,17 +134,10 @@ body {
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
-tg.BackButton.show();
-tg.BackButton.onClick(goBack);
 
 const CATEGORY = "stock1";
 const CONTACT_USERNAME = "gascloud2";
 let selectedProduct = null;
-
-function goBack() {
-  tg.BackButton.hide();
-  window.location.href = "catalog.html";
-}
 
 fetch("products.json?v=" + Date.now())
   .then(res => res.json())
@@ -157,13 +150,13 @@ fetch("products.json?v=" + Date.now())
         const card = document.createElement("div");
         card.className = "product";
 
-        const preview =
-          p.mediaType === "video"
-            ? `<img src="${p.previewImage}" alt="${p.name}">`
-            : `<img src="${p.mediaUrl}" alt="${p.name}">`;
+        const isVideo = p.mediaType === "video";
 
         card.innerHTML = `
-          <div class="media">${preview}</div>
+          <div class="media">
+            <img src="${isVideo ? (p.previewImage || p.mediaUrl) : p.mediaUrl}">
+            ${isVideo ? `<div class="play-icon">▶️</div>` : ``}
+          </div>
           <div class="name">${p.name}</div>
         `;
 
@@ -176,13 +169,37 @@ function openModal(p) {
   selectedProduct = p;
   const mediaBox = document.getElementById("modalMedia");
 
-  mediaBox.innerHTML =
-    p.mediaType === "video"
-      ? `<video src="${p.mediaUrl}" controls playsinline muted></video>`
-      : `<img src="${p.mediaUrl}">`;
+  if (p.mediaType === "video") {
+    mediaBox.innerHTML = `
+      <div id="videoWrapper" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+        <img
+          src="${p.previewImage || p.mediaUrl}"
+          style="width:100%;max-height:100%;object-fit:contain;cursor:pointer;"
+          onclick="playVideo('${p.mediaUrl}')"
+        >
+        <div class="play-icon">▶️</div>
+      </div>
+    `;
+  } else {
+    mediaBox.innerHTML = `<img src="${p.mediaUrl}">`;
+  }
 
   document.getElementById("modalPrice").innerText = "€" + p.price;
   document.getElementById("modal").style.display = "flex";
+}
+
+function playVideo(url) {
+  const wrapper = document.getElementById("videoWrapper");
+  wrapper.innerHTML = `
+    <video
+      src="${url}"
+      controls
+      autoplay
+      playsinline
+      muted
+      style="width:100%;max-height:100%;object-fit:contain;"
+    ></video>
+  `;
 }
 
 function closeModal() {
