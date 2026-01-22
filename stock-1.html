@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Gas Cloud – Stock 1</title>
+<title>Gas Cloud – Stock</title>
 
+<!-- SDK ufficiale Telegram WebApp -->
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
+/* ===== STILE BASE ===== */
 body {
   margin: 0;
   background: #000;
@@ -15,6 +17,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
+/* ===== GRIGLIA PRODOTTI ===== */
 .products {
   padding: 70px 16px 20px;
   display: grid;
@@ -29,6 +32,7 @@ body {
   cursor: pointer;
 }
 
+/* ===== PREVIEW MEDIA ===== */
 .media {
   aspect-ratio: 1 / 1;
   border-radius: 14px;
@@ -43,6 +47,7 @@ body {
   object-fit: cover;
 }
 
+/* Icona ▶️ sopra i video */
 .play-icon {
   position: absolute;
   inset: 0;
@@ -62,7 +67,7 @@ body {
   font-size: 13px;
 }
 
-/* MODAL */
+/* ===== MODAL PRODOTTO ===== */
 .modal {
   position: fixed;
   inset: 0;
@@ -119,8 +124,10 @@ body {
 
 <body>
 
+<!-- CONTENITORE PRODOTTI -->
 <div class="products" id="products"></div>
 
+<!-- MODAL DETTAGLIO -->
 <div class="modal" id="modal">
   <div class="modal-media" id="modalMedia"></div>
   <div class="modal-info">
@@ -131,27 +138,43 @@ body {
 </div>
 
 <script>
+/* ======================================================
+   INIZIALIZZAZIONE TELEGRAM WEBAPP
+====================================================== */
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-const CATEGORY = "stock1";
+/* ======================================================
+   CAMBIA QUI LO STOCK DA VISUALIZZARE
+   "stock1"  = primo stock
+   "stock2"  = secondo stock
+====================================================== */
+const CATEGORY = "stock1"; //MODIFICA QUESTA RIGA
+
+/* Username Telegram per i contatti */
 const CONTACT_USERNAME = "gascloud2";
+
+/* Prodotto selezionato */
 let selectedProduct = null;
 
-fetch("products.json?v=" + Date.now())
+/* ======================================================
+   CARICAMENTO PRODOTTI DAL FILE JSON
+====================================================== */
+fetch("products.json?v=" + Date.now()) // cache-buster
   .then(res => res.json())
   .then(products => {
     const box = document.getElementById("products");
 
     products
-      .filter(p => p.category === CATEGORY)
+      .filter(p => p.category === CATEGORY) // filtro per stock
       .forEach(p => {
         const card = document.createElement("div");
         card.className = "product";
 
         const isVideo = p.mediaType === "video";
 
+        /* Preview: immagine o poster video */
         card.innerHTML = `
           <div class="media">
             <img src="${isVideo ? (p.previewImage || p.mediaUrl) : p.mediaUrl}">
@@ -160,15 +183,20 @@ fetch("products.json?v=" + Date.now())
           <div class="name">${p.name}</div>
         `;
 
+        /* Click su prodotto */
         card.onclick = () => openModal(p);
         box.appendChild(card);
       });
   });
 
+/* ======================================================
+   APERTURA MODAL
+====================================================== */
 function openModal(p) {
   selectedProduct = p;
   const mediaBox = document.getElementById("modalMedia");
 
+  /* Se è un video → mostra preview e parte SOLO dopo tap */
   if (p.mediaType === "video") {
     mediaBox.innerHTML = `
       <div id="videoWrapper" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
@@ -181,6 +209,7 @@ function openModal(p) {
       </div>
     `;
   } else {
+    /* Se è immagine */
     mediaBox.innerHTML = `<img src="${p.mediaUrl}">`;
   }
 
@@ -188,6 +217,9 @@ function openModal(p) {
   document.getElementById("modal").style.display = "flex";
 }
 
+/* ======================================================
+   PLAY VIDEO DOPO TAP (AUTOPLAY CONSENTITO)
+====================================================== */
 function playVideo(url) {
   const wrapper = document.getElementById("videoWrapper");
   wrapper.innerHTML = `
@@ -202,11 +234,17 @@ function playVideo(url) {
   `;
 }
 
+/* ======================================================
+   CHIUSURA MODAL
+====================================================== */
 function closeModal() {
   document.getElementById("modal").style.display = "none";
   document.getElementById("modalMedia").innerHTML = "";
 }
 
+/* ======================================================
+   CONTATTO TELEGRAM
+====================================================== */
 function order() {
   if (!selectedProduct) return;
   const message = encodeURIComponent(selectedProduct.name);
