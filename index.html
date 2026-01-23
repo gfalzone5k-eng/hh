@@ -12,6 +12,7 @@
   --red: #ff1a1a;
   --bg: #0b0b0b;
   --panel: #1a1a1a;
+  --panel-soft: #161616;
   --card-bg: #2a2a2a;
 }
 
@@ -46,30 +47,37 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 22px;
 }
 
-/* TITOLO FUORI DAL PANNELLO */
-.app-title {
+/* CORNICE TESTO */
+.header-panel {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel-soft);
+  border-radius: 22px;
+  padding: 20px 18px;
+  border: 1px solid rgba(255,255,255,0.06);
   text-align: center;
-  margin-bottom: 22px;
 }
 
-.app-title h1 {
+/* TESTO GRANDE */
+.header-panel h1 {
   margin: 0;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 900;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   text-transform: uppercase;
 }
 
-.app-title p {
-  margin: 6px 0 0;
-  font-size: 11px;
-  opacity: 0.6;
-  letter-spacing: 0.8px;
+.header-panel p {
+  margin: 8px 0 0;
+  font-size: 13px;
+  letter-spacing: 1px;
+  opacity: 0.65;
 }
 
-/* PANNELLO BOTTONI */
+/* CORNICE BOTTONI */
 .panel {
   width: 100%;
   max-width: 420px;
@@ -82,7 +90,7 @@ body::before {
     inset 0 0 20px rgba(255,255,255,0.02);
 }
 
-/* GRID BOTTONI (COME I TUOI) */
+/* GRID BOTTONI */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -106,7 +114,7 @@ body::before {
   transform: scale(0.95);
 }
 
-/* LOGO DENTRO CARD */
+/* LOGO INTERNO */
 .card img {
   position: absolute;
   inset: 10%;
@@ -164,13 +172,13 @@ body::before {
 
 <div class="app">
 
-  <!-- TESTO FUORI -->
-  <div class="app-title">
+  <!-- TESTO IN CORNICE -->
+  <div class="header-panel">
     <h1>Gas Cloud</h1>
     <p>Official Telegram Mini App</p>
   </div>
 
-  <!-- PANNELLO BOTTONI -->
+  <!-- BOTTONI IN CORNICE -->
   <div class="panel">
     <div class="grid">
 
@@ -238,6 +246,7 @@ function openChannels() {
 
 </body>
 </html>
+
 
 
 
