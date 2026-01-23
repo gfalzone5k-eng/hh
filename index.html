@@ -71,7 +71,7 @@ body::before {
 .card {
   aspect-ratio: 1 / 1;
   position: relative;
-  overflow: hidden;               /* 🔴 FIX FONDAMENTALE */
+  overflow: hidden;
   border-radius: 22px;
   border: 2px solid var(--red);
   background: var(--card-bg);
@@ -85,7 +85,7 @@ body::before {
   box-shadow: 0 0 35px rgba(255,0,0,0.8);
 }
 
-/* LOGO DENTRO IL BOTTONE (CLIPPATO) */
+/* LOGO DENTRO IL BOTTONE */
 .card img {
   position: absolute;
   inset: 10%;
@@ -117,6 +117,35 @@ body::before {
   .card span {
     font-size: 14px;
   }
+}
+
+/* ================= POPUP OVERLAY ================= */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ================= POPUP BOX ================= */
+.popup {
+  background: #2b2b2b;
+  border: 2px solid var(--red);
+  border-radius: 18px;
+  padding: 24px 20px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255,0,0,0.6);
+}
+
+.popup a {
+  color: var(--red);
+  font-weight: 900;
+  text-decoration: none;
 }
 </style>
 </head>
@@ -154,21 +183,50 @@ body::before {
   </div>
 </div>
 
+<!-- ================= POPUP ================= -->
+<div class="overlay" id="overlay" onclick="closePopup()">
+  <div class="popup" onclick="event.stopPropagation()">
+    <!-- ✏️ CONTENUTO DINAMICO -->
+    <div id="popupContent"></div>
+  </div>
+</div>
+
 <script>
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
+/* ===== CATALOG ===== */
 function openCatalog() {
   window.location.href = "catalog.html";
 }
 
-function openContacts() {
-  tg.sendData(JSON.stringify({ action: "contacts" }));
+/* ===== POPUP ===== */
+function openPopup(html) {
+  document.getElementById("popupContent").innerHTML = html;
+  document.getElementById("overlay").style.display = "flex";
 }
 
+function closePopup() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+/* ===== CONTACTS ===== */
+function openContacts() {
+  openPopup(`
+    <div>📩 CONTACTS</div><br>
+    <a href="https://t.me/gascloud2" target="_blank">@gascloud2</a><br><br>
+    Support available only on Telegram
+  `);
+}
+
+/* ===== CHANNELS ===== */
 function openChannels() {
-  tg.sendData(JSON.stringify({ action: "channels" }));
+  openPopup(`
+    <div>📢 CHANNELS</div><br>
+    <a href="https://t.me/your_channel" target="_blank">Official Channel</a><br><br>
+    <a href="https://t.me/your_group" target="_blank">Community Group</a>
+  `);
 }
 </script>
 
