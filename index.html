@@ -11,29 +11,40 @@
 :root {
   --red: #ff1a1a;
   --bg: #0b0b0b;
-  --card-bg: #2a2a2a;
 }
 
+/* RESET */
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
+/* BODY + SFONDO PREMIUM */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top, #1a1a1a 0%, #0b0b0b 60%),
+    linear-gradient(180deg, #0e0e0e, #000);
   overflow-x: hidden;
 }
 
-/* WATERMARK LOGO SFONDO */
+/* WATERMARK + NOISE */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 70% no-repeat;
-  opacity: 0.05;
+  background:
+    url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 65% no-repeat,
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  opacity: 0.06;
   pointer-events: none;
   z-index: 0;
 }
@@ -45,59 +56,76 @@ body::before {
   padding: 24px 20px 100px;
 }
 
-/* ANNOUNCEMENT BOX */
+/* ANNOUNCEMENT BOX (GLASS) */
 .bubble {
-  background: #2b2b2b;
-  border-radius: 14px;
-  padding: 20px 16px;
-  margin-bottom: 26px;
+  background: rgba(43,43,43,0.65);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 22px 18px;
+  margin-bottom: 30px;
   text-align: center;
   font-size: 14px;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.4px;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.45);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.55),
+    inset 0 0 20px rgba(255,255,255,0.03);
 }
 
-/* GRID BOTTONI */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 18px;
 }
 
-/* CARD */
+/* CARD PREMIUM */
 .card {
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
-  border-radius: 22px;
-  border: 2px solid var(--red);
-  background: var(--card-bg);
-  box-shadow: 0 0 18px rgba(255,0,0,0.35);
+  border-radius: 26px;
+  background: linear-gradient(145deg, #2f2f2f, #1f1f1f);
+  border: 1px solid rgba(255,0,0,0.4);
+  box-shadow:
+    0 0 22px rgba(255,0,0,0.35),
+    inset 0 0 20px rgba(255,255,255,0.04);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.card:hover {
+  box-shadow:
+    0 0 40px rgba(255,0,0,0.6),
+    inset 0 0 25px rgba(255,255,255,0.06);
+  border-color: var(--red);
 }
 
 .card:active {
-  transform: scale(0.96);
-  box-shadow: 0 0 35px rgba(255,0,0,0.8);
+  transform: scale(0.94);
 }
 
-/* LOGO DENTRO IL BOTTONE */
+/* LOGO */
 .card img {
   position: absolute;
-  inset: 10%;
-  width: 80%;
-  height: 80%;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
   object-fit: cover;
   border-radius: 50%;
-  opacity: 0.45;
-  filter: drop-shadow(0 0 20px rgba(255,0,0,0.6));
+  opacity: 0.35;
+  filter:
+    drop-shadow(0 0 25px rgba(255,0,0,0.7))
+    contrast(1.2);
 }
 
-/* TESTO SOPRA */
+/* TESTO CARD */
 .card span {
   position: relative;
   z-index: 2;
@@ -105,21 +133,23 @@ body::before {
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   color: #fff;
-  text-shadow: 0 0 12px rgba(0,0,0,0.9);
+  text-shadow:
+    0 0 12px rgba(0,0,0,1),
+    0 0 18px rgba(255,0,0,0.6);
 }
 
-/* SCHERMI MOLTO PICCOLI */
+/* SCHERMI PICCOLI */
 @media (max-width: 360px) {
   .card span {
     font-size: 14px;
   }
 }
 
-/* ================= POPUP OVERLAY ================= */
+/* OVERLAY */
 .overlay {
   position: fixed;
   inset: 0;
@@ -130,16 +160,19 @@ body::before {
   z-index: 9999;
 }
 
-/* ================= POPUP BOX ================= */
+/* POPUP */
 .popup {
-  background: #2b2b2b;
-  border: 2px solid var(--red);
-  border-radius: 18px;
-  padding: 24px 20px;
+  background: rgba(43,43,43,0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,0,0,0.6);
+  border-radius: 22px;
+  padding: 26px 22px;
   max-width: 320px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 0 30px rgba(255,0,0,0.6);
+  box-shadow:
+    0 0 45px rgba(255,0,0,0.7),
+    inset 0 0 25px rgba(255,255,255,0.05);
 }
 
 .popup a {
@@ -154,7 +187,6 @@ body::before {
 
 <div class="container">
 
-  <!-- BOX TESTO -->
   <div class="bubble">
     Welcome to the gas cloud<br>
     Official bot!<br><br>
@@ -162,7 +194,6 @@ body::before {
     on the mini app button.
   </div>
 
-  <!-- BOTTONI -->
   <div class="grid">
 
     <div class="card" onclick="openCatalog()">
@@ -183,10 +214,8 @@ body::before {
   </div>
 </div>
 
-<!-- ================= POPUP ================= -->
 <div class="overlay" id="overlay" onclick="closePopup()">
   <div class="popup" onclick="event.stopPropagation()">
-    <!-- ✏️ CONTENUTO DINAMICO -->
     <div id="popupContent"></div>
   </div>
 </div>
@@ -196,12 +225,10 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-/* ===== CATALOG ===== */
 function openCatalog() {
   window.location.href = "catalog.html";
 }
 
-/* ===== POPUP ===== */
 function openPopup(html) {
   document.getElementById("popupContent").innerHTML = html;
   document.getElementById("overlay").style.display = "flex";
@@ -211,7 +238,6 @@ function closePopup() {
   document.getElementById("overlay").style.display = "none";
 }
 
-/* ===== CONTACTS ===== */
 function openContacts() {
   openPopup(`
     <div>📩 CONTACTS</div><br>
@@ -220,7 +246,6 @@ function openContacts() {
   `);
 }
 
-/* ===== CHANNELS ===== */
 function openChannels() {
   openPopup(`
     <div>📢 CHANNELS</div><br>
