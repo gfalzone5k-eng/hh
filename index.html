@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Gas Cloud</title>
+<title>Gas Cloud – Home</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
 :root {
   --red: #ff1a1a;
-  --dark: #050505;
+  --bg: #0b0b0b;
+  --card-bg: #2a2a2a;
 }
 
 /* RESET */
@@ -23,111 +24,114 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  background: radial-gradient(circle at top, #160000 0%, #050505 55%);
+  background:
+    radial-gradient(circle at top, #160000 0%, #0b0b0b 55%);
   overflow-x: hidden;
 }
 
-/* ENERGY BACKGROUND */
+/* SFONDO ENERGIA + LOGO WATERMARK */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 30% 20%, rgba(255,0,0,0.25), transparent 45%),
-    radial-gradient(circle at 70% 60%, rgba(255,0,0,0.18), transparent 50%);
-  z-index: 0;
+    radial-gradient(circle at 30% 20%, rgba(255,0,0,0.18), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(255,0,0,0.12), transparent 50%),
+    url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 75% no-repeat;
+  opacity: 0.05;
   pointer-events: none;
+  z-index: 0;
 }
 
-/* CONTAINER */
+/* CONTENITORE */
 .container {
   position: relative;
   z-index: 1;
-  padding: 26px 18px 120px;
+  padding: 24px 20px 100px;
 }
 
-/* HEADER */
+/* HEADER LOGO */
 .header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 22px;
 }
 
 .header img {
-  width: 96px;
-  height: 96px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
-  box-shadow: 0 0 45px rgba(255,0,0,0.8);
-  margin-bottom: 14px;
+  box-shadow: 0 0 35px rgba(255,0,0,0.7);
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 2px;
+/* ANNOUNCEMENT BOX (ORIGINALE, RIPULITO) */
+.bubble {
+  background: #2b2b2b;
+  border-radius: 14px;
+  padding: 18px 14px;
+  margin-bottom: 26px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
 }
 
-.header p {
-  margin-top: 6px;
-  font-size: 12px;
-  opacity: 0.75;
-  letter-spacing: 1px;
-}
-
-/* GRID */
+/* GRID BOTTONI – IDENTICA ALLA TUA */
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
 }
 
-/* CARD MONUMENTALI */
+/* CARD – STRUTTURA IDENTICA */
 .card {
+  aspect-ratio: 1 / 1;
   position: relative;
-  height: 96px;
+  overflow: hidden;
   border-radius: 22px;
-  background: linear-gradient(145deg, #140000, #0a0a0a);
-  border: 1px solid rgba(255,0,0,0.45);
-  box-shadow:
-    0 0 25px rgba(255,0,0,0.45),
-    inset 0 0 18px rgba(255,0,0,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 2px solid var(--red);
+  background: var(--card-bg);
+  box-shadow: 0 0 18px rgba(255,0,0,0.35);
   cursor: pointer;
   transition: transform 0.12s ease;
 }
 
 .card:active {
-  transform: scale(0.94);
+  transform: scale(0.95);
 }
 
-/* GLOW LINE */
-.card::before {
-  content: "";
+/* LOGO DENTRO CARD – COME IL TUO */
+.card img {
   position: absolute;
-  left: -40%;
-  top: 0;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,0,0,0.4), transparent);
+  inset: 10%;
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 50%;
+  opacity: 0.4;
 }
 
-/* TESTO CARD */
+/* TESTO */
 .card span {
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #fff;
 }
 
 /* OVERLAY */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.65);
   display: none;
   align-items: center;
   justify-content: center;
@@ -136,14 +140,14 @@ body::before {
 
 /* POPUP */
 .popup {
-  background: linear-gradient(145deg, #120000, #050505);
-  border-radius: 22px;
-  padding: 28px 22px;
-  width: 85%;
+  background: #2b2b2b;
+  border: 2px solid var(--red);
+  border-radius: 18px;
+  padding: 24px 20px;
   max-width: 320px;
+  width: 90%;
   text-align: center;
-  border: 1px solid rgba(255,0,0,0.6);
-  box-shadow: 0 0 40px rgba(255,0,0,0.8);
+  box-shadow: 0 0 30px rgba(255,0,0,0.6);
 }
 
 .popup a {
@@ -158,29 +162,41 @@ body::before {
 
 <div class="container">
 
+  <!-- LOGO -->
   <div class="header">
-    <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
-    <h1>Gas Cloud</h1>
-    <p>Official Telegram Mini App</p>
+    <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="Gas Cloud">
   </div>
 
+  <!-- BOX TESTO -->
+  <div class="bubble">
+    Welcome to the gas cloud<br>
+    Official bot!<br><br>
+    To open the catalogue press<br>
+    on the mini app button.
+  </div>
+
+  <!-- BOTTONI (UGUALI AI TUOI) -->
   <div class="grid">
 
     <div class="card" onclick="openCatalog()">
+      <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
       <span>CATALOGUE</span>
     </div>
 
     <div class="card" onclick="openContacts()">
+      <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
       <span>CONTACTS</span>
     </div>
 
     <div class="card" onclick="openChannels()">
+      <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
       <span>CHANNELS</span>
     </div>
 
   </div>
 </div>
 
+<!-- POPUP -->
 <div class="overlay" id="overlay" onclick="closePopup()">
   <div class="popup" onclick="event.stopPropagation()">
     <div id="popupContent"></div>
@@ -209,7 +225,7 @@ function openContacts() {
   openPopup(`
     <div>📩 CONTACTS</div><br>
     <a href="https://t.me/gascloud2" target="_blank">@gascloud2</a><br><br>
-    Support only on Telegram
+    Support available only on Telegram
   `);
 }
 
