@@ -42,32 +42,19 @@ body::before {
 /* WRAPPER */
 .app {
   min-height: 100vh;
+  padding: 28px 20px 100px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
 }
 
-/* PANNELLO */
-.panel {
-  width: 100%;
-  max-width: 420px;
-  background: var(--panel);
-  border-radius: 26px;
-  padding: 24px 22px 26px;
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow:
-    0 0 30px rgba(0,0,0,0.6),
-    inset 0 0 20px rgba(255,255,255,0.02);
-}
-
-/* TITOLO */
-.panel-title {
+/* TITOLO FUORI DAL PANNELLO */
+.app-title {
   text-align: center;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
-.panel-title h1 {
+.app-title h1 {
   margin: 0;
   font-size: 18px;
   font-weight: 900;
@@ -75,14 +62,27 @@ body::before {
   text-transform: uppercase;
 }
 
-.panel-title p {
+.app-title p {
   margin: 6px 0 0;
   font-size: 11px;
   opacity: 0.6;
   letter-spacing: 0.8px;
 }
 
-/* GRID BOTTONI */
+/* PANNELLO BOTTONI */
+.panel {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel);
+  border-radius: 26px;
+  padding: 22px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow:
+    0 0 30px rgba(0,0,0,0.6),
+    inset 0 0 20px rgba(255,255,255,0.02);
+}
+
+/* GRID BOTTONI (COME I TUOI) */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -164,15 +164,14 @@ body::before {
 
 <div class="app">
 
+  <!-- TESTO FUORI -->
+  <div class="app-title">
+    <h1>Gas Cloud</h1>
+    <p>Official Telegram Mini App</p>
+  </div>
+
+  <!-- PANNELLO BOTTONI -->
   <div class="panel">
-
-    <!-- TITOLO -->
-    <div class="panel-title">
-      <h1>Gas Cloud</h1>
-      <p>Official Telegram Mini App</p>
-    </div>
-
-    <!-- BOTTONI -->
     <div class="grid">
 
       <div class="card" onclick="openCatalog()">
@@ -191,8 +190,8 @@ body::before {
       </div>
 
     </div>
-
   </div>
+
 </div>
 
 <!-- POPUP -->
@@ -239,6 +238,7 @@ function openChannels() {
 
 </body>
 </html>
+
 
 
 
