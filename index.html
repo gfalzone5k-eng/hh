@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Gas Cloud – Home</title>
+<title>Gas Cloud</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
@@ -11,6 +11,7 @@
 :root {
   --red: #ff1a1a;
   --bg: #0b0b0b;
+  --panel: #1a1a1a;
   --card-bg: #2a2a2a;
 }
 
@@ -24,68 +25,51 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  background:
-    radial-gradient(circle at top, #160000 0%, #0b0b0b 55%);
-  overflow-x: hidden;
+  background: radial-gradient(circle at top, #140000 0%, #0b0b0b 60%);
 }
 
-/* SFONDO ENERGIA + LOGO WATERMARK */
+/* BACKGROUND ENERGY LEGGERA */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 30% 20%, rgba(255,0,0,0.18), transparent 45%),
-    radial-gradient(circle at 70% 60%, rgba(255,0,0,0.12), transparent 50%),
-    url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 75% no-repeat;
-  opacity: 0.05;
+    radial-gradient(circle at 30% 20%, rgba(255,0,0,0.12), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(255,0,0,0.08), transparent 50%);
+  opacity: 1;
   pointer-events: none;
-  z-index: 0;
 }
 
-/* CONTENITORE */
-.container {
-  position: relative;
-  z-index: 1;
-  padding: 24px 20px 100px;
+/* CONTENITORE GENERALE */
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-/* HEADER LOGO */
-.header {
-  text-align: center;
-  margin-bottom: 22px;
+/* CORNICE / PANNELLO */
+.panel {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel);
+  border-radius: 26px;
+  padding: 22px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow:
+    0 0 30px rgba(0,0,0,0.6),
+    inset 0 0 20px rgba(255,255,255,0.02);
 }
 
-.header img {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  box-shadow: 0 0 35px rgba(255,0,0,0.7);
-}
-
-/* ANNOUNCEMENT BOX (ORIGINALE, RIPULITO) */
-.bubble {
-  background: #2b2b2b;
-  border-radius: 14px;
-  padding: 18px 14px;
-  margin-bottom: 26px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
-}
-
-/* GRID BOTTONI – IDENTICA ALLA TUA */
+/* GRID BOTTONI – COME I TUOI */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
 
-/* CARD – STRUTTURA IDENTICA */
+/* CARD – IDENTICHE */
 .card {
   aspect-ratio: 1 / 1;
   position: relative;
@@ -102,7 +86,7 @@ body::before {
   transform: scale(0.95);
 }
 
-/* LOGO DENTRO CARD – COME IL TUO */
+/* LOGO INTERNO (COME PRIMA) */
 .card img {
   position: absolute;
   inset: 10%;
@@ -124,7 +108,6 @@ body::before {
   font-size: 16px;
   font-weight: 900;
   letter-spacing: 1px;
-  color: #fff;
 }
 
 /* OVERLAY */
@@ -144,10 +127,9 @@ body::before {
   border: 2px solid var(--red);
   border-radius: 18px;
   padding: 24px 20px;
-  max-width: 320px;
   width: 90%;
+  max-width: 320px;
   text-align: center;
-  box-shadow: 0 0 30px rgba(255,0,0,0.6);
 }
 
 .popup a {
@@ -160,37 +142,29 @@ body::before {
 
 <body>
 
-<div class="container">
+<div class="app">
 
-  <!-- LOGO -->
-  <div class="header">
-    <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="Gas Cloud">
-  </div>
+  <!-- PANNELLO -->
+  <div class="panel">
 
-  <!-- BOX TESTO -->
-  <div class="bubble">
-    Welcome to the gas cloud<br>
-    Official bot!<br><br>
-    To open the catalogue press<br>
-    on the mini app button.
-  </div>
+    <!-- BOTTONI (UGUALI AI TUOI) -->
+    <div class="grid">
 
-  <!-- BOTTONI (UGUALI AI TUOI) -->
-  <div class="grid">
+      <div class="card" onclick="openCatalog()">
+        <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
+        <span>CATALOGUE</span>
+      </div>
 
-    <div class="card" onclick="openCatalog()">
-      <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
-      <span>CATALOGUE</span>
-    </div>
+      <div class="card" onclick="openContacts()">
+        <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
+        <span>CONTACTS</span>
+      </div>
 
-    <div class="card" onclick="openContacts()">
-      <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
-      <span>CONTACTS</span>
-    </div>
+      <div class="card" onclick="openChannels()">
+        <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
+        <span>CHANNELS</span>
+      </div>
 
-    <div class="card" onclick="openChannels()">
-      <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
-      <span>CHANNELS</span>
     </div>
 
   </div>
@@ -240,6 +214,7 @@ function openChannels() {
 
 </body>
 </html>
+
 
 
 
