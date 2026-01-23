@@ -5,145 +5,189 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Gas Cloud – Stock</title>
 
-<!-- SDK ufficiale Telegram WebApp -->
+<!-- Telegram WebApp SDK -->
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
+/* ===== VARIABILI ===== */
+:root{
+  --red:#ff1a1a;
+  --bg:#000;
+}
+
 /* ===== STILE BASE ===== */
-body {
-  margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+body{
+  margin:0;
+  background:var(--bg);
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  overflow-x:hidden;
+}
+
+/* ===== BACK BUTTON (STILE CATALOGO) ===== */
+.back{
+  position:fixed;
+  top:calc(12px + env(safe-area-inset-top));
+  left:12px;
+  z-index:1000;
+  padding:10px 14px;
+  font-size:13px;
+  font-weight:800;
+  border-radius:14px;
+  background:rgba(20,20,20,.9);
+  border:1px solid var(--red);
+  color:#fff;
+  box-shadow:0 0 12px rgba(255,0,0,.5);
+  cursor:pointer;
 }
 
 /* ===== GRIGLIA PRODOTTI ===== */
-.products {
-  padding: 70px 16px 20px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+.products{
+  padding:80px 16px 20px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
 }
 
-.product {
-  background: #1a1a1a;
-  border-radius: 18px;
-  padding: 10px;
-  cursor: pointer;
+.product{
+  background:#1a1a1a;
+  border-radius:18px;
+  padding:10px;
+  cursor:pointer;
 }
 
-/* ===== PREVIEW MEDIA ===== */
-.media {
-  aspect-ratio: 1 / 1;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #000;
-  position: relative;
+/* ===== MEDIA ===== */
+.media{
+  aspect-ratio:1/1;
+  border-radius:14px;
+  overflow:hidden;
+  background:#000;
+  position:relative;
 }
 
-.media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-/* Icona ▶️ sopra i video */
-.play-icon {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  color: white;
-  opacity: 0.8;
-  pointer-events: none;
+.play-icon{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  color:#fff;
+  opacity:.8;
+  pointer-events:none;
 }
 
-.name {
-  margin-top: 8px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 13px;
+.name{
+  margin-top:8px;
+  text-align:center;
+  font-weight:700;
+  font-size:13px;
 }
 
-/* ===== MODAL PRODOTTO ===== */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  display: none;
-  flex-direction: column;
-  z-index: 999;
+/* ===== MODAL ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  flex-direction:column;
+  z-index:999;
 }
 
-.modal-media {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.modal-media{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
 }
 
 .modal-media img,
-.modal-media video {
-  width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  .video-back {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: rgba(0,0,0,0.7);
-  color: #fff;
-  border-radius: 12px;
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  z-index: 10;
-}
+.modal-media video{
+  width:100%;
+  max-height:100%;
+  object-fit:contain;
 }
 
-.modal-info {
-  padding: 20px;
-  background: #111;
+/* BACK DENTRO VIDEO */
+.back-btn{
+  position:absolute;
+  top:14px;
+  left:14px;
+  background:rgba(0,0,0,.7);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  z-index:10;
 }
 
-.price {
-  font-size: 22px;
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 14px;
+.modal-info{
+  padding:20px;
+  background:#111;
 }
 
-.order {
-  background: #00ff99;
-  color: #000;
-  padding: 16px;
-  border-radius: 18px;
-  font-weight: 900;
-  text-align: center;
-  cursor: pointer;
+.quantity-buttons{
+  margin-bottom:12px;
 }
 
-.close {
-  margin-top: 12px;
-  text-align: center;
-  opacity: 0.6;
-  cursor: pointer;
+.quantity-buttons div{
+  display:inline-block;
+  margin:5px;
+  padding:8px 12px;
+  background:#00ff99;
+  color:#000;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.price{
+  font-size:22px;
+  font-weight:900;
+  text-align:center;
+  margin-bottom:14px;
+}
+
+.order{
+  background:#00ff99;
+  color:#000;
+  padding:16px;
+  border-radius:18px;
+  font-weight:900;
+  text-align:center;
+  cursor:pointer;
+}
+
+.close{
+  margin-top:12px;
+  text-align:center;
+  opacity:.6;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CONTENITORE PRODOTTI -->
+<!-- BACK -->
+<div class="back" onclick="goBack()">⬅️ BACK</div>
+
+<!-- PRODOTTI -->
 <div class="products" id="products"></div>
 
-<!-- MODAL DETTAGLIO -->
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-media" id="modalMedia"></div>
   <div class="modal-info">
+    <div class="quantity-buttons" id="quantityButtons"></div>
     <div class="price" id="modalPrice"></div>
     <div class="order" onclick="order()">ORDINA</div>
     <div class="close" onclick="closeModal()">Chiudi</div>
@@ -151,125 +195,121 @@ body {
 </div>
 
 <script>
-/* ======================================================
-   INIZIALIZZAZIONE TELEGRAM WEBAPP
-====================================================== */
+/* ===== TELEGRAM ===== */
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
+tg.BackButton.show();
+tg.BackButton.onClick(goBack);
 
-/* ======================================================
-   CAMBIA QUI LO STOCK DA VISUALIZZARE
-   "stock1"  = primo stock
-   "stock2"  = secondo stock
-====================================================== */
-const CATEGORY = "stock1"; //MODIFICA QUESTA RIGA
-
-/* Username Telegram per i contatti */
+/* ===== CONFIG ===== */
+const CATEGORY = "stock1";
 const CONTACT_USERNAME = "gascloud2";
 
-/* Prodotto selezionato */
 let selectedProduct = null;
 
-/* ======================================================
-   CARICAMENTO PRODOTTI DAL FILE JSON
-====================================================== */
-fetch("products.json?v=" + Date.now()) // cache-buster
+/* ===== LOAD PRODUCTS ===== */
+fetch("products.json?v=" + Date.now())
   .then(res => res.json())
   .then(products => {
     const box = document.getElementById("products");
 
     products
-      .filter(p => p.category === CATEGORY) // filtro per stock
+      .filter(p => p.category === CATEGORY)
       .forEach(p => {
         const card = document.createElement("div");
         card.className = "product";
 
         const isVideo = p.mediaType === "video";
 
-        /* Preview: immagine o poster video */
         card.innerHTML = `
           <div class="media">
             <img src="${isVideo ? (p.previewImage || p.mediaUrl) : p.mediaUrl}">
-            ${isVideo ? `<div class="play-icon">▶️</div>` : ``}
+            ${isVideo ? <div class="play-icon">▶️</div> : ``}
           </div>
           <div class="name">${p.name}</div>
         `;
 
-        /* Click su prodotto */
         card.onclick = () => openModal(p);
         box.appendChild(card);
       });
   });
 
-/* ======================================================
-   APERTURA MODAL
-====================================================== */
-function openModal(p) {
+/* ===== OPEN MODAL ===== */
+function openModal(p){
   selectedProduct = p;
   const mediaBox = document.getElementById("modalMedia");
 
-  /* Se è un video → mostra preview e parte SOLO dopo tap */
-  if (p.mediaType === "video") {
+  if(p.mediaType === "video"){
     mediaBox.innerHTML = `
-      <div id="videoWrapper" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-        <img
-          src="${p.previewImage || p.mediaUrl}"
-          style="width:100%;max-height:100%;object-fit:contain;cursor:pointer;"
-          onclick="playVideo('${p.mediaUrl}')"
-        >
+      <div id="videoWrapper" style="width:100%;height:100%;position:relative;">
+        <img src="${p.previewImage || p.mediaUrl}"
+             style="width:100%;height:100%;object-fit:contain;cursor:pointer;"
+             onclick="playVideo('${p.mediaUrl}')">
         <div class="play-icon">▶️</div>
       </div>
     `;
-  } else {
-    /* Se è immagine */
-    mediaBox.innerHTML = `<img src="${p.mediaUrl}">`;
+  }else{
+    mediaBox.innerHTML = <img src="${p.mediaUrl}">;
   }
 
-  document.getElementById("modalPrice").innerText = "€" + p.price;
+  const quantityBox = document.getElementById("quantityButtons");
+  quantityBox.innerHTML = "";
+
+  p.prices.forEach(item=>{
+    const btn = document.createElement("div");
+    btn.textContent = item.quantity + " → €" + item.price;
+    btn.onclick = () => selectQuantity(item.quantity);
+    quantityBox.appendChild(btn);
+  });
+
+  selectQuantity(p.prices[0].quantity);
   document.getElementById("modal").style.display = "flex";
 }
 
-/* ======================================================
-   PLAY VIDEO DOPO TAP (AUTOPLAY CONSENTITO)
-====================================================== */
-function playVideo(url) {
-  const wrapper = document.getElementById("videoWrapper");
-  wrapper.innerHTML = `
-    <video
-      src="${url}"
-      controls
-      autoplay
-      playsinline
-      muted
-      style="width:100%;max-height:100%;object-fit:contain;"
-    ></video>
+/* ===== QUANTITÀ ===== */
+function selectQuantity(qty){
+  const priceObj = selectedProduct.prices.find(p => p.quantity === qty);
+  selectedProduct.selectedQuantity = qty;
+  document.getElementById("modalPrice").innerText = "€" + priceObj.price;
+}
+
+/* ===== VIDEO ===== */
+function playVideo(url){
+  document.getElementById("videoWrapper").innerHTML = `
+    <div class="back-btn" onclick="backToPreview()">← Indietro</div>
+    <video src="${url}" controls autoplay playsinline
+           style="width:100%;height:100%;object-fit:contain;"></video>
   `;
 }
 
-/* ======================================================
-   CHIUSURA MODAL
-====================================================== */
-function closeModal() {
+function backToPreview(){
+  openModal(selectedProduct);
+}
+
+/* ===== CLOSE ===== */
+function closeModal(){
   document.getElementById("modal").style.display = "none";
   document.getElementById("modalMedia").innerHTML = "";
 }
 
-/* ======================================================
-   CONTATTO TELEGRAM
-====================================================== */
-function order() {
-  if (!selectedProduct) return;
-  const message = encodeURIComponent(selectedProduct.name);
-  window.open(`https://t.me/${CONTACT_USERNAME}?text=${message}`, "_blank");
+/* ===== ORDER ===== */
+function order(){
+  const msg = encodeURIComponent(
+    ${selectedProduct.name} x${selectedProduct.selectedQuantity}
+  );
+  window.open(https://t.me/${CONTACT_USERNAME}?text=${msg}, "_blank");
+}
+
+/* ===== BACK ===== */
+function goBack(){
+  tg.BackButton.hide();
+  window.location.href = "catalog.html";
 }
 </script>
 
 </body>
 </html>
-
-
-
 
 
 
