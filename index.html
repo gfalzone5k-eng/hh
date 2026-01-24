@@ -12,7 +12,6 @@
 <style>
 :root {
   --red: #ff1a1a;
-  --bg: #0b0b0b;
   --panel: #161616;
   --panel-soft: #141414;
   --card-top: #2f2f2f;
@@ -29,7 +28,6 @@ html, body {
   margin: 0;
   padding: 0;
   background: #000;
-  overscroll-behavior: none;
 }
 
 /* BODY */
@@ -111,7 +109,6 @@ body::before {
   border-radius: 26px;
   padding: 22px;
   border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 0 30px rgba(0,0,0,0.6);
 }
 
 /* GRID */
@@ -126,8 +123,7 @@ body::before {
   aspect-ratio: 1 / 1;
   position: relative;
   border-radius: 26px;
-  background:
-    linear-gradient(145deg, var(--card-top), var(--card-bottom));
+  background: linear-gradient(145deg, var(--card-top), var(--card-bottom));
   box-shadow:
     inset 0 2px 4px rgba(255,255,255,0.08),
     inset 0 -4px 8px rgba(0,0,0,0.8),
@@ -137,24 +133,15 @@ body::before {
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.12s ease;
-  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
 }
 
 .card:active {
   transform: scale(0.94);
-}
-
-/* LOGO */
-.card img {
-  position: absolute;
-  top: 14%;
-  left: 14%;
-  width: 72%;
-  height: 72%;
-  border-radius: 50%;
-  object-fit: cover;
-  opacity: 0.9;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
 }
 
 /* RIFLESSO ANIMATO */
@@ -178,25 +165,34 @@ body::before {
   animation: shine 3.8s ease-in-out infinite;
 }
 
-/* ANIMAZIONE */
 @keyframes shine {
-  0% {
-    left: -75%;
-  }
-  45% {
-    left: 120%;
-  }
-  100% {
-    left: 120%;
-  }
+  0% { left: -75%; }
+  45% { left: 120%; }
+  100% { left: 120%; }
+}
+
+/* CORNICE LOGO */
+.logo-frame {
+  width: 70%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  padding: 6px;
+  background: linear-gradient(145deg, #ff2a2a, #7a0000);
+  box-shadow:
+    0 0 14px rgba(255,0,0,0.6),
+    inset 0 0 6px rgba(0,0,0,0.8);
+}
+
+.logo-frame img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #111;
 }
 
 /* TESTO */
 .card span {
-  position: absolute;
-  bottom: 14px;
-  width: 100%;
-  text-align: center;
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -247,68 +243,21 @@ body::before {
     <div class="grid">
 
       <div class="card" onclick="openCatalog()">
-        <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
+        <div class="logo-frame">
+          <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+        </div>
         <span>Catalogue</span>
       </div>
 
       <div class="card" onclick="openContacts()">
-        <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
+        <div class="logo-frame">
+          <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+        </div>
         <span>Contacts</span>
       </div>
 
       <div class="card" onclick="openChannels()">
-        <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png" alt="">
-        <span>Channels</span>
-      </div>
-
-    </div>
-  </div>
-
-</div>
-
-<div class="overlay" id="overlay" onclick="closePopup()">
-  <div class="popup" onclick="event.stopPropagation()">
-    <div id="popupContent"></div>
-  </div>
-</div>
-
-<script>
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
-
-function openCatalog() {
-  window.location.href = "catalog.html";
-}
-
-function openPopup(html) {
-  document.getElementById("popupContent").innerHTML = html;
-  document.getElementById("overlay").style.display = "flex";
-}
-
-function closePopup() {
-  document.getElementById("overlay").style.display = "none";
-}
-
-function openContacts() {
-  openPopup(`
-    <strong>📩 CONTACTS</strong><br><br>
-    <a href="https://t.me/gascloud2" target="_blank">@gascloud2</a><br><br>
-    Support available only on Telegram
-  `);
-}
-
-function openChannels() {
-  openPopup(`
-    <strong>📢 CHANNELS</strong><br><br>
-    <a href="https://t.me/your_channel" target="_blank">Official Channel</a><br><br>
-    <a href="https://t.me/your_group" target="_blank">Community Group</a>
-  `);
-}
-</script>
-
-</body>
-</html>
+        <div class="logo-fram
 
 
 
