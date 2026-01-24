@@ -87,18 +87,6 @@ body::before {
   font-size: 12px;
   letter-spacing: 1px;
   opacity: 0.65;
-  position: relative;
-}
-
-.header-panel p::after {
-  content: "";
-  display: block;
-  width: 36px;
-  height: 2px;
-  background: var(--red);
-  margin: 10px auto 0;
-  border-radius: 2px;
-  opacity: 0.6;
 }
 
 /* PANEL */
@@ -118,7 +106,7 @@ body::before {
   gap: 16px;
 }
 
-/* CARD */
+/* CARD (CLICK SAFE) */
 .card {
   aspect-ratio: 1 / 1;
   position: relative;
@@ -132,19 +120,13 @@ body::before {
   border: 1px solid rgba(255,255,255,0.08);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.12s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
 }
 
 .card:active {
   transform: scale(0.94);
 }
 
-/* RIFLESSO ANIMATO */
+/* RIFLESSO */
 .card::before {
   content: "";
   position: absolute;
@@ -154,13 +136,12 @@ body::before {
   height: 200%;
   background: linear-gradient(
     120deg,
-    transparent 0%,
-    rgba(255,255,255,0.35) 45%,
-    rgba(255,255,255,0.15) 55%,
-    transparent 100%
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
   );
   transform: rotate(12deg);
-  opacity: 0.55;
+  opacity: 0.5;
   pointer-events: none;
   animation: shine 3.8s ease-in-out infinite;
 }
@@ -171,9 +152,21 @@ body::before {
   100% { left: 120%; }
 }
 
+/* CONTENUTO INTERNO (NO JS IMPACT) */
+.card-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: none; /* 🔑 */
+}
+
 /* CORNICE LOGO */
 .logo-frame {
-  width: 70%;
+  width: 64%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   padding: 6px;
@@ -188,7 +181,6 @@ body::before {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  background: #111;
 }
 
 /* TESTO */
@@ -243,23 +235,80 @@ body::before {
     <div class="grid">
 
       <div class="card" onclick="openCatalog()">
-        <div class="logo-frame">
-          <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+        <div class="card-content">
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+          </div>
+          <span>Catalogue</span>
         </div>
-        <span>Catalogue</span>
       </div>
 
       <div class="card" onclick="openContacts()">
-        <div class="logo-frame">
-          <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+        <div class="card-content">
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+          </div>
+          <span>Contacts</span>
         </div>
-        <span>Contacts</span>
       </div>
 
       <div class="card" onclick="openChannels()">
-        <div class="logo-fram
+        <div class="card-content">
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+          </div>
+          <span>Channels</span>
+        </div>
+      </div>
 
+    </div>
+  </div>
 
+</div>
+
+<div class="overlay" id="overlay" onclick="closePopup()">
+  <div class="popup" onclick="event.stopPropagation()">
+    <div id="popupContent"></div>
+  </div>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+function openCatalog() {
+  window.location.href = "catalog.html";
+}
+
+function openPopup(html) {
+  document.getElementById("popupContent").innerHTML = html;
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+function openContacts() {
+  openPopup(`
+    <strong>📩 CONTACTS</strong><br><br>
+    <a href="https://t.me/gascloud2" target="_blank">@gascloud2</a><br><br>
+    Support available only on Telegram
+  `);
+}
+
+function openChannels() {
+  openPopup(`
+    <strong>📢 CHANNELS</strong><br><br>
+    <a href="https://t.me/your_channel" target="_blank">Official Channel</a><br><br>
+    <a href="https://t.me/your_group" target="_blank">Community Group</a>
+  `);
+}
+</script>
+
+</body>
+</html>
 
 
 
