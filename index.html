@@ -10,8 +10,8 @@
 <style>
 :root {
   --red: #ff1a1a;
-  --bg1: #050505;
-  --bg2: #0e0e0e;
+  --dark1: #0a0a0a;
+  --dark2: #151515;
 }
 
 /* RESET */
@@ -24,99 +24,59 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  background: radial-gradient(circle at top, #140000 0%, var(--bg1) 35%, var(--bg2) 100%);
+  background:
+    radial-gradient(circle at 50% -10%, rgba(255,0,0,0.18), transparent 45%),
+    radial-gradient(circle at 20% 80%, rgba(255,0,0,0.12), transparent 50%),
+    linear-gradient(180deg, #050505, #0b0b0b 40%, #050505);
   overflow-x: hidden;
 }
 
-/* ================= SPLASH + LOADER ================= */
-
-#splash {
+/* vignette */
+body::after {
+  content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle, #160000, #050505);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-  transition: opacity .6s ease;
-}
-
-#splash.hide {
-  opacity: 0;
+  background: radial-gradient(circle, transparent 55%, rgba(0,0,0,0.85) 100%);
   pointer-events: none;
+  z-index: 0;
 }
 
-.splash-logo {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #ff2a2a, #6b0000);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: breathing 3.5s ease-in-out infinite;
-  box-shadow: 0 0 30px rgba(255,0,0,.6);
+/* watermark */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 60% no-repeat;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.splash-logo img {
-  width: 86%;
-  height: 86%;
-  border-radius: 50%;
-}
-
-.splash-text {
-  margin-top: 18px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  opacity: .85;
-}
-
-/* Loader ring */
-.loader {
-  margin-top: 24px;
-  width: 38px;
-  height: 38px;
-  border: 3px solid rgba(255,255,255,.15);
-  border-top-color: var(--red);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes breathing {
-  0% { transform: scale(1); box-shadow: 0 0 18px rgba(255,0,0,.4); }
-  50% { transform: scale(1.06); box-shadow: 0 0 32px rgba(255,0,0,.75); }
-  100% { transform: scale(1); }
-}
-
-/* ================= APP ================= */
-
+/* APP */
 .container {
   position: relative;
   z-index: 1;
-  padding: 30px 20px 110px;
+  padding: 32px 20px 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 26px;
+  gap: 28px;
 }
 
+/* HEADER */
 .bubble {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(145deg, rgba(40,40,40,.9), rgba(18,18,18,.9));
-  border-radius: 26px;
-  padding: 24px;
+  background: linear-gradient(145deg, #1e1e1e, #0f0f0f);
+  border-radius: 28px;
+  padding: 26px 18px;
   text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
   font-size: 22px;
   font-weight: 900;
   letter-spacing: 3px;
   text-transform: uppercase;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
 }
 
 .bubble::after {
@@ -124,54 +84,58 @@ body {
   display: block;
   margin-top: 10px;
   font-size: 12px;
-  opacity: .6;
+  letter-spacing: 2px;
+  opacity: 0.6;
 }
 
+/* PANEL */
 .panel {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(145deg, rgba(30,30,30,.85), rgba(16,16,16,.85));
-  border-radius: 30px;
-  padding: 24px;
+  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+  border-radius: 34px;
+  padding: 26px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.9);
 }
 
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
+  gap: 20px;
 }
 
-/* ================= CARD DINAMICHE ================= */
-
+/* CARD */
 .card {
   aspect-ratio: 1 / 1;
-  border-radius: 26px;
-  background: linear-gradient(145deg, #2e2e2e, #141414);
+  border-radius: 28px;
+  background: linear-gradient(145deg, #232323, #0f0f0f);
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease;
-  box-shadow: 0 12px 28px rgba(0,0,0,.8);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.08),
+    inset 0 -6px 12px rgba(0,0,0,0.9),
+    0 18px 40px rgba(0,0,0,0.9);
 }
 
-.card:active {
-  transform: scale(.93);
-  box-shadow: 0 0 26px rgba(255,0,0,.5);
-}
-
+/* riflesso lucido statico */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(255,0,0,.15), transparent 60%);
-  opacity: 0;
-  transition: opacity .2s ease;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.08) 25%,
+    transparent 55%
+  );
+  opacity: 0.35;
+  pointer-events: none;
 }
 
-.card:active::before {
-  opacity: 1;
-}
-
+/* CONTENT */
 .card-content {
   position: absolute;
   inset: 0;
@@ -182,13 +146,16 @@ body {
   gap: 14px;
 }
 
+/* LOGO */
 .logo-frame {
-  width: 66%;
-  padding-top: 66%;
+  width: 72%;
+  padding-top: 72%;
   border-radius: 50%;
-  background: linear-gradient(145deg, #ff2a2a, #6b0000);
+  background: linear-gradient(145deg, #ff2a2a, #7a0000);
   position: relative;
-  animation: breathing 4s ease-in-out infinite;
+  box-shadow:
+    0 0 22px rgba(255,0,0,0.8),
+    inset 0 0 10px rgba(0,0,0,0.9);
 }
 
 .logo-frame img {
@@ -197,21 +164,23 @@ body {
   width: calc(100% - 12px);
   height: calc(100% - 12px);
   border-radius: 50%;
+  object-fit: cover;
 }
 
+/* TEXT */
 .card span {
+  margin-top: 4px;
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-/* ================= POPUP ================= */
-
+/* POPUP */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.75);
+  background: rgba(0,0,0,0.75);
   display: none;
   align-items: center;
   justify-content: center;
@@ -238,16 +207,6 @@ body {
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="splash-logo">
-    <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
-  </div>
-  <div class="splash-text">Gas Cloud</div>
-  <div class="loader"></div>
-</div>
-
-<!-- APP -->
 <div class="container">
   <div class="bubble">Gas Cloud</div>
 
@@ -305,12 +264,6 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-/* SPLASH HIDE */
-setTimeout(() => {
-  document.getElementById("splash").classList.add("hide");
-}, 1600);
-
-/* LOGICA ORIGINALE */
 function openCatalog() {
   window.location.href = "catalog.html";
 }
@@ -346,6 +299,7 @@ function openCreateBy() {
 
 </body>
 </html>
+
 
 
 
