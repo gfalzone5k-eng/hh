@@ -27,6 +27,7 @@
       overflow-x: hidden;
     }
 
+    /* FUMO */
     body::before {
       content: "";
       position: fixed;
@@ -98,6 +99,7 @@
       to { transform: rotate(360deg); }
     }
 
+    /* APP */
     .container {
       position: relative;
       z-index: 1;
@@ -108,6 +110,7 @@
       align-items: center;
     }
 
+    /* HEADER */
     .bubble {
       width: 100%;
       max-width: 420px;
@@ -137,6 +140,7 @@
       opacity: 0.7;
     }
 
+    /* PANEL */
     .panel {
       width: 100%;
       max-width: 420px;
@@ -220,6 +224,7 @@
       border-bottom: 1px solid rgba(255,26,26,0.45);
     }
 
+    /* ===== BOTTOM BAR ===== */
     .bottom-bar {
       position: fixed;
       bottom: 16px;
@@ -278,7 +283,6 @@
 
   <div class="panel">
     <div class="grid">
-
       <div class="card" onclick="openCatalog()">
         <div class="card-content">
           <div class="logo-frame"><img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png"></div>
@@ -306,9 +310,26 @@
           <span>CREATED BY</span>
         </div>
       </div>
-
     </div>
   </div>
+</div>
+
+<!-- BARRA IN BASSO RIPRISTINATA -->
+<div class="bottom-bar">
+  <a href="https://t.me/GASCLOUD2" class="icon-telegram">
+    <svg viewBox="0 0 24 24"><path d="M9.04 15.84 8.9 19.7c.27 0 .39-.11.53-.25l2.54-2.44 5.27 3.86c.97.54 1.66.26 1.9-.9l3.44-16.1c.33-1.5-.54-2.09-1.49-1.74L1.8 9.7c-1.45.56-1.43 1.35-.26 1.71l4.88 1.52L18.6 5.5c.57-.36 1.1-.16.67.2z"/></svg>
+    Telegram
+  </a>
+
+  <a href="https://instagram.com/" class="icon-instagram">
+    <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
+    Instagram
+  </a>
+
+  <a href="#" class="icon-signal">
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.9.6-3.5-1.4-3.5-1.4-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.1 1 2.6.8.1-.6.3-1 .6-1.2-2.3-.3-4.7-1.2-4.7-5.1 0-1.1.4-2 1-2.7-.1-.3-.4-1.2.1-2.5 0 0 .8-.3 2.6 1a9 9 0 0 1 4.8 0c1.8-1.3 2.6-1 2.6-1 .5 1.3.2 2.2.1 2.5.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.7 5.1.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+    Signal
+  </a>
 </div>
 
 <script>
