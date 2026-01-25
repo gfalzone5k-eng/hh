@@ -23,21 +23,21 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
   background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 55%),
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.18), transparent 60%),
     linear-gradient(180deg, #020202, #0a0a0a 40%, #020202);
   overflow-x: hidden;
 }
 
-/* ===== FUMO ROSSO BACKGROUND ===== */
+/* FUMO ROSSO SOFT */
 body::before {
   content: "";
   position: fixed;
   inset: -40%;
   background:
-    radial-gradient(circle at 30% 40%, rgba(255,0,0,0.20), transparent 45%),
-    radial-gradient(circle at 70% 60%, rgba(160,0,0,0.18), transparent 50%);
-  filter: blur(90px);
-  opacity: 0.55;
+    radial-gradient(circle at 30% 40%, rgba(180,0,0,0.16), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(120,0,0,0.14), transparent 50%);
+  filter: blur(100px);
+  opacity: 0.45;
   animation: smoke 70s linear infinite;
   pointer-events: none;
   z-index: 0;
@@ -49,12 +49,12 @@ body::before {
   100% { transform: translate(0,0); }
 }
 
-/* ================= SPLASH ================= */
+/* SPLASH */
 #splash {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.35), transparent 55%),
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 60%),
     linear-gradient(180deg, #020202, #000);
   display: flex;
   flex-direction: column;
@@ -77,21 +77,13 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 40px rgba(255,0,0,.9);
+  box-shadow: 0 0 35px rgba(255,0,0,.75);
 }
 
 .splash-logo img {
   width: 86%;
   height: 86%;
   border-radius: 50%;
-}
-
-.splash-text {
-  margin-top: 18px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  opacity: .85;
 }
 
 .loader {
@@ -108,7 +100,7 @@ body::before {
   to { transform: rotate(360deg); }
 }
 
-/* ================= APP ================= */
+/* APP */
 .container {
   position: relative;
   z-index: 1;
@@ -124,7 +116,7 @@ body::before {
   width: 100%;
   max-width: 420px;
   background:
-    linear-gradient(180deg, rgba(255,0,0,0.35), #0a0a0a 55%);
+    linear-gradient(180deg, rgba(255,0,0,0.12), #0a0a0a 65%);
   border-radius: 22px;
   padding: 24px 18px;
   text-align: center;
@@ -141,7 +133,7 @@ body::before {
   margin-top: 8px;
   font-size: 11px;
   letter-spacing: 2px;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 /* PANEL */
@@ -171,7 +163,7 @@ body::before {
   background: linear-gradient(180deg, #1b1b1b, #060606);
   position: relative;
   cursor: pointer;
-  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.35); /* cornice sottile */
   box-shadow:
     inset 0 -14px 22px rgba(0,0,0,0.95),
     inset 0 1px 1px rgba(255,255,255,0.05),
@@ -186,7 +178,7 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 /* LOGO */
@@ -209,20 +201,16 @@ body::before {
   border-radius: 50%;
 }
 
-/* TITLE STRIP */
+/* TESTO BOTTONI */
 .card span {
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: 8px 6px;
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
-  background: linear-gradient(180deg, rgba(255,0,0,0.35), #0a0a0a 70%);
+  color: var(--red); /* testo rosso */
 }
 
-/* ===== BOTTOM BAR ===== */
+/* BOTTOM BAR */
 .bottom-bar {
   position: fixed;
   bottom: 16px;
@@ -241,17 +229,24 @@ body::before {
 }
 
 .bottom-bar a {
-  color: #fff;
   text-decoration: none;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
-  opacity: 0.9;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
 }
+
+/* ICON COLORS */
+.icon-telegram { color:#229ED9; }
+.icon-instagram {
+  background: linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.icon-signal { color:#3A76F0; }
 
 .bottom-bar svg {
   width: 22px;
@@ -268,7 +263,6 @@ body::before {
   <div class="splash-logo">
     <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
   </div>
-  <div class="splash-text">Gas Cloud</div>
   <div class="loader"></div>
 </div>
 
@@ -310,17 +304,16 @@ body::before {
   </div>
 </div>
 
-<!-- BOTTOM BAR -->
 <div class="bottom-bar">
-  <a href="https://t.me/GASCLOUD2">
+  <a href="https://t.me/GASCLOUD2" class="icon-telegram">
     <svg viewBox="0 0 24 24"><path d="M9.04 15.84 8.9 19.7c.27 0 .39-.11.53-.25l2.54-2.44 5.27 3.86c.97.54 1.66.26 1.9-.9l3.44-16.1c.33-1.5-.54-2.09-1.49-1.74L1.8 9.7c-1.45.56-1.43 1.35-.26 1.71l4.88 1.52L18.6 5.5c.57-.36 1.1-.16.67.2z"/></svg>
     Telegram
   </a>
-  <a href="https://instagram.com/">
+  <a href="https://instagram.com/" class="icon-instagram">
     <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
     Instagram
   </a>
-  <a href="#">
+  <a href="#" class="icon-signal">
     <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.9.6-3.5-1.4-3.5-1.4-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.1 1 2.6.8.1-.6.3-1 .6-1.2-2.3-.3-4.7-1.2-4.7-5.1 0-1.1.4-2 1-2.7-.1-.3-.4-1.2.1-2.5 0 0 .8-.3 2.6 1a9 9 0 0 1 4.8 0c1.8-1.3 2.6-1 2.6-1 .5 1.3.2 2.2.1 2.5.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.7 5.1.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
     Signal
   </a>
@@ -335,12 +328,14 @@ setTimeout(() => {
   document.getElementById("splash").classList.add("hide");
 }, 1500);
 
-function openCatalog() { window.location.href = "catalog.html"; }
+function openCatalog(){ window.location.href="catalog.html"; }
 function openContacts(){}
 function openChannels(){}
 function openCreateBy(){}
 </script>
 
 </body>
+</html>
+
 </html>
 
