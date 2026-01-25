@@ -10,6 +10,7 @@
 <style>
 :root {
   --red: #ff1a1a;
+  --dark: #050505;
 }
 
 /* RESET */
@@ -23,85 +24,67 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
   background:
-    radial-gradient(circle at 50% -10%, rgba(255,0,0,0.18), transparent 45%),
-    linear-gradient(180deg, #050505, #0b0b0b 45%, #050505);
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 55%),
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.04), transparent 40%),
+    linear-gradient(180deg, #020202, #0a0a0a 40%, #020202);
   overflow-x: hidden;
 }
 
-/* ================= FUMO ANIMATO ================= */
-.smoke {
+/* FUMO UNDERGROUND */
+body::before {
+  content: "";
   position: fixed;
-  inset: -20%;
+  inset: -30%;
   background:
-    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.06), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.05), transparent 45%),
-    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.04), transparent 50%);
-  filter: blur(60px);
-  opacity: 0.35;
-  animation: smokeMove 45s linear infinite;
+    radial-gradient(circle at 20% 40%, rgba(255,255,255,0.05), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.04), transparent 50%);
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: smoke 60s linear infinite;
   pointer-events: none;
   z-index: 0;
 }
 
-@keyframes smokeMove {
-  0% { transform: translate(0,0) scale(1); }
-  50% { transform: translate(-4%, -3%) scale(1.05); }
-  100% { transform: translate(0,0) scale(1); }
-}
-
-/* vignette */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle, transparent 55%, rgba(0,0,0,0.85) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* watermark */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 60% no-repeat;
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 1;
+@keyframes smoke {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-6%, -4%); }
+  100% { transform: translate(0,0); }
 }
 
 /* APP */
 .container {
   position: relative;
-  z-index: 2;
-  padding: 32px 20px 110px;
+  z-index: 1;
+  padding: 30px 18px 140px;
   display: flex;
   flex-direction: column;
+  gap: 26px;
   align-items: center;
-  gap: 28px;
 }
 
 /* HEADER */
 .bubble {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(145deg, #1f1f1f, #0e0e0e);
-  border-radius: 28px;
-  padding: 26px 18px;
+  background:
+    linear-gradient(180deg, #1a1a1a, #090909);
+  border-radius: 18px;
+  padding: 22px 18px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.08);
   font-size: 22px;
   font-weight: 900;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.85);
+  box-shadow:
+    inset 0 -6px 12px rgba(0,0,0,0.9),
+    0 20px 50px rgba(0,0,0,0.95);
 }
 
 .bubble::after {
   content: "Official bot";
   display: block;
-  margin-top: 10px;
-  font-size: 12px;
+  margin-top: 8px;
+  font-size: 11px;
   letter-spacing: 2px;
   opacity: 0.6;
 }
@@ -110,57 +93,48 @@ body::before {
 .panel {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(145deg, #1a1a1a, #0c0c0c);
-  border-radius: 36px;
-  padding: 26px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 35px 70px rgba(0,0,0,0.95);
+  background:
+    linear-gradient(180deg, #141414, #070707);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.04),
+    inset 0 -10px 20px rgba(0,0,0,0.9),
+    0 30px 70px rgba(0,0,0,0.95);
 }
 
 /* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 18px;
 }
 
-/* ================= CARD PREMIUM ================= */
+/* CARD UNDERGROUND */
 .card {
   aspect-ratio: 1 / 1;
-  border-radius: 30px;
-  background: linear-gradient(145deg, #242424, #0f0f0f);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, #1b1b1b, #060606);
   position: relative;
-  overflow: hidden;
   cursor: pointer;
   box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.08),
-    inset 0 -8px 16px rgba(0,0,0,0.9),
-    0 20px 45px rgba(0,0,0,0.95);
+    inset 0 -10px 18px rgba(0,0,0,0.95),
+    inset 0 1px 1px rgba(255,255,255,0.05),
+    0 16px 40px rgba(0,0,0,0.95);
 }
 
-/* riflesso vetro Apple */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.45),
-      rgba(255,255,255,0.12) 22%,
-      transparent 50%
-    );
-  opacity: 0.45;
-  pointer-events: none;
-}
-
-/* edge light */
+/* luce rossa dal basso */
 .card::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  background: linear-gradient(
+    to top,
+    rgba(255,0,0,0.25),
+    transparent 45%
+  );
+  opacity: 0.6;
   pointer-events: none;
 }
 
@@ -177,14 +151,14 @@ body::before {
 
 /* LOGO */
 .logo-frame {
-  width: 74%;
-  padding-top: 74%;
+  width: 76%;
+  padding-top: 76%;
   border-radius: 50%;
-  background: linear-gradient(145deg, #ff2a2a, #7a0000);
-  position: relative;
+  background: radial-gradient(circle, #ff2a2a, #5a0000);
   box-shadow:
-    0 0 24px rgba(255,0,0,0.85),
-    inset 0 0 12px rgba(0,0,0,0.95);
+    0 0 26px rgba(255,0,0,0.85),
+    inset 0 0 14px rgba(0,0,0,0.95);
+  position: relative;
 }
 
 .logo-frame img {
@@ -193,23 +167,54 @@ body::before {
   width: calc(100% - 12px);
   height: calc(100% - 12px);
   border-radius: 50%;
-  object-fit: cover;
 }
 
 /* TEXT */
 .card span {
-  margin-top: 4px;
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
+/* ================= BOTTOM BAR ================= */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 74px;
+  background: linear-gradient(180deg, #0d0d0d, #040404);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 999;
+  box-shadow: 0 -20px 40px rgba(0,0,0,0.9);
+}
+
+.bottom-bar a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.bottom-bar span {
+  font-size: 20px;
+}
+
 /* POPUP */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.8);
   display: none;
   align-items: center;
   justify-content: center;
@@ -217,10 +222,10 @@ body::before {
 }
 
 .popup {
-  background: #1b1b1b;
+  background: #0f0f0f;
   border: 2px solid var(--red);
-  border-radius: 20px;
-  padding: 26px;
+  border-radius: 16px;
+  padding: 24px;
   width: 90%;
   max-width: 320px;
   text-align: center;
@@ -235,8 +240,6 @@ body::before {
 </head>
 
 <body>
-
-<div class="smoke"></div>
 
 <div class="container">
   <div class="bubble">Gas Cloud</div>
@@ -284,6 +287,19 @@ body::before {
   </div>
 </div>
 
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <a href="https://t.me/GASCLOUD2" target="_blank">
+    <span>📨</span>Telegram
+  </a>
+  <a href="https://instagram.com/" target="_blank">
+    <span>📸</span>Instagram
+  </a>
+  <a href="#">
+    <span>🔐</span>Signal
+  </a>
+</div>
+
 <script>
 const tg = window.Telegram.WebApp;
 tg.ready();
@@ -305,8 +321,7 @@ function closePopup() {
 function openContacts() {
   openPopup(`
     <div>📩 CONTACTS</div><br>
-    <a href="https://T.me/GASCLOUD2" target="_blank">@GASCLOUD2BOT</a><br><br>
-    Support available only on Telegram
+    <a href="https://T.me/GASCLOUD2" target="_blank">@GASCLOUD2BOT</a>
   `);
 }
 
