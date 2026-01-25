@@ -108,10 +108,17 @@
       align-items: center;
     }
 
+    /* ===== HEADER – SFUMATURA MIGLIORATA ===== */
     .bubble {
       width: 100%;
       max-width: 420px;
-      background: linear-gradient(180deg, rgba(255,0,0,0.35), #0a0a0a 55%);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,40,40,0.28) 0%,
+          rgba(120,0,0,0.18) 35%,
+          rgba(10,10,10,0.95) 85%
+        );
       border-radius: 22px;
       padding: 24px 18px;
       text-align: center;
@@ -170,7 +177,7 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      transform: translateY(6px); /* logo leggermente più in basso */
+      transform: translateY(6px);
     }
 
     .logo-frame {
@@ -192,6 +199,7 @@
       border-radius: 50%;
     }
 
+    /* TESTO BOTTONI */
     .card span {
       display: block;
       width: 100%;
@@ -201,10 +209,19 @@
       font-weight: 900;
       letter-spacing: 2px;
       text-transform: uppercase;
-      background: linear-gradient(180deg, rgba(255,0,0,0.35), #0a0a0a 70%);
+      color: var(--red);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,40,40,0.55) 0%,
+          rgba(120,0,0,0.35) 40%,
+          rgba(10,10,10,0.95) 90%
+        );
+      border-top: 1px solid rgba(255,26,26,0.7);
+      border-bottom: 1px solid rgba(255,26,26,0.45);
     }
 
-    /* ===== BOTTOM BAR ===== */
+    /* BOTTOM BAR */
     .bottom-bar {
       position: fixed;
       bottom: 16px;
@@ -330,6 +347,7 @@
 
 </body>
 </html>
+
 
 
 
