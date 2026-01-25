@@ -23,22 +23,21 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
   background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.35), transparent 55%),
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 55%),
     linear-gradient(180deg, #020202, #0a0a0a 40%, #020202);
   overflow-x: hidden;
 }
 
-/* ===== FUMO ROSSO ===== */
+/* ===== FUMO ROSSO BACKGROUND ===== */
 body::before {
   content: "";
   position: fixed;
   inset: -40%;
   background:
-    radial-gradient(circle at 30% 40%, rgba(255,0,0,0.25), transparent 45%),
-    radial-gradient(circle at 70% 60%, rgba(180,0,0,0.22), transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(120,0,0,0.18), transparent 55%);
+    radial-gradient(circle at 30% 40%, rgba(255,0,0,0.20), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(160,0,0,0.18), transparent 50%);
   filter: blur(90px);
-  opacity: 0.6;
+  opacity: 0.55;
   animation: smoke 70s linear infinite;
   pointer-events: none;
   z-index: 0;
@@ -50,7 +49,66 @@ body::before {
   100% { transform: translate(0,0); }
 }
 
-/* APP */
+/* ================= SPLASH ================= */
+#splash {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.35), transparent 55%),
+    linear-gradient(180deg, #020202, #000);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity .6s ease;
+}
+
+#splash.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff2a2a, #5a0000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(255,0,0,.9);
+}
+
+.splash-logo img {
+  width: 86%;
+  height: 86%;
+  border-radius: 50%;
+}
+
+.splash-text {
+  margin-top: 18px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: .85;
+}
+
+.loader {
+  margin-top: 26px;
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= APP ================= */
 .container {
   position: relative;
   z-index: 1;
@@ -105,34 +163,18 @@ body::before {
   gap: 18px;
 }
 
-/* ===== CARD FIXATE ===== */
+/* ===== CARD CLEAN ===== */
 .card {
   aspect-ratio: 1 / 1;
   border-radius: 22px;
   background: linear-gradient(180deg, #1b1b1b, #060606);
   position: relative;
   cursor: pointer;
-  overflow: hidden; /* 🔑 chiave */
+  overflow: hidden;
   box-shadow:
     inset 0 -14px 22px rgba(0,0,0,0.95),
     inset 0 1px 1px rgba(255,255,255,0.05),
     0 16px 40px rgba(0,0,0,0.95);
-}
-
-/* ROSSO CONFINATO DENTRO */
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,0,0,0.35),
-      rgba(255,0,0,0.18) 45%,
-      transparent 70%
-    );
-  opacity: 0.9;
-  pointer-events: none;
 }
 
 /* CONTENT */
@@ -213,6 +255,16 @@ body::before {
 
 <body>
 
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-logo">
+    <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+  </div>
+  <div class="splash-text">Gas Cloud</div>
+  <div class="loader"></div>
+</div>
+
+<!-- APP -->
 <div class="container">
   <div class="bubble">Gas Cloud</div>
 
@@ -270,6 +322,10 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
+setTimeout(() => {
+  document.getElementById("splash").classList.add("hide");
+}, 1500);
+
 function openCatalog() {
   window.location.href = "catalog.html";
 }
@@ -280,9 +336,6 @@ function openCreateBy(){}
 
 </body>
 </html>
-
-
-
 
 
 
