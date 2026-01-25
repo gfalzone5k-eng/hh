@@ -28,7 +28,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== FUMO ROSSO VISIBILE ===== */
+/* ===== FUMO ROSSO ===== */
 body::before {
   content: "";
   position: fixed;
@@ -105,30 +105,33 @@ body::before {
   gap: 18px;
 }
 
-/* CARD */
+/* ===== CARD FIXATE ===== */
 .card {
   aspect-ratio: 1 / 1;
   border-radius: 22px;
   background: linear-gradient(180deg, #1b1b1b, #060606);
   position: relative;
   cursor: pointer;
+  overflow: hidden; /* 🔑 chiave */
   box-shadow:
-    inset 0 -10px 18px rgba(0,0,0,0.95),
+    inset 0 -14px 22px rgba(0,0,0,0.95),
     inset 0 1px 1px rgba(255,255,255,0.05),
     0 16px 40px rgba(0,0,0,0.95);
 }
 
-/* glow rosso */
+/* ROSSO CONFINATO DENTRO */
 .card::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(255,0,0,0.35),
-    transparent 45%
-  );
-  opacity: 0.7;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,0,0,0.35),
+      rgba(255,0,0,0.18) 45%,
+      transparent 70%
+    );
+  opacity: 0.9;
   pointer-events: none;
 }
 
@@ -150,8 +153,8 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(circle, #ff2a2a, #5a0000);
   box-shadow:
-    0 0 28px rgba(255,0,0,0.9),
-    inset 0 0 14px rgba(0,0,0,0.95);
+    inset 0 0 18px rgba(0,0,0,0.95),
+    0 0 14px rgba(255,0,0,0.6);
   position: relative;
 }
 
@@ -171,7 +174,7 @@ body::before {
   text-transform: uppercase;
 }
 
-/* ===== BOTTOM BAR FLOATING ===== */
+/* ===== BOTTOM BAR ===== */
 .bottom-bar {
   position: fixed;
   bottom: 16px;
@@ -204,33 +207,6 @@ body::before {
 
 .bottom-bar span {
   font-size: 20px;
-}
-
-/* POPUP */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.popup {
-  background: #0f0f0f;
-  border: 2px solid var(--red);
-  border-radius: 16px;
-  padding: 24px;
-  width: 90%;
-  max-width: 320px;
-  text-align: center;
-}
-
-.popup a {
-  color: var(--red);
-  font-weight: 900;
-  text-decoration: none;
 }
 </style>
 </head>
@@ -283,17 +259,10 @@ body::before {
   </div>
 </div>
 
-<!-- BOTTOM BAR -->
 <div class="bottom-bar">
-  <a href="https://t.me/GASCLOUD2" target="_blank">
-    <span>📨</span>Telegram
-  </a>
-  <a href="https://instagram.com/" target="_blank">
-    <span>📸</span>Instagram
-  </a>
-  <a href="#">
-    <span>🔐</span>Signal
-  </a>
+  <a href="https://t.me/GASCLOUD2"><span>📨</span>Telegram</a>
+  <a href="https://instagram.com/"><span>📸</span>Instagram</a>
+  <a href="#"><span>🔐</span>Signal</a>
 </div>
 
 <script>
@@ -304,16 +273,14 @@ tg.expand();
 function openCatalog() {
   window.location.href = "catalog.html";
 }
-
-function openContacts() {}
-function openChannels() {}
-function openCreateBy() {
-  Telegram.WebApp.openLink("");
-}
+function openContacts(){}
+function openChannels(){}
+function openCreateBy(){}
 </script>
 
 </body>
 </html>
+
 
 
 
