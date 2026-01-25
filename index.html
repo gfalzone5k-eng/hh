@@ -10,10 +10,10 @@
 <style>
 :root {
   --red: #ff1a1a;
-  --bg: #0b0b0b;
-  --panel: #1a1a1a;
-  --panel-soft: #161616;
-  --card-bg: #2a2a2a;
+  --bg1: #050505;
+  --bg2: #0e0e0e;
+  --panel: rgba(26,26,26,0.85);
+  --panel-soft: rgba(22,22,22,0.85);
 }
 
 /* RESET */
@@ -26,53 +26,66 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  background: var(--bg);
+  background: radial-gradient(circle at top, #140000 0%, var(--bg1) 35%, var(--bg2) 100%);
   overflow-x: hidden;
 }
 
-/* WATERMARK LOGO */
+/* BACKGROUND FX */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,0,0,0.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,0,0,0.06), transparent 45%);
+  z-index: 0;
+  pointer-events: none;
+}
+
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 70% no-repeat;
-  opacity: 0.04;
+  background: url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 55% no-repeat;
+  opacity: 0.03;
   pointer-events: none;
   z-index: 0;
 }
 
-/* APP WRAPPER */
+/* APP */
 .container {
   position: relative;
   z-index: 1;
-  padding: 26px 20px 100px;
+  padding: 30px 20px 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
+  gap: 26px;
 }
 
 /* HEADER */
 .bubble {
   width: 100%;
   max-width: 420px;
-  background: var(--panel-soft);
-  border-radius: 22px;
-  padding: 22px 18px;
+  background: linear-gradient(145deg, rgba(40,40,40,0.9), rgba(18,18,18,0.9));
+  backdrop-filter: blur(6px);
+  border-radius: 26px;
+  padding: 24px 18px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.06);
-  font-size: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 22px;
   font-weight: 900;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255,0,0,0.15);
 }
 
 .bubble::after {
   content: "Official bot";
   display: block;
-  margin-top: 8px;
-  font-size: 13px;
-  letter-spacing: 1px;
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 2px;
   opacity: 0.6;
 }
 
@@ -80,41 +93,43 @@ body::before {
 .panel {
   width: 100%;
   max-width: 420px;
-  background: var(--panel);
-  border-radius: 26px;
-  padding: 22px;
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(145deg, rgba(30,30,30,0.85), rgba(16,16,16,0.85));
+  backdrop-filter: blur(8px);
+  border-radius: 30px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
 }
 
 /* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 18px;
 }
 
 /* CARD */
 .card {
   aspect-ratio: 1 / 1;
   position: relative;
-  border-radius: 22px;
-  background: linear-gradient(145deg, #303030, #1c1c1c);
+  border-radius: 26px;
+  background: linear-gradient(145deg, #2e2e2e, #141414);
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.06),
-    inset 0 -4px 8px rgba(0,0,0,0.8),
-    0 8px 22px rgba(0,0,0,0.6),
-    0 0 16px rgba(255,0,0,0.35);
+    inset 0 1px 2px rgba(255,255,255,0.06),
+    inset 0 -6px 10px rgba(0,0,0,0.9),
+    0 12px 28px rgba(0,0,0,0.8),
+    0 0 18px rgba(255,0,0,0.25);
   cursor: pointer;
   overflow: hidden;
-  transition: transform .12s ease;
+  transition: transform .15s ease;
 }
 
 .card:active {
   transform: scale(0.95);
 }
 
-/* RIFLESSO */
+/* SHINE */
 .card::before {
   content: "";
   position: absolute;
@@ -122,14 +137,9 @@ body::before {
   left: -80%;
   width: 60%;
   height: 200%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.35),
-    transparent
-  );
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
   transform: rotate(12deg);
-  opacity: 0.55;
+  opacity: 0.5;
   pointer-events: none;
   animation: shine 4s ease-in-out infinite;
 }
@@ -140,7 +150,7 @@ body::before {
   100% { left: 120%; }
 }
 
-/* CONTENUTO INTERNO */
+/* CONTENT */
 .card-content {
   position: absolute;
   inset: 0;
@@ -148,23 +158,19 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   pointer-events: none;
 }
 
-/* CORNICE LOGO — CERCHIO PERFETTO */
 .logo-frame {
-  width: 64%;
-  padding-top: 64%;
+  width: 66%;
+  padding-top: 66%;
   position: relative;
   border-radius: 50%;
-  background: linear-gradient(145deg, #ff2a2a, #7a0000);
-  box-shadow:
-    0 0 14px rgba(255,0,0,0.6),
-    inset 0 0 6px rgba(0,0,0,0.8);
+  background: linear-gradient(145deg, #ff2a2a, #6b0000);
+  box-shadow: 0 0 18px rgba(255,0,0,0.7), inset 0 0 10px rgba(0,0,0,0.9);
 }
 
-/* IMMAGINE INTERNA */
 .logo-frame img {
   position: absolute;
   inset: 6px;
@@ -172,22 +178,21 @@ body::before {
   height: calc(100% - 12px);
   border-radius: 50%;
   object-fit: cover;
-  display: block;
 }
 
-/* TESTO */
 .card span {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  opacity: 0.95;
 }
+
 /* POPUP */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -195,10 +200,10 @@ body::before {
 }
 
 .popup {
-  background: #2b2b2b;
+  background: linear-gradient(145deg, #2c2c2c, #141414);
   border: 2px solid var(--red);
-  border-radius: 18px;
-  padding: 24px 20px;
+  border-radius: 20px;
+  padding: 26px 22px;
   max-width: 320px;
   width: 90%;
   text-align: center;
@@ -213,8 +218,7 @@ body::before {
 </head>
 
 <body>
-  <div class="container">
-
+<div class="container">
   <div class="bubble">Gas Cloud</div>
 
   <div class="panel">
@@ -304,9 +308,9 @@ function openCreateBy() {
   Telegram.WebApp.openLink("");
 }
 </script>
-
 </body>
 </html>
+
 
 
 
