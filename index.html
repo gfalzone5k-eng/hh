@@ -2,20 +2,18 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<title>Gas Cloud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Gas Cloud – Home</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
 :root {
   --red: #ff1a1a;
-  --panel: #161616;
-  --panel-soft: #141414;
-  --card-top: #2f2f2f;
-  --card-bottom: #1b1b1b;
+  --bg: #0b0b0b;
+  --panel: #1a1a1a;
+  --panel-soft: #161616;
+  --card-bg: #2a2a2a;
 }
 
 /* RESET */
@@ -24,69 +22,58 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #000;
-}
-
-/* BODY */
 body {
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  background:
-    radial-gradient(circle at top, #1a0000 0%, #0b0b0b 55%),
-    linear-gradient(180deg, #0b0b0b, #000);
+  background: var(--bg);
+  overflow-x: hidden;
 }
 
-/* SFONDO SOFT */
+/* WATERMARK LOGO */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle at 25% 20%, rgba(255,0,0,0.18), transparent 45%),
-    radial-gradient(circle at 75% 70%, rgba(255,0,0,0.12), transparent 50%);
+  background: url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 70% no-repeat;
+  opacity: 0.04;
   pointer-events: none;
+  z-index: 0;
 }
 
-/* APP */
-.app {
-  min-height: 100vh;
-  padding:
-    env(safe-area-inset-top, 24px)
-    20px
-    calc(90px + env(safe-area-inset-bottom, 0px));
+/* APP WRAPPER */
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 26px 20px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
 }
 
 /* HEADER */
-.header-panel {
+.bubble {
   width: 100%;
   max-width: 420px;
   background: var(--panel-soft);
   border-radius: 22px;
-  padding: 20px;
-  border: 1px solid rgba(255,255,255,0.06);
+  padding: 22px 18px;
   text-align: center;
-}
-
-.header-panel h1 {
-  margin: 0;
-  font-size: 22px;
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 20px;
   font-weight: 900;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-.header-panel p {
+.bubble::after {
+  content: "Official bot";
+  display: block;
   margin-top: 8px;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 1px;
-  opacity: 0.65;
+  opacity: 0.6;
 }
 
 /* PANEL */
@@ -106,24 +93,25 @@ body::before {
   gap: 16px;
 }
 
-/* CARD (CLICK SAFE) */
+/* CARD */
 .card {
   aspect-ratio: 1 / 1;
   position: relative;
-  border-radius: 26px;
-  background: linear-gradient(145deg, var(--card-top), var(--card-bottom));
-  box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.08),
-    inset 0 -4px 8px rgba(0,0,0,0.8),
-    0 10px 24px rgba(0,0,0,0.6),
-    0 0 18px rgba(255,0,0,0.25);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #303030, #1c1c1c);
   border: 1px solid rgba(255,255,255,0.08);
-  overflow: hidden;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.06),
+    inset 0 -4px 8px rgba(0,0,0,0.8),
+    0 8px 22px rgba(0,0,0,0.6),
+    0 0 16px rgba(255,0,0,0.35);
   cursor: pointer;
+  overflow: hidden;
+  transition: transform .12s ease;
 }
 
 .card:active {
-  transform: scale(0.94);
+  transform: scale(0.95);
 }
 
 /* RIFLESSO */
@@ -131,7 +119,7 @@ body::before {
   content: "";
   position: absolute;
   top: -50%;
-  left: -75%;
+  left: -80%;
   width: 60%;
   height: 200%;
   background: linear-gradient(
@@ -141,18 +129,18 @@ body::before {
     transparent
   );
   transform: rotate(12deg);
-  opacity: 0.5;
+  opacity: 0.55;
   pointer-events: none;
-  animation: shine 3.8s ease-in-out infinite;
+  animation: shine 4s ease-in-out infinite;
 }
 
 @keyframes shine {
-  0% { left: -75%; }
+  0% { left: -80%; }
   45% { left: 120%; }
   100% { left: 120%; }
 }
 
-/* CONTENUTO INTERNO (NO JS IMPACT) */
+/* CONTENUTO INTERNO */
 .card-content {
   position: absolute;
   inset: 0;
@@ -161,26 +149,30 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  pointer-events: none; /* 🔑 */
+  pointer-events: none;
 }
 
-/* CORNICE LOGO */
+/* CORNICE LOGO — CERCHIO PERFETTO */
 .logo-frame {
   width: 64%;
-  aspect-ratio: 1 / 1;
+  padding-top: 64%;
+  position: relative;
   border-radius: 50%;
-  padding: 6px;
   background: linear-gradient(145deg, #ff2a2a, #7a0000);
   box-shadow:
     0 0 14px rgba(255,0,0,0.6),
     inset 0 0 6px rgba(0,0,0,0.8);
 }
 
+/* IMMAGINE INTERNA */
 .logo-frame img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
   border-radius: 50%;
   object-fit: cover;
+  display: block;
 }
 
 /* TESTO */
@@ -191,8 +183,7 @@ body::before {
   text-transform: uppercase;
   opacity: 0.95;
 }
-
-/* OVERLAY */
+/* POPUP */
 .overlay {
   position: fixed;
   inset: 0;
@@ -203,14 +194,13 @@ body::before {
   z-index: 9999;
 }
 
-/* POPUP */
 .popup {
   background: #2b2b2b;
   border: 2px solid var(--red);
   border-radius: 18px;
   padding: 24px 20px;
-  width: 90%;
   max-width: 320px;
+  width: 90%;
   text-align: center;
 }
 
@@ -223,13 +213,9 @@ body::before {
 </head>
 
 <body>
+  <div class="container">
 
-<div class="app">
-
-  <div class="header-panel">
-    <h1>Gas Cloud</h1>
-    <p>Official Telegram Mini App</p>
-  </div>
+  <div class="bubble">Gas Cloud</div>
 
   <div class="panel">
     <div class="grid">
@@ -239,7 +225,7 @@ body::before {
           <div class="logo-frame">
             <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
           </div>
-          <span>Catalogue</span>
+          <span>CATALOGUE</span>
         </div>
       </div>
 
@@ -248,7 +234,7 @@ body::before {
           <div class="logo-frame">
             <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
           </div>
-          <span>Contacts</span>
+          <span>CONTACTS</span>
         </div>
       </div>
 
@@ -257,13 +243,21 @@ body::before {
           <div class="logo-frame">
             <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
           </div>
-          <span>Channels</span>
+          <span>CHANNELS</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openCreateBy()">
+        <div class="card-content">
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+          </div>
+          <span>CREATED BY</span>
         </div>
       </div>
 
     </div>
   </div>
-
 </div>
 
 <div class="overlay" id="overlay" onclick="closePopup()">
@@ -292,24 +286,27 @@ function closePopup() {
 
 function openContacts() {
   openPopup(`
-    <strong>📩 CONTACTS</strong><br><br>
-    <a href="https://t.me/gascloud2" target="_blank">@gascloud2</a><br><br>
+    <div>📩 CONTACTS</div><br>
+    <a href="https://T.me/GASCLOUD2" target="_blank">@GASCLOUD2BOT</a><br><br>
     Support available only on Telegram
   `);
 }
 
 function openChannels() {
   openPopup(`
-    <strong>📢 CHANNELS</strong><br><br>
-    <a href="https://t.me/your_channel" target="_blank">Official Channel</a><br><br>
+    <div>📢 CHANNELS</div><br>
+    <a href="https://T.me/GASCLOUD2" target="_blank">Official Channel</a><br><br>
     <a href="https://t.me/your_group" target="_blank">Community Group</a>
   `);
+}
+
+function openCreateBy() {
+  Telegram.WebApp.openLink("");
 }
 </script>
 
 </body>
 </html>
-
 
 
 
