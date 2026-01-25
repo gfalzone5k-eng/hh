@@ -23,21 +23,21 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
   background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.18), transparent 60%),
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.22), transparent 55%),
     linear-gradient(180deg, #020202, #0a0a0a 40%, #020202);
   overflow-x: hidden;
 }
 
-/* FUMO ROSSO SOFT */
+/* ===== FUMO ROSSO ===== */
 body::before {
   content: "";
   position: fixed;
   inset: -40%;
   background:
-    radial-gradient(circle at 30% 40%, rgba(180,0,0,0.16), transparent 45%),
-    radial-gradient(circle at 70% 60%, rgba(120,0,0,0.14), transparent 50%);
-  filter: blur(100px);
-  opacity: 0.45;
+    radial-gradient(circle at 30% 40%, rgba(255,0,0,0.18), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(160,0,0,0.16), transparent 50%);
+  filter: blur(95px);
+  opacity: 0.5;
   animation: smoke 70s linear infinite;
   pointer-events: none;
   z-index: 0;
@@ -49,12 +49,12 @@ body::before {
   100% { transform: translate(0,0); }
 }
 
-/* SPLASH */
+/* ================= SPLASH ================= */
 #splash {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 60%),
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.3), transparent 55%),
     linear-gradient(180deg, #020202, #000);
   display: flex;
   flex-direction: column;
@@ -77,13 +77,21 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 35px rgba(255,0,0,.75);
+  box-shadow: 0 0 40px rgba(255,0,0,.85);
 }
 
 .splash-logo img {
   width: 86%;
   height: 86%;
   border-radius: 50%;
+}
+
+.splash-text {
+  margin-top: 18px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: .85;
 }
 
 .loader {
@@ -100,7 +108,7 @@ body::before {
   to { transform: rotate(360deg); }
 }
 
-/* APP */
+/* ================= APP ================= */
 .container {
   position: relative;
   z-index: 1;
@@ -116,7 +124,7 @@ body::before {
   width: 100%;
   max-width: 420px;
   background:
-    linear-gradient(180deg, rgba(255,0,0,0.12), #0a0a0a 65%);
+    linear-gradient(180deg, rgba(255,0,0,0.18), #0a0a0a 65%);
   border-radius: 22px;
   padding: 24px 18px;
   text-align: center;
@@ -163,7 +171,6 @@ body::before {
   background: linear-gradient(180deg, #1b1b1b, #060606);
   position: relative;
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.35); /* cornice sottile */
   box-shadow:
     inset 0 -14px 22px rgba(0,0,0,0.95),
     inset 0 1px 1px rgba(255,255,255,0.05),
@@ -178,7 +185,7 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 /* LOGO */
@@ -201,16 +208,30 @@ body::before {
   border-radius: 50%;
 }
 
-/* TESTO BOTTONI */
+/* ===== TITLE STRIP PREMIUM ===== */
 .card span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 9px 6px;
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--red); /* testo rosso */
+  color: var(--red);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,40,40,0.55) 0%,
+      rgba(120,0,0,0.35) 35%,
+      rgba(10,10,10,0.95) 85%
+    );
+
+  border-top: 1px solid rgba(255,255,255,0.15);
 }
 
-/* BOTTOM BAR */
+/* ===== BOTTOM BAR ===== */
 .bottom-bar {
   position: fixed;
   bottom: 16px;
@@ -239,7 +260,7 @@ body::before {
   gap: 6px;
 }
 
-/* ICON COLORS */
+/* ICON COLORS ORIGINALI */
 .icon-telegram { color:#229ED9; }
 .icon-instagram {
   background: linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);
@@ -263,6 +284,7 @@ body::before {
   <div class="splash-logo">
     <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
   </div>
+  <div class="splash-text">Gas Cloud</div>
   <div class="loader"></div>
 </div>
 
@@ -304,6 +326,7 @@ body::before {
   </div>
 </div>
 
+<!-- BOTTOM BAR -->
 <div class="bottom-bar">
   <a href="https://t.me/GASCLOUD2" class="icon-telegram">
     <svg viewBox="0 0 24 24"><path d="M9.04 15.84 8.9 19.7c.27 0 .39-.11.53-.25l2.54-2.44 5.27 3.86c.97.54 1.66.26 1.9-.9l3.44-16.1c.33-1.5-.54-2.09-1.49-1.74L1.8 9.7c-1.45.56-1.43 1.35-.26 1.71l4.88 1.52L18.6 5.5c.57-.36 1.1-.16.67.2z"/></svg>
@@ -335,7 +358,5 @@ function openCreateBy(){}
 </script>
 
 </body>
-</html>
-
 </html>
 
