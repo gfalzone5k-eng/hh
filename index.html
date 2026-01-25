@@ -10,8 +10,6 @@
 <style>
 :root {
   --red: #ff1a1a;
-  --dark1: #0a0a0a;
-  --dark2: #151515;
 }
 
 /* RESET */
@@ -26,9 +24,29 @@ body {
   color: #fff;
   background:
     radial-gradient(circle at 50% -10%, rgba(255,0,0,0.18), transparent 45%),
-    radial-gradient(circle at 20% 80%, rgba(255,0,0,0.12), transparent 50%),
-    linear-gradient(180deg, #050505, #0b0b0b 40%, #050505);
+    linear-gradient(180deg, #050505, #0b0b0b 45%, #050505);
   overflow-x: hidden;
+}
+
+/* ================= FUMO ANIMATO ================= */
+.smoke {
+  position: fixed;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.06), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.05), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.04), transparent 50%);
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: smokeMove 45s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes smokeMove {
+  0% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-4%, -3%) scale(1.05); }
+  100% { transform: translate(0,0) scale(1); }
 }
 
 /* vignette */
@@ -38,7 +56,7 @@ body::after {
   inset: 0;
   background: radial-gradient(circle, transparent 55%, rgba(0,0,0,0.85) 100%);
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 /* watermark */
@@ -47,15 +65,15 @@ body::before {
   position: fixed;
   inset: 0;
   background: url("https://tgwos.github.io/mini-app/gas-cloud-logo.png") center / 60% no-repeat;
-  opacity: 0.035;
+  opacity: 0.03;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 /* APP */
 .container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: 32px 20px 110px;
   display: flex;
   flex-direction: column;
@@ -67,7 +85,7 @@ body::before {
 .bubble {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(145deg, #1e1e1e, #0f0f0f);
+  background: linear-gradient(145deg, #1f1f1f, #0e0e0e);
   border-radius: 28px;
   padding: 26px 18px;
   text-align: center;
@@ -76,7 +94,7 @@ body::before {
   font-weight: 900;
   letter-spacing: 3px;
   text-transform: uppercase;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.85);
 }
 
 .bubble::after {
@@ -92,11 +110,11 @@ body::before {
 .panel {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-  border-radius: 34px;
+  background: linear-gradient(145deg, #1a1a1a, #0c0c0c);
+  border-radius: 36px;
   padding: 26px;
   border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+  box-shadow: 0 35px 70px rgba(0,0,0,0.95);
 }
 
 /* GRID */
@@ -106,32 +124,43 @@ body::before {
   gap: 20px;
 }
 
-/* CARD */
+/* ================= CARD PREMIUM ================= */
 .card {
   aspect-ratio: 1 / 1;
-  border-radius: 28px;
-  background: linear-gradient(145deg, #232323, #0f0f0f);
+  border-radius: 30px;
+  background: linear-gradient(145deg, #242424, #0f0f0f);
   position: relative;
   overflow: hidden;
   cursor: pointer;
   box-shadow:
     inset 0 1px 2px rgba(255,255,255,0.08),
-    inset 0 -6px 12px rgba(0,0,0,0.9),
-    0 18px 40px rgba(0,0,0,0.9);
+    inset 0 -8px 16px rgba(0,0,0,0.9),
+    0 20px 45px rgba(0,0,0,0.95);
 }
 
-/* riflesso lucido statico */
+/* riflesso vetro Apple */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255,255,255,0.35),
-    rgba(255,255,255,0.08) 25%,
-    transparent 55%
-  );
-  opacity: 0.35;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.45),
+      rgba(255,255,255,0.12) 22%,
+      transparent 50%
+    );
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* edge light */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
   pointer-events: none;
 }
 
@@ -148,14 +177,14 @@ body::before {
 
 /* LOGO */
 .logo-frame {
-  width: 72%;
-  padding-top: 72%;
+  width: 74%;
+  padding-top: 74%;
   border-radius: 50%;
   background: linear-gradient(145deg, #ff2a2a, #7a0000);
   position: relative;
   box-shadow:
-    0 0 22px rgba(255,0,0,0.8),
-    inset 0 0 10px rgba(0,0,0,0.9);
+    0 0 24px rgba(255,0,0,0.85),
+    inset 0 0 12px rgba(0,0,0,0.95);
 }
 
 .logo-frame img {
@@ -207,6 +236,8 @@ body::before {
 
 <body>
 
+<div class="smoke"></div>
+
 <div class="container">
   <div class="bubble">Gas Cloud</div>
 
@@ -253,12 +284,6 @@ body::before {
   </div>
 </div>
 
-<div class="overlay" id="overlay" onclick="closePopup()">
-  <div class="popup" onclick="event.stopPropagation()">
-    <div id="popupContent"></div>
-  </div>
-</div>
-
 <script>
 const tg = window.Telegram.WebApp;
 tg.ready();
@@ -299,6 +324,7 @@ function openCreateBy() {
 
 </body>
 </html>
+
 
 
 
