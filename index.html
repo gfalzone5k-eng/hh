@@ -123,7 +123,8 @@ body::before {
 .bubble {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(180deg, #1a1a1a, #090909);
+  background:
+    linear-gradient(180deg, rgba(255,0,0,0.35), #0a0a0a 55%);
   border-radius: 22px;
   padding: 24px 18px;
   text-align: center;
@@ -140,7 +141,7 @@ body::before {
   margin-top: 8px;
   font-size: 11px;
   letter-spacing: 2px;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 /* PANEL */
@@ -163,7 +164,7 @@ body::before {
   gap: 18px;
 }
 
-/* ===== CARD CLEAN ===== */
+/* CARD */
 .card {
   aspect-ratio: 1 / 1;
   border-radius: 22px;
@@ -185,7 +186,7 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 /* LOGO */
@@ -208,12 +209,17 @@ body::before {
   border-radius: 50%;
 }
 
-/* TEXT */
+/* TITLE STRIP */
 .card span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 8px 6px;
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
+  background: linear-gradient(180deg, rgba(255,0,0,0.35), #0a0a0a 70%);
 }
 
 /* ===== BOTTOM BAR ===== */
@@ -240,15 +246,17 @@ body::before {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
-  opacity: 0.85;
+  opacity: 0.9;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
 }
 
-.bottom-bar span {
-  font-size: 20px;
+.bottom-bar svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
 }
 </style>
 </head>
@@ -264,7 +272,6 @@ body::before {
   <div class="loader"></div>
 </div>
 
-<!-- APP -->
 <div class="container">
   <div class="bubble">Gas Cloud</div>
 
@@ -273,36 +280,28 @@ body::before {
 
       <div class="card" onclick="openCatalog()">
         <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
-          </div>
+          <div class="logo-frame"><img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png"></div>
           <span>CATALOGUE</span>
         </div>
       </div>
 
       <div class="card" onclick="openContacts()">
         <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
-          </div>
+          <div class="logo-frame"><img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png"></div>
           <span>CONTACTS</span>
         </div>
       </div>
 
       <div class="card" onclick="openChannels()">
         <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
-          </div>
+          <div class="logo-frame"><img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png"></div>
           <span>CHANNELS</span>
         </div>
       </div>
 
       <div class="card" onclick="openCreateBy()">
         <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
-          </div>
+          <div class="logo-frame"><img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png"></div>
           <span>CREATED BY</span>
         </div>
       </div>
@@ -311,10 +310,20 @@ body::before {
   </div>
 </div>
 
+<!-- BOTTOM BAR -->
 <div class="bottom-bar">
-  <a href="https://t.me/GASCLOUD2"><span>📨</span>Telegram</a>
-  <a href="https://instagram.com/"><span>📸</span>Instagram</a>
-  <a href="#"><span>🔐</span>Signal</a>
+  <a href="https://t.me/GASCLOUD2">
+    <svg viewBox="0 0 24 24"><path d="M9.04 15.84 8.9 19.7c.27 0 .39-.11.53-.25l2.54-2.44 5.27 3.86c.97.54 1.66.26 1.9-.9l3.44-16.1c.33-1.5-.54-2.09-1.49-1.74L1.8 9.7c-1.45.56-1.43 1.35-.26 1.71l4.88 1.52L18.6 5.5c.57-.36 1.1-.16.67.2z"/></svg>
+    Telegram
+  </a>
+  <a href="https://instagram.com/">
+    <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
+    Instagram
+  </a>
+  <a href="#">
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.9.6-3.5-1.4-3.5-1.4-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.1 1 2.6.8.1-.6.3-1 .6-1.2-2.3-.3-4.7-1.2-4.7-5.1 0-1.1.4-2 1-2.7-.1-.3-.4-1.2.1-2.5 0 0 .8-.3 2.6 1a9 9 0 0 1 4.8 0c1.8-1.3 2.6-1 2.6-1 .5 1.3.2 2.2.1 2.5.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.7 5.1.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+    Signal
+  </a>
 </div>
 
 <script>
@@ -326,9 +335,7 @@ setTimeout(() => {
   document.getElementById("splash").classList.add("hide");
 }, 1500);
 
-function openCatalog() {
-  window.location.href = "catalog.html";
-}
+function openCatalog() { window.location.href = "catalog.html"; }
 function openContacts(){}
 function openChannels(){}
 function openCreateBy(){}
@@ -336,6 +343,4 @@ function openCreateBy(){}
 
 </body>
 </html>
-
-
 
