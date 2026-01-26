@@ -49,9 +49,7 @@ body::before {
 #splash {
   position:fixed;
   inset:0;
-  background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.35), transparent 55%),
-    linear-gradient(180deg,#020202,#000);
+  background:linear-gradient(180deg,#020202,#000);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -108,13 +106,12 @@ body::before {
 .bubble {
   width:100%;
   max-width:420px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,40,40,0.28),
-      rgba(120,0,0,0.18) 35%,
-      rgba(10,10,10,0.95) 85%
-    );
+  background:linear-gradient(
+    180deg,
+    rgba(255,40,40,0.28),
+    rgba(120,0,0,0.18) 35%,
+    rgba(10,10,10,0.95) 85%
+  );
   border-radius:22px;
   padding:24px 18px;
   text-align:center;
@@ -125,126 +122,99 @@ body::before {
   box-shadow:0 20px 50px rgba(0,0,0,0.95);
 }
 
-.bubble::after {
-  content:"Official bot";
-  display:block;
-  margin-top:8px;
-  font-size:11px;
-  letter-spacing:2px;
-  opacity:.7;
-}
-
 .panel {
   width:100%;
   max-width:420px;
   background:linear-gradient(180deg,#141414,#070707);
   border-radius:26px;
   padding:22px;
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.04),
-    inset 0 -10px 20px rgba(0,0,0,0.9),
-    0 30px 70px rgba(0,0,0,0.95);
+  box-shadow:0 30px 70px rgba(0,0,0,0.95);
 }
 
-/* HERO CATALOG */
-.card-main {
-  height:180px;
+/* HERO CATALOG – FIXED */
+.catalog-hero {
+  height:170px;
   border-radius:22px;
   background:
-    linear-gradient(
-      180deg,
-      rgba(255,50,50,0.45),
-      rgba(160,0,0,0.35) 35%,
-      rgba(10,10,10,0.95) 85%
-    );
+    radial-gradient(circle at top, rgba(255,60,60,.35), transparent 60%),
+    linear-gradient(180deg, #1a0000, #050505 80%);
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-direction:column;
+  gap:14px;
   cursor:pointer;
-  box-shadow:
-    inset 0 -18px 28px rgba(0,0,0,0.95),
-    inset 0 1px 1px rgba(255,255,255,0.08),
-    0 30px 80px rgba(0,0,0,1),
-    0 0 40px rgba(255,0,0,0.35);
-  animation:catalogPulse 4.5s ease-in-out infinite;
+  box-shadow:0 0 60px rgba(255,0,0,.35);
 }
 
-@keyframes catalogPulse {
-  0%,100%{box-shadow:0 30px 80px rgba(0,0,0,1),0 0 30px rgba(255,0,0,0.25);}
-  50%{box-shadow:0 30px 80px rgba(0,0,0,1),0 0 55px rgba(255,0,0,0.55);}
-}
-
-.card-content {
-  display:flex;
-  align-items:center;
-  gap:22px;
-}
-
-.logo-frame {
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  background:radial-gradient(circle,#ff2a2a,#5a0000);
-  box-shadow:
-    inset 0 0 22px rgba(0,0,0,0.95),
-    0 0 26px rgba(255,0,0,0.75);
-}
-
-.logo-frame img {
-  width:100%;
-  height:100%;
+.catalog-hero img {
+  width:88px;
+  height:88px;
   border-radius:50%;
 }
 
-.card-main span {
-  font-size:18px;
-  font-weight:900;
+.catalog-hero h2 {
+  margin:0;
+  font-size:20px;
   letter-spacing:4px;
-  padding:14px 16px;
-  text-transform:uppercase;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,60,60,0.7),
-      rgba(160,0,0,0.45) 45%,
-      rgba(10,10,10,0.95)
-    );
-  border-radius:12px;
+  font-weight:900;
 }
 
-/* INFO STRIP – migliorata */
+/* INFO BUTTONS */
 .info-strip {
-  margin-top:26px;
+  margin-top:24px;
   display:flex;
-  justify-content:space-between;
-  gap:10px;
+  gap:12px;
 }
 
 .info-btn {
   flex:1;
+  padding:14px 8px;
   text-align:center;
-  padding:12px 6px;
   font-size:11px;
   font-weight:900;
   letter-spacing:2px;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.8);
-  border-radius:14px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.05),
-      rgba(0,0,0,0.6)
-    );
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.05),
-    inset 0 -6px 12px rgba(0,0,0,0.8);
+  border-radius:16px;
+  background:linear-gradient(180deg,#101010,#050505);
+  box-shadow:inset 0 -6px 12px rgba(0,0,0,.9);
   cursor:pointer;
 }
 
-.info-btn:active {
-  color:var(--red);
-  box-shadow:0 0 14px rgba(255,0,0,0.5);
+/* POPUP */
+.popup {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+
+.popup-box {
+  width:85%;
+  max-width:320px;
+  background:linear-gradient(180deg,#140000,#050505);
+  border-radius:22px;
+  padding:26px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(255,0,0,.4);
+}
+
+.popup-box h3 {
+  margin:0 0 12px;
+  letter-spacing:3px;
+}
+
+.popup-box button {
+  margin-top:18px;
+  padding:10px 18px;
+  border:none;
+  border-radius:14px;
+  background:var(--red);
+  color:#000;
+  font-weight:900;
 }
 
 /* BOTTOM BAR */
@@ -259,10 +229,6 @@ body::before {
   display:flex;
   justify-content:space-evenly;
   align-items:center;
-  z-index:999;
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.05),
-    0 20px 50px rgba(0,0,0,0.95);
 }
 
 .bottom-bar a {
@@ -274,7 +240,6 @@ body::before {
   gap:6px;
   font-size:11px;
   font-weight:800;
-  letter-spacing:1px;
 }
 
 .bottom-bar svg {
@@ -299,59 +264,62 @@ body::before {
 
   <div class="panel">
 
-    <div class="card-main" onclick="openCatalog()">
-      <div class="card-content">
-        <div class="logo-frame">
-          <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
-        </div>
-        <span>Catalogue</span>
-      </div>
+    <div class="catalog-hero" onclick="openCatalog()">
+      <img src="https://tgwos.github.io/mini-app/gas-cloud-logo.png">
+      <h2>CATALOGUE</h2>
     </div>
 
     <div class="info-strip">
-      <div class="info-btn" onclick="openContacts()">Contacts</div>
-      <div class="info-btn" onclick="openChannels()">Channels</div>
-      <div class="info-btn" onclick="openCreateBy()">Created by</div>
+      <div class="info-btn" onclick="openPopup('Contacts')">Contacts</div>
+      <div class="info-btn" onclick="openPopup('Channels')">Channels</div>
+      <div class="info-btn" onclick="openPopup('Created by')">Created by</div>
     </div>
 
   </div>
 </div>
 
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h3 id="popupTitle"></h3>
+    <p>Coming soon</p>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
+
 <div class="bottom-bar">
   <a href="https://t.me/GASCLOUD2">
-    <!-- Telegram originale -->
-    <svg viewBox="0 0 24 24">
-      <path d="M9.04 15.84 8.9 19.7c.27 0 .39-.11.53-.25l2.54-2.44 5.27 3.86c.97.54 1.66.26 1.9-.9l3.44-16.1c.33-1.5-.54-2.09-1.49-1.74L1.8 9.7c-1.45.56-1.43 1.35-.26 1.71l4.88 1.52L18.6 5.5c.57-.36 1.1-.16.67.2z"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="M9.04 15.84 8.9 19.7c.27 0 .39-.11.53-.25l2.54-2.44 5.27 3.86c.97.54 1.66.26 1.9-.9l3.44-16.1c.33-1.5-.54-2.09-1.49-1.74L1.8 9.7c-1.45.56-1.43 1.35-.26 1.71l4.88 1.52L18.6 5.5c.57-.36 1.1-.16.67.2z"/></svg>
     Telegram
   </a>
 
   <a href="https://instagram.com/">
-    <!-- Instagram originale -->
-    <svg viewBox="0 0 24 24">
-      <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
     Instagram
   </a>
 </div>
 
 <script>
 const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
+tg.ready(); tg.expand();
 
-setTimeout(()=>{
-  document.getElementById("splash").classList.add("hide");
-},1500);
+setTimeout(()=>{ document.getElementById("splash").classList.add("hide"); },1500);
 
 function openCatalog(){ window.location.href="catalog.html"; }
-function openContacts(){}
-function openChannels(){}
-function openCreateBy(){}
+
+function openPopup(title){
+  document.getElementById("popupTitle").innerText = title;
+  document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
 </script>
 
 </body>
 </html>
+
 
 
 
