@@ -8,9 +8,7 @@
   <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
   <style>
-    :root {
-      --red: #ff1a1a;
-    }
+    :root { --red:#ff1a1a; }
 
     * {
       box-sizing: border-box;
@@ -47,7 +45,7 @@
       100% { transform: translate(0,0); }
     }
 
-    /* SPLASH */
+    /* ===== SPLASH ===== */
     #splash {
       position: fixed;
       inset: 0;
@@ -94,10 +92,9 @@
       animation: spin 1s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ===== CONTENT ===== */
     .container {
       position: relative;
       z-index: 1;
@@ -114,9 +111,8 @@
       background:
         linear-gradient(
           180deg,
-          rgba(255,40,40,0.28) 0%,
-          rgba(120,0,0,0.18) 35%,
-          rgba(10,10,10,0.95) 85%
+          rgba(255,40,40,0.28),
+          rgba(10,10,10,0.95)
         );
       border-radius: 22px;
       padding: 24px 18px;
@@ -134,7 +130,7 @@
       margin-top: 8px;
       font-size: 11px;
       letter-spacing: 2px;
-      opacity: 0.7;
+      opacity: .7;
     }
 
     .panel {
@@ -149,6 +145,7 @@
         0 30px 70px rgba(0,0,0,0.95);
     }
 
+    /* ===== GRID ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -167,42 +164,15 @@
         0 16px 40px rgba(0,0,0,0.95);
     }
 
-    /* ===== CATALOGUE SPECIAL ===== */
+    /* ===== CATALOGUE ===== */
     .card-main {
       grid-column: 1 / -1;
-      height: 90px;
+      height: 92px;
+      padding: 0 20px;
       display: flex;
       align-items: center;
-      padding: 0 22px;
     }
 
-    .card-main .card-content {
-      position: relative;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 18px;
-      width: 100%;
-    }
-
-    .card-main .logo-frame {
-      width: 56px;
-      height: 56px;
-      padding: 0;
-      flex-shrink: 0;
-    }
-
-    .card-main span {
-      background: none;
-      border: none;
-      padding: 0;
-      font-size: 18px;
-      letter-spacing: 3px;
-      text-align: left;
-    }
-
-    /* Glossy animation */
     .card-main::after {
       content: "";
       position: absolute;
@@ -221,14 +191,44 @@
 
     @keyframes shine {
       0% { left: -60%; }
-      45% { left: 120%; }
+      40% { left: 120%; }
       100% { left: 120%; }
     }
 
-    /* ===== SMALL CARDS ===== */
-    .card-small {
-      aspect-ratio: 1 / 1.05;
+    .card-main-content {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 1;
     }
+
+    .card-main .logo-frame {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ff2a2a, #5a0000);
+      box-shadow: 0 0 14px rgba(255,0,0,.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-main .logo-frame img {
+      width: 80%;
+      height: 80%;
+      border-radius: 50%;
+    }
+
+    .card-main .title {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ===== SMALL CARDS ===== */
+    .card-small { aspect-ratio: 1 / 1.05; }
 
     .card-content {
       position: absolute;
@@ -241,19 +241,11 @@
     }
 
     .logo-frame {
-      width: 78%;
-      padding-top: 78%;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ff2a2a, #5a0000);
-      box-shadow:
-        inset 0 0 18px rgba(0,0,0,0.95),
-        0 0 14px rgba(255,0,0,0.6);
-      position: relative;
-    }
-
-    .card-small .logo-frame {
       width: 70%;
       padding-top: 70%;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ff2a2a, #5a0000);
+      position: relative;
     }
 
     .logo-frame img {
@@ -265,29 +257,54 @@
     }
 
     .card span {
-      display: block;
       width: 100%;
       text-align: center;
-      padding: 8px 6px;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 6px 4px;
       background:
         linear-gradient(
           180deg,
-          rgba(255,40,40,0.55) 0%,
-          rgba(120,0,0,0.35) 40%,
-          rgba(10,10,10,0.95) 90%
+          rgba(255,40,40,0.55),
+          rgba(10,10,10,0.95)
         );
-      border-top: 1px solid rgba(255,26,26,0.7);
-      border-bottom: 1px solid rgba(255,26,26,0.45);
     }
 
-    .card-small span {
+    /* ===== BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      height: 72px;
+      background: linear-gradient(180deg, #0f0f0f, #050505);
+      border-radius: 26px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 999;
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.05),
+        0 20px 50px rgba(0,0,0,0.95);
+    }
+
+    .bottom-bar a {
+      color: var(--red);
+      text-decoration: none;
       font-size: 11px;
-      letter-spacing: 1.4px;
-      padding: 6px 4px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bottom-bar svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
     }
   </style>
 </head>
@@ -306,12 +323,13 @@
 
   <div class="panel">
     <div class="grid">
+
       <div class="card card-main" onclick="openCatalog()">
-        <div class="card-content">
+        <div class="card-main-content">
           <div class="logo-frame">
             <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
           </div>
-          <span>CATALOGUE</span>
+          <div class="title">CATALOGUE</div>
         </div>
       </div>
 
@@ -335,8 +353,15 @@
           <span>CREATED BY</span>
         </div>
       </div>
+
     </div>
   </div>
+</div>
+
+<div class="bottom-bar">
+  <a href="https://t.me/GASCLOUD2">Telegram</a>
+  <a href="https://instagram.com/">Instagram</a>
+  <a href="#">Signal</a>
 </div>
 
 <script>
@@ -348,14 +373,38 @@
     document.getElementById("splash").classList.add("hide");
   }, 1500);
 
-  function openCatalog(){ window.location.href="catalog.html"; }
-  function openContacts(){}
-  function openChannels(){}
-  function openCreateBy(){}
+  function openCatalog() {
+    window.location.href = "catalog.html";
+  }
+
+  function openContacts() {
+    tg.showPopup({
+      title: "Contacts",
+      message: "Supporto:\n@GasCloudSupport",
+      buttons: [{ type: "close" }]
+    });
+  }
+
+  function openChannels() {
+    tg.showPopup({
+      title: "Channels",
+      message: "Canale ufficiale:\n@GASCLOUD2",
+      buttons: [{ type: "close" }]
+    });
+  }
+
+  function openCreateBy() {
+    tg.showPopup({
+      title: "Created by",
+      message: "Gas Cloud\n© 2026",
+      buttons: [{ type: "close" }]
+    });
+  }
 </script>
 
 </body>
 </html>
+
 
 
 
