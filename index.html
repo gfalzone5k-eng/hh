@@ -192,33 +192,27 @@
       z-index: 1;
     }
 
-   .card-main .logo-frame {
+  /* FIX DEFINITIVA LOGO CATALOGUE – MASK CIRCULAR */
+.card-main .logo-frame {
   width: 58px;
   aspect-ratio: 1 / 1;
-  height: auto;
-
-  min-width: 58px;
-  max-width: 58px;
-
   border-radius: 50%;
-  background: radial-gradient(circle at center, #ff2a2a, #5a0000);
+  background-color: #5a0000;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* FORZA CERCHIO PERFETTO */
+  background-image: url("https://tgwos.github.io/mini-app1/gas-cloud-logo.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   overflow: hidden;
   flex-shrink: 0;
 }
 
+/* NASCONDE IMG ORIGINALE */
 .card-main .logo-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
+  display: none;
 }
-
     /* ===== SMALL CARDS ===== */
     .card-small { aspect-ratio: 1 / 1.05; }
 
