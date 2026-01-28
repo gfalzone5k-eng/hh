@@ -1,323 +1,248 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Gas Cloud – Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Gas Cloud – Home</title>
 
-<script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
-<style>
-:root { --red:#ff1a1a; }
+  <style>
+    :root { --red:#ff1a1a; }
 
-* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  color:#fff;
-  background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 55%),
-    linear-gradient(180deg,#020202,#0a0a0a 40%,#020202);
-  overflow-x:hidden;
-}
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:#fff;
+      background:
+        radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 55%),
+        linear-gradient(180deg,#020202,#0a0a0a 40%,#020202);
+      overflow-x:hidden;
+    }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:-40%;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(255,0,0,0.20), transparent 45%),
-    radial-gradient(circle at 70% 60%, rgba(160,0,0,0.18), transparent 50%);
-  filter:blur(90px);
-  opacity:.55;
-  animation:smoke 70s linear infinite;
-  pointer-events:none;
-  z-index:0;
-}
+    body::before {
+      content:"";
+      position:fixed;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(255,0,0,0.20), transparent 45%),
+        radial-gradient(circle at 70% 60%, rgba(160,0,0,0.18), transparent 50%);
+      filter:blur(90px);
+      opacity:.55;
+      animation:smoke 70s linear infinite;
+      pointer-events:none;
+      z-index:0;
+    }
 
-@keyframes smoke{
-  0%{transform:translate(0,0)}
-  50%{transform:translate(-6%,-4%)}
-  100%{transform:translate(0,0)}
-}
+    @keyframes smoke {
+      0%{transform:translate(0,0)}
+      50%{transform:translate(-6%,-4%)}
+      100%{transform:translate(0,0)}
+    }
 
-/* SPLASH */
-#splash{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.35), transparent 55%),
-    linear-gradient(180deg,#020202,#000);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  transition:opacity .6s ease;
-}
-#splash.hide{opacity:0;pointer-events:none;}
+    /* SPLASH */
+    #splash {
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 120%, rgba(255,0,0,0.35), transparent 55%),
+        linear-gradient(180deg,#020202,#000);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:99999;
+      transition:opacity .6s ease;
+    }
 
-.splash-logo{
-  width:120px;height:120px;border-radius:50%;
-  background:radial-gradient(circle,#ff2a2a,#5a0000);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 40px rgba(255,0,0,.9);
-}
-.splash-logo img{width:86%;height:86%;border-radius:50%;}
+    #splash.hide { opacity:0; pointer-events:none; }
 
-.loader{
-  margin-top:26px;width:36px;height:36px;
-  border:3px solid rgba(255,255,255,.15);
-  border-top-color:var(--red);
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
+    .splash-logo {
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:radial-gradient(circle,#ff2a2a,#5a0000);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 0 40px rgba(255,0,0,.9);
+    }
 
-.container{
-  position:relative;z-index:1;
-  padding:30px 18px 150px;
-  display:flex;flex-direction:column;
-  gap:26px;align-items:center;
-}
+    .splash-logo img {
+      width:86%;
+      height:86%;
+      border-radius:50%;
+    }
 
-.bubble{
-  width:100%;max-width:420px;
-  background:linear-gradient(180deg,rgba(255,40,40,.28),rgba(120,0,0,.18) 35%,rgba(10,10,10,.95) 85%);
-  border-radius:22px;padding:24px 18px;
-  text-align:center;font-size:22px;
-  font-weight:900;letter-spacing:4px;
-  text-transform:uppercase;
-  box-shadow:0 20px 50px rgba(0,0,0,.95);
-}
-.bubble::after{
-  content:"Official bot";
-  display:block;margin-top:8px;
-  font-size:11px;letter-spacing:2px;opacity:.7;
-}
+    .loader {
+      margin-top:26px;
+      width:36px;
+      height:36px;
+      border:3px solid rgba(255,255,255,.15);
+      border-top-color:var(--red);
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+    }
 
-.panel{
-  width:100%;max-width:420px;
-  background:linear-gradient(180deg,#141414,#070707);
-  border-radius:26px;padding:22px;
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,.04),
-    inset 0 -10px 20px rgba(0,0,0,.9),
-    0 30px 70px rgba(0,0,0,.95);
-}
+    @keyframes spin { to{transform:rotate(360deg)} }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
+    .container {
+      position:relative;
+      z-index:1;
+      padding:30px 18px 150px;
+      display:flex;
+      flex-direction:column;
+      gap:26px;
+      align-items:center;
+    }
 
-/* CARD BASE (ORIGINALE) */
-.card{
-  aspect-ratio:1/1;
-  border-radius:22px;
-  background:linear-gradient(180deg,#1b1b1b,#060606);
-  position:relative;
-  cursor:pointer;
-  overflow:hidden;
-  box-shadow:
-    inset 0 -14px 22px rgba(0,0,0,.95),
-    inset 0 1px 1px rgba(255,255,255,.05),
-    0 16px 40px rgba(0,0,0,.95);
-}
+    .bubble {
+      width:100%;
+      max-width:420px;
+      background:linear-gradient(180deg,rgba(255,40,40,.28),rgba(120,0,0,.18) 35%,rgba(10,10,10,.95) 85%);
+      border-radius:22px;
+      padding:24px 18px;
+      text-align:center;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      box-shadow:0 20px 50px rgba(0,0,0,.95);
+    }
 
-.card-content{
-  position:absolute;inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  transform:translateY(6px);
-}
+    .bubble::after {
+      content:"Official bot";
+      display:block;
+      margin-top:8px;
+      font-size:11px;
+      letter-spacing:2px;
+      opacity:.7;
+    }
 
-.logo-frame{
-  width:78%;
-  padding-top:78%;
-  border-radius:50%;
-  background:radial-gradient(circle,#ff2a2a,#5a0000);
-  box-shadow:
-    inset 0 0 18px rgba(0,0,0,.95),
-    0 0 14px rgba(255,0,0,.6);
-  position:relative;
-}
+    .panel {
+      width:100%;
+      max-width:420px;
+      background:linear-gradient(180deg,#141414,#070707);
+      border-radius:26px;
+      padding:22px;
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.04),
+        inset 0 -10px 20px rgba(0,0,0,.9),
+        0 30px 70px rgba(0,0,0,.95);
+    }
 
-.logo-frame img{
-  position:absolute;
-  inset:6px;
-  width:calc(100% - 12px);
-  height:calc(100% - 12px);
-  border-radius:50%;
-}
+    /* ===== GRID FIX ===== */
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr); /* FIX */
+      gap:18px;
+    }
 
-.card span{
-  display:block;width:100%;
-  text-align:center;
-  padding:8px 6px;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#fff;
-  background:linear-gradient(180deg,rgba(255,40,40,.55),rgba(120,0,0,.35) 40%,rgba(10,10,10,.95) 90%);
-  border-top:1px solid rgba(255,26,26,.7);
-  border-bottom:1px solid rgba(255,26,26,.45);
-}
+    .card {
+      aspect-ratio:1/1;
+      border-radius:22px;
+      background:linear-gradient(180deg,#1b1b1b,#060606);
+      position:relative;
+      cursor:pointer;
+      overflow:hidden;
+      box-shadow:
+        inset 0 -14px 22px rgba(0,0,0,.95),
+        inset 0 1px 1px rgba(255,255,255,.05),
+        0 16px 40px rgba(0,0,0,.95);
+    }
 
-/* ===== MODIFICHE ===== */
+    .card-content {
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      transform:translateY(6px);
+    }
 
-/* CATALOGUE */
-.card-main{
-  grid-column:1 / -1;
-  aspect-ratio:2.6 / 1;
-}
-.card-main .card-content{
-  flex-direction:row;
-  justify-content:flex-start;
-  padding-left:18px;
-  gap:18px;
-  transform:none;
-}
-.card-main .logo-frame{
-  width:72px;
-  padding-top:72px;
-}
-.card-main span{
-  font-size:18px;
-  letter-spacing:3px;
-}
+    .logo-frame {
+      width:78%;
+      padding-top:78%;
+      border-radius:50%;
+      background:radial-gradient(circle,#ff2a2a,#5a0000);
+      box-shadow:
+        inset 0 0 18px rgba(0,0,0,.95),
+        0 0 14px rgba(255,0,0,.6);
+      position:relative;
+    }
 
-/* 3 BOTTONI PICCOLI IN FILA */
-.card-small{
-  transform:scale(0.88);
-}
+    .logo-frame img {
+      position:absolute;
+      inset:6px;
+      width:calc(100% - 12px);
+      height:calc(100% - 12px);
+      border-radius:50%;
+    }
 
-/* BOTTOM BAR */
-.bottom-bar{
-  position:fixed;
-  bottom:16px;left:16px;right:16px;
-  height:72px;
-  background:linear-gradient(180deg,#0f0f0f,#050505);
-  border-radius:26px;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:999;
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,.05),
-    0 20px 50px rgba(0,0,0,.95);
-}
+    .card span {
+      display:block;
+      width:100%;
+      text-align:center;
+      padding:8px 6px;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:#fff;
+      background:linear-gradient(180deg,rgba(255,40,40,.55),rgba(120,0,0,.35) 40%,rgba(10,10,10,.95) 90%);
+      border-top:1px solid rgba(255,26,26,.7);
+      border-bottom:1px solid rgba(255,26,26,.45);
+    }
 
-.bottom-bar a{
-  color:var(--red);
-  text-decoration:none;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-}
+    /* ===== CATALOGUE FIX ===== */
+    .card-main {
+      grid-column:1 / -1;
+      aspect-ratio:2.3 / 1;
+    }
 
-.bottom-bar svg{width:22px;height:22px;fill:currentColor;}
-</style>
+    /* ===== BOTTOM BAR (ORIGINALE) ===== */
+    .bottom-bar {
+      position:fixed;
+      bottom:16px;
+      left:16px;
+      right:16px;
+      height:72px;
+      background:linear-gradient(180deg,#0f0f0f,#050505);
+      border-radius:26px;
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+      z-index:999;
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.05),
+        0 20px 50px rgba(0,0,0,.95);
+    }
+
+    .bottom-bar a {
+      color:var(--red);
+      text-decoration:none;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:1px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+
+    .bottom-bar svg {
+      width:22px;
+      height:22px;
+      fill:currentColor;
+    }
+  </style>
 </head>
 
 <body>
-
-<div id="splash">
-  <div class="splash-logo">
-    <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
-  </div>
-  <div class="loader"></div>
-</div>
-
-<div class="container">
-  <div class="bubble">Gas Cloud</div>
-
-  <div class="panel">
-    <div class="grid">
-
-      <div class="card card-main" onclick="openCatalog()">
-        <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
-          </div>
-          <span>CATALOGUE</span>
-        </div>
-      </div>
-
-      <div class="card card-small" onclick="openContacts()">
-        <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
-          </div>
-          <span>CONTACTS</span>
-        </div>
-      </div>
-
-      <div class="card card-small" onclick="openChannels()">
-        <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
-          </div>
-          <span>CHANNELS</span>
-        </div>
-      </div>
-
-      <div class="card card-small" onclick="openCreateBy()">
-        <div class="card-content">
-          <div class="logo-frame">
-            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
-          </div>
-          <span>CREATED BY</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="bottom-bar">
-  <a href="https://t.me/GASCLOUD2">
-    <svg viewBox="0 0 24 24"><path d="M9.04 15.84 8.9 19.7c.27 0 .39-.11.53-.25l2.54-2.44 5.27 3.86c.97.54 1.66.26 1.9-.9l3.44-16.1c.33-1.5-.54-2.09-1.49-1.74L1.8 9.7c-1.45.56-1.43 1.35-.26 1.71l4.88 1.52L18.6 5.5c.57-.36 1.1-.16.67.2z"/></svg>
-    Telegram
-  </a>
-  <a href="https://instagram.com/">
-    <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
-    Instagram
-  </a>
-  <a href="#">
-    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.9.6-3.5-1.4-3.5-1.4-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.1 1 2.6.8.1-.6.3-1 .6-1.2-2.3-.3-4.7-1.2-4.7-5.1 0-1.1.4-2 1-2.7-.1-.3-.4-1.2.1-2.5 0 0 .8-.3 2.6 1a9 9 0 0 1 4.8 0c1.8-1.3 2.6-1 2.6-1 .5 1.3.2 2.2.1 2.5.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.7 5.1.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
-    Signal
-  </a>
-</div>
-
-<script>
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
-
-setTimeout(()=>{
-  document.getElementById("splash").classList.add("hide");
-},1500);
-
-function openCatalog(){ window.location.href="catalog.html"; }
-function openContacts(){}
-function openChannels(){}
-function openCreateBy(){}
-</script>
-
-</body>
-</html>
 
 
 
