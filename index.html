@@ -193,73 +193,50 @@
     }
 
   /* FIX DEFINITIVA LOGO CATALOGUE – MASK CIRCULAR */
-.card-main .logo-frame {
-  width: 58px;
-  height: 58px;
-  min-width: 58px;
-  min-height: 58px;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-
-  background-image: url("https://tgwos.github.io/mini-app1/gas-cloud-logo.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  overflow: hidden;
+.card-catalog {
+  grid-column: 1 / -1;
+  height: 96px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #1b1b1b, #060606);
+  box-shadow:
+    inset 0 -14px 22px rgba(0,0,0,0.95),
+    inset 0 1px 1px rgba(255,255,255,0.05),
+    0 16px 40px rgba(0,0,0,0.95);
+  cursor: pointer;
 }
 
-/* NASCONDE IMG ORIGINALE */
-.card-main .logo-frame img {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 50% !important;
-  object-fit: cover !important;
-}
-    /* ===== SMALL CARDS ===== */
-    .card-small { aspect-ratio: 1 / 1.05; }
-
-    .card-content {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .card-main-content {
+.catalog-content {
+  height: 100%;
+  display: flex;
   align-items: center;
+  gap: 18px;
+  padding: 0 20px;
 }
 
-    .logo-frame {
-      width: 70%;
-      padding-top: 70%;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ff2a2a, #5a0000);
-      position: relative;
-    }
+/* RIUSA LOGO IDENTICO AI BOTTONI SOTTO */
+.card-catalog .logo-frame {
+  width: 58px;
+  padding-top: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff2a2a, #5a0000);
+  position: relative;
+  flex-shrink: 0;
+}
 
-    .logo-frame img {
-      position: absolute;
-      inset: 6px;
-      width: calc(100% - 12px);
-      height: calc(100% - 12px);
-      border-radius: 50%;
-      object-fit: cover;
-    }
+.card-catalog .logo-frame img {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-    .card span {
-      width: 100%;
-      text-align: center;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      padding: 6px 4px;
-      background: linear-gradient(180deg, rgba(255,40,40,0.55), rgba(10,10,10,0.95));
-    }
-
+.card-catalog span {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
     /* ===== BOTTOM BAR ===== */
     .bottom-bar {
       position: fixed;
