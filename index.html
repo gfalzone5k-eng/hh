@@ -1,208 +1,165 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Gas Cloud – Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Gas Cloud</title>
 
-  <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
+<script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
-  <style>
-    :root { --red:#ff1a1a; }
+<style>
+:root { --red:#ff1a1a; }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      color: #fff;
-      background:
-        radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 55%),
-        linear-gradient(180deg, #020202, #0a0a0a 40%, #020202);
-      overflow-x: hidden;
-    }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,0.25), transparent 55%),
+    linear-gradient(180deg, #020202, #0a0a0a 40%, #020202);
+  overflow-x: hidden;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 30% 40%, rgba(255,0,0,0.20), transparent 45%),
-        radial-gradient(circle at 70% 60%, rgba(160,0,0,0.18), transparent 50%);
-      filter: blur(90px);
-      opacity: 0.55;
-      animation: smoke 70s linear infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
+body::before {
+  content: "";
+  position: fixed;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255,0,0,0.20), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(160,0,0,0.18), transparent 50%);
+  filter: blur(90px);
+  opacity: .55;
+  animation: smoke 70s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
 
-    @keyframes smoke {
-      0% { transform: translate(0,0); }
-      50% { transform: translate(-6%, -4%); }
-      100% { transform: translate(0,0); }
-    }
+@keyframes smoke {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-6%, -4%); }
+  100% { transform: translate(0,0); }
+}
 
-    /* ===== SPLASH ===== */
-    #splash {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 120%, rgba(255,0,0,0.35), transparent 55%),
-        linear-gradient(180deg, #020202, #000);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      transition: opacity .6s ease;
-    }
+/* ===== SPLASH ===== */
+#splash {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 120%, rgba(255,0,0,.35), transparent 55%),
+    linear-gradient(180deg, #020202, #000);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
 
-    #splash.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
+#splash.hide { opacity: 0; pointer-events: none; transition: .6s; }
 
-    .splash-logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ff2a2a, #5a0000);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 40px rgba(255,0,0,.9);
-    }
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff2a2a, #5a0000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(255,0,0,.9);
+}
 
-    .splash-logo img {
-      width: 86%;
-      height: 86%;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+.splash-logo img {
+  width: 86%;
+  height: 86%;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-    .loader {
-      margin-top: 26px;
-      width: 36px;
-      height: 36px;
-      border: 3px solid rgba(255,255,255,.15);
-      border-top-color: var(--red);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
+.loader {
+  margin-top: 26px;
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ===== CONTENT ===== */
-    .container {
-      position: relative;
-      z-index: 1;
-      padding: 30px 18px 150px;
-      display: flex;
-      flex-direction: column;
-      gap: 26px;
-      align-items: center;
-    }
+/* ===== LAYOUT ===== */
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 30px 18px 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  align-items: center;
+}
 
-    .bubble {
-      width: 100%;
-      max-width: 420px;
-      background: linear-gradient(180deg, rgba(255,40,40,0.28), rgba(10,10,10,0.95));
-      border-radius: 22px;
-      padding: 24px 18px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.95);
-    }
+.bubble {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(180deg, rgba(255,40,40,.28), rgba(10,10,10,.95));
+  border-radius: 22px;
+  padding: 24px 18px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  box-shadow: 0 20px 50px rgba(0,0,0,.95);
+}
 
-    .bubble::after {
-      content: "Official bot";
-      display: block;
-      margin-top: 8px;
-      font-size: 11px;
-      letter-spacing: 2px;
-      opacity: .7;
-    }
+.bubble::after {
+  content: "Official bot";
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  opacity: .7;
+}
 
-    .panel {
-      width: 100%;
-      max-width: 420px;
-      background: linear-gradient(180deg, #141414, #070707);
-      border-radius: 26px;
-      padding: 22px;
-      box-shadow:
-        inset 0 1px 1px rgba(255,255,255,0.04),
-        inset 0 -10px 20px rgba(0,0,0,0.9),
-        0 30px 70px rgba(0,0,0,0.95);
-    }
+.panel {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(180deg, #141414, #070707);
+  border-radius: 26px;
+  padding: 22px;
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.04),
+    inset 0 -10px 20px rgba(0,0,0,.9),
+    0 30px 70px rgba(0,0,0,.95);
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
 
-    .card {
-      border-radius: 22px;
-      background: linear-gradient(180deg, #1b1b1b, #060606);
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
-      box-shadow:
-        inset 0 -14px 22px rgba(0,0,0,0.95),
-        inset 0 1px 1px rgba(255,255,255,0.05),
-        0 16px 40px rgba(0,0,0,0.95);
-    }
+/* ===== CARD BASE ===== */
+.card {
+  border-radius: 22px;
+  background: linear-gradient(180deg, #1b1b1b, #060606);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow:
+    inset 0 -14px 22px rgba(0,0,0,.95),
+    inset 0 1px 1px rgba(255,255,255,.05),
+    0 16px 40px rgba(0,0,0,.95);
+}
 
-    /* ===== CATALOGUE ===== */
-    .card-main {
-      grid-column: 1 / -1;
-      height: 92px;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    .card-main::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -60%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
-      animation: shine 3.5s infinite;
-    }
-
-    @keyframes shine {
-      0% { left: -60%; }
-      40% { left: 120%; }
-      100% { left: 120%; }
-    }
-
-    .card-main-content {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      z-index: 1;
-    }
-
-  /* FIX DEFINITIVA LOGO CATALOGUE – MASK CIRCULAR */
+/* ===== CATALOGO ===== */
 .card-catalog {
   grid-column: 1 / -1;
   height: 96px;
-  border-radius: 22px;
-  background: linear-gradient(180deg, #1b1b1b, #060606);
-  box-shadow:
-    inset 0 -14px 22px rgba(0,0,0,0.95),
-    inset 0 1px 1px rgba(255,255,255,0.05),
-    0 16px 40px rgba(0,0,0,0.95);
-  cursor: pointer;
 }
 
 .catalog-content {
@@ -213,7 +170,6 @@
   padding: 0 20px;
 }
 
-/* RIUSA LOGO IDENTICO AI BOTTONI SOTTO */
 .card-catalog .logo-frame {
   width: 58px;
   padding-top: 58px;
@@ -237,44 +193,75 @@
   font-weight: 900;
   letter-spacing: 3px;
 }
-    /* ===== BOTTOM BAR ===== */
-    .bottom-bar {
-      position: fixed;
-      bottom: 16px;
-      left: 16px;
-      right: 16px;
-      height: 72px;
-      background: linear-gradient(180deg, #0f0f0f, #050505);
-      border-radius: 26px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 999;
-      box-shadow:
-        inset 0 1px 1px rgba(255,255,255,0.05),
-        0 20px 50px rgba(0,0,0,0.95);
-    }
 
-    .bottom-bar a {
-      color: var(--red);
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
+/* ===== BOTTONI PICCOLI ===== */
+.card-small {
+  aspect-ratio: 1 / 1.05;
+}
 
-    .bottom-bar svg {
-      width: 22px;
-      height: 22px;
-      fill: currentColor;
-    }
-  </style>
-</head>
-  </style>
+.card-small .card-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.card-small .logo-frame {
+  width: 70%;
+  padding-top: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff2a2a, #5a0000);
+  position: relative;
+}
+
+.card-small .logo-frame img {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-small span {
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  padding: 6px 4px;
+  background: linear-gradient(180deg, rgba(255,40,40,.55), rgba(10,10,10,.95));
+}
+
+/* ===== BOTTOM BAR ===== */
+.bottom-bar {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  height: 72px;
+  background: linear-gradient(180deg, #0f0f0f, #050505);
+  border-radius: 26px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 999;
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.05),
+    0 20px 50px rgba(0,0,0,.95);
+}
+
+.bottom-bar a {
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -293,31 +280,37 @@
     <div class="grid">
 
       <div class="card card-catalog" onclick="openCatalog()">
-  <div class="catalog-content">
-    <div class="logo-frame">
-      <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
-    </div>
-    <span>CATALOGO</span>
-  </div>
-</div>
+        <div class="catalog-content">
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
+          </div>
+          <span>CATALOGO</span>
+        </div>
+      </div>
 
       <div class="card card-small" onclick="openContacts()">
         <div class="card-content">
-          <div class="logo-frame"><img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png"></div>
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
+          </div>
           <span>CONTACTS</span>
         </div>
       </div>
 
       <div class="card card-small" onclick="openChannels()">
         <div class="card-content">
-          <div class="logo-frame"><img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png"></div>
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
+          </div>
           <span>CHANNELS</span>
         </div>
       </div>
 
-      <div class="card card-small" onclick="openCreateBy()">
+      <div class="card card-small" onclick="openCreatedBy()">
         <div class="card-content">
-          <div class="logo-frame"><img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png"></div>
+          <div class="logo-frame">
+            <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
+          </div>
           <span>CREATED BY</span>
         </div>
       </div>
@@ -327,53 +320,49 @@
 </div>
 
 <div class="bottom-bar">
-  <a href="https://t.me/GASCLOUD2">Telegram</a>
-  <a href="https://instagram.com/">Instagram</a>
-  <a href="#">Signal</a>
+  <a onclick="openTelegram()">Telegram</a>
+  <a onclick="openInstagram()">Instagram</a>
+  <a onclick="openSignal()">Signal</a>
 </div>
 
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.ready();
-  tg.expand();
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
 
-  setTimeout(() => {
-    document.getElementById("splash").classList.add("hide");
-  }, 1500);
+setTimeout(() => {
+  document.getElementById("splash").classList.add("hide");
+}, 1500);
 
-  function openCatalog() {
-    window.location.href = "catalog.html";
-  }
+function openCatalog() {
+  window.location.href = "catalog.html";
+}
 
-  function openContacts() {
-    tg.showPopup({
-      title: "Contacts",
-      message: "Supporto:\n@GasCloudSupport",
-      buttons: [{ type: "close" }]
-    });
-  }
+function openContacts() {
+  tg.showPopup({ title:"Contacts", message:"@GasCloudSupport", buttons:[{type:"close"}] });
+}
 
-  function openChannels() {
-    tg.showPopup({
-      title: "Channels",
-      message: "Canale ufficiale:\n@GASCLOUD2",
-      buttons: [{ type: "close" }]
-    });
-  }
+function openChannels() {
+  tg.showPopup({ title:"Channels", message:"@GASCLOUD2", buttons:[{type:"close"}] });
+}
 
-  function openCreateBy() {
-    tg.showPopup({
-      title: "Created by",
-      message: "Gas Cloud\n© 2026",
-      buttons: [{ type: "close" }]
-    });
-  }
+function openCreatedBy() {
+  tg.showPopup({ title:"Created by", message:"Gas Cloud © 2026", buttons:[{type:"close"}] });
+}
+
+function openTelegram() {
+  tg.openLink("https://t.me/GASCLOUD2");
+}
+function openInstagram() {
+  tg.openLink("https://instagram.com/");
+}
+function openSignal() {
+  tg.openLink("https://signal.org/");
+}
 </script>
 
 </body>
 </html>
-
-
 
 
 
