@@ -263,6 +263,60 @@ body::before {
   letter-spacing: 1px;
   cursor: pointer;
 }
+  /* ===== FIX ALLINEAMENTI GENERALI ===== */
+.catalog-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-catalog span {
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ===== FIX LOGHI TAGLIATI (BOTTONI PICCOLI) ===== */
+.card-small .logo-frame {
+  overflow: hidden;
+}
+
+.card-small .logo-frame img {
+  inset: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  object-fit: contain;
+}
+
+/* ===== FIX CENTRATURA TESTO BOTTONI PICCOLI ===== */
+.card-small span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+}
+
+/* ===== FIX BOTTOM BAR ICONS ROSSE ===== */
+.bottom-bar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.bottom-bar svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--red);
+  display: block;
+}
+
+/* ===== FIX TOUCH & VISUAL CONSISTENCY ===== */
+.card,
+.bottom-bar a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 </style>
 </head>
 
