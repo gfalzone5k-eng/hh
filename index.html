@@ -316,10 +316,78 @@ body::before {
 .bottom-bar a {
   -webkit-tap-highlight-color: transparent;
 }
+.createby-fab{
+  position:fixed;
+  bottom:96px; /* sopra la bottom bar */
+  right:18px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:#050505;
+  border:2px solid var(--red);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:999;
+}
+
+.createby-fab img{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+}
+
+/* Tooltip */
+.createby-tooltip{
+  position:absolute;
+  right:70px;
+  bottom:50%;
+  transform:translateY(50%);
+  background:#050505;
+  border:1px solid var(--red);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-align:center;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+/* Freccia */
+.createby-tooltip::after{
+  content:"";
+  position:absolute;
+  right:-6px;
+  top:50%;
+  transform:translateY(-50%);
+  border-width:6px;
+  border-style:solid;
+  border-color:transparent transparent transparent var(--red);
+}
+
+.createby-fab:hover .createby-tooltip{
+  opacity:1;
+}
 
 </style>
 </head>
-
+<!-- FLOATING CREATE BY -->
+<div class="createby-fab" onclick="openPopup(
+  'CREATED BY',
+  '👨‍💻 BOX CREATE',
+  'https://t.me/boxcreate22'
+)">
+  <img src="https://tgwos.github.io/mini-app1/gas-cloud-logo.png">
+  <div class="createby-tooltip">
+    ✨ Crea anche tu<br>la tua mini app
+  </div>
+</div>
 <body>
 
 <div id="splash">
