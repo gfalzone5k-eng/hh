@@ -3,44 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ITALIAN FARM</title>
+<title>ROMA BLANCA 99</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
 <style>
-<style>
 :root{
-  --gold-light:#f8e7a1;
+  --gold-light:#f5e6b3;
   --gold:#d4af37;
   --gold-deep:#9c7c1a;
-  --marble-bg:url("https://www.transparenttextures.com/patterns/white-marble.png");
 }
 
-/* RESET */
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 body{
   margin:0;
-  font-family:"Trajan Pro", "Cinzel", serif;
+  font-family:"Cinzel", serif;
   color:var(--gold-deep);
   background:
     linear-gradient(rgba(255,255,255,.92),rgba(255,255,255,.95)),
-    var(--marble-bg);
-  background-size:cover;
-  overflow-x:hidden;
+    url("https://tgwos.github.io/ROMABLANCA99/sfondo.jpg")
+    center/cover no-repeat fixed;
 }
 
-/* ===== PARTICLE CANVAS ===== */
-#goldParticles{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-}
-
-/* ===== LOADER ===== */
+/* LOADER */
 #loader{
   position:fixed;
   inset:0;
@@ -48,207 +34,175 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#f5f5f5;
-}
-#loader::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(255,255,255,.85);
+  background:#ffffff;
 }
 #loader-text{
   position:absolute;
   bottom:14%;
-  font-size:36px;
+  font-size:30px;
   letter-spacing:8px;
   color:var(--gold);
-  text-shadow:
-    1px 1px 0 #fff,
-    2px 2px 0 var(--gold-light),
-    4px 4px 6px rgba(0,0,0,.25);
+  text-shadow:2px 2px 4px rgba(0,0,0,.2);
 }
 
-/* ===== HEADER ===== */
-.header video,
+/* BACKGROUND FIX */
+.app-bg{display:none;}
+
+/* LAYOUT */
+.container{
+  padding:28px 16px 130px;
+  display:flex;
+  flex-direction:column;
+  gap:26px;
+  align-items:center;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+.header video{display:none;}
 .header img{
-  width:170px;
-  height:170px;
+  width:160px;
+  height:160px;
   border-radius:18px;
+  border:6px double var(--gold);
   object-fit:cover;
-  border:4px solid var(--gold);
-  box-shadow:
-    inset 0 0 10px rgba(0,0,0,.4),
-    0 6px 20px rgba(0,0,0,.25);
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
 }
-
 .header span{
-  font-size:20px;
-  letter-spacing:4px;
-  color:var(--gold-deep);
-  text-shadow:
-    1px 1px 0 #fff,
-    2px 2px 2px rgba(0,0,0,.2);
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:3px;
 }
 
-/* ===== PANEL ROMAN FRAME ===== */
+/* PANEL */
 .panel{
   width:100%;
   max-width:420px;
-  padding:30px;
-  border-radius:22px;
-  background:
-    linear-gradient(145deg,#ffffff,#eaeaea);
+  background:linear-gradient(145deg,#ffffff,#ececec);
+  border-radius:24px;
+  padding:28px;
   border:6px double var(--gold);
-  box-shadow:
-    inset 0 0 15px rgba(0,0,0,.2),
-    0 10px 30px rgba(0,0,0,.2);
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
   position:relative;
 }
-
-/* incisione romana decorativa */
 .panel::before{
-  content:"✠";
+  content:"SPQR";
   position:absolute;
   top:-18px;
   left:50%;
   transform:translateX(-50%);
-  font-size:28px;
-  color:var(--gold);
   background:#fff;
-  padding:4px 12px;
+  padding:4px 18px;
+  border:3px solid var(--gold);
   border-radius:12px;
-  border:2px solid var(--gold);
-  box-shadow:0 4px 10px rgba(0,0,0,.2);
+  letter-spacing:4px;
 }
 
-/* ===== GRID ===== */
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:24px;
+  gap:20px;
 }
 
-/* ===== CATALOGO PRINCIPALE ===== */
+/* CATALOGO */
 .card-catalog{
   grid-column:1/-1;
   height:190px;
-  border-radius:18px;
+  border-radius:20px;
   cursor:pointer;
   background:
-    linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,.9)),
-    url("https://tgwos.github.io/ITALIANFARM/5807439531530194108.jpg")
+    linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.9)),
+    url("https://tgwos.github.io/ROMABLANCA99/foto1.jpg")
     center/cover no-repeat;
-  border:4px solid var(--gold);
-  box-shadow:
-    inset 0 0 15px rgba(0,0,0,.25),
-    0 8px 25px rgba(0,0,0,.25);
+  border:5px double var(--gold);
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:.3s;
 }
-
-.card-catalog:hover{
-  transform:translateY(-4px);
-  box-shadow:
-    inset 0 0 15px rgba(0,0,0,.3),
-    0 12px 30px rgba(0,0,0,.3);
-}
-
 .card-catalog span{
-  font-size:30px;
+  font-size:26px;
   letter-spacing:8px;
-  color:var(--gold-deep);
-  text-shadow:
-    1px 1px 0 #fff,
-    2px 2px 3px rgba(0,0,0,.3);
 }
 
-/* ===== SMALL CARDS ===== */
+/* SMALL CARDS */
+.small-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
 .card-small{
+  width:100%;
   height:120px;
-  border-radius:16px;
-  background:
-    linear-gradient(145deg,#ffffff,#ececec);
-  border:4px double var(--gold);
+  border-radius:18px;
+  background:#fff;
+  border:5px double var(--gold);
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:
-    inset 0 0 12px rgba(0,0,0,.2),
-    0 6px 15px rgba(0,0,0,.2);
-  transition:.3s;
 }
-
-.card-small:hover{
-  transform:scale(1.04);
-}
-
 .card-small img{
-  width:85%;
-  height:85%;
-  object-fit:contain;
+  width:90%;
+  height:90%;
+  object-fit:cover;
+  border-radius:12px;
 }
-
 .small-label{
-  margin-top:6px;
   padding:6px 14px;
-  border-radius:10px;
+  border-radius:12px;
   font-size:12px;
   letter-spacing:2px;
-  background:linear-gradient(145deg,var(--gold-light),var(--gold));
+  background:var(--gold);
   color:#fff;
-  box-shadow:
-    inset 0 0 5px rgba(255,255,255,.4),
-    0 3px 6px rgba(0,0,0,.2);
 }
 
-/* ===== POPUP ===== */
+/* POPUP */
 .popup-box{
+  min-width:240px;
+  padding:22px 26px;
   border-radius:18px;
-  background:
-    linear-gradient(145deg,#ffffff,#eaeaea);
-  border:4px double var(--gold);
-  box-shadow:
-    inset 0 0 12px rgba(0,0,0,.2),
-    0 10px 25px rgba(0,0,0,.25);
-  padding:24px 28px;
+  background:#fff;
+  border:5px double var(--gold);
+  text-align:center;
 }
-
 .popup-title{
-  font-size:18px;
-  letter-spacing:4px;
-  color:var(--gold-deep);
+  font-size:16px;
+  letter-spacing:3px;
 }
-
 .popup-link{
+  display:block;
+  padding-top:10px;
+  margin-top:10px;
+  font-size:14px;
   color:var(--gold-deep);
   text-decoration:none;
-  font-weight:bold;
 }
 
-/* ===== BOTTOM BAR ===== */
+/* BOTTOM BAR */
 .bottom-bar{
   position:fixed;
   bottom:14px;
   left:14px;
   right:14px;
   height:70px;
-  background:
-    linear-gradient(145deg,#ffffff,#eaeaea);
-  border-radius:22px;
-  border:4px double var(--gold);
+  background:#fff;
+  border-radius:24px;
+  border:5px double var(--gold);
   display:flex;
   justify-content:space-around;
   align-items:center;
-  box-shadow:
-    inset 0 0 10px rgba(0,0,0,.2),
-    0 6px 20px rgba(0,0,0,.25);
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
-
 .bottom-bar svg{
-  width:24px;
-  height:24px;
+  width:22px;
+  height:22px;
   fill:var(--gold-deep);
   stroke:var(--gold-deep);
 }
@@ -258,25 +212,16 @@ body{
 <body>
 
 <div id="loader">
-  <video autoplay muted playsinline>
-    <source src="https://res.cloudinary.com/dizbl4jib/video/upload/v1771246950/IMG_4055_1_grhlla.mp4" type="video/mp4">
-  </video>
-  <div id="loader-text">ITALIAN FARM</div>
+  <div id="loader-text">ROMA BLANCA 99</div>
 </div>
-
-<div class="app-bg"></div>
 
 <div class="container">
 
   <div class="header">
-    <video id="logoVideo" autoplay muted playsinline>
-      <source src="https://res.cloudinary.com/dizbl4jib/video/upload/v1771246950/IMG_4055_1_grhlla.mp4" type="video/mp4">
-    </video>
-    <img id="logoStatic" src="https://tgwos.github.io/ITALIANFARM/5807439531530194108.jpg" style="display:none">
-    <span>CATALOGO ITALIAN FARM</span>
+    <img id="logoStatic" src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
+    <span>CATALOGO ROMA BLANCA 99</span>
   </div>
 
-  <!-- CORNICE GENERALE BOTTONI -->
   <div class="panel">
     <div class="grid">
 
@@ -290,12 +235,10 @@ body{
              '📨 Telegram: @Italianfarm1',
              'https://t.me/Italianfarm1',
              '📞 Signal',
-             'https://signal.me/#eu/kRf_X-QX9q6AnKI0IC9lsi2GjAiS7cLKf_MoHkGnHt1U3msPbTJOYJ7C2IOfVkU5',
-             '🥔 POTATO',
-             'https://tutuduanyu.org/italianfarm'
+             'https://signal.me/#eu/kRf_X-QX9q6AnKI0IC9lsi2GjAiS7cLKf_MoHkGnHt1U3msPbTJOYJ7C2IOfVkU5'
            )">
         <div class="card-small">
-          <img src="https://tgwos.github.io/ITALIANFARM/5807439531530194108.jpg">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
         </div>
         <div class="small-label">CONTACTS</div>
       </div>
@@ -304,12 +247,10 @@ body{
            onclick="openPopup(
              'CHANNEL',
              '📢 Telegram: GASCLOUDPRIVE',
-             'https://t.me/+TIzcbA_vAMw4ZjU0',
-             '📞 Signal',
-             'https://signal.group/#CjQKIDNGRGl9UmFJzST3ADxn0PsPIc0zsRWW1foOy3Ity-KvEhBjRjUNbHUuV1qczApKp_ok'
+             'https://t.me/+TIzcbA_vAMw4ZjU0'
            )">
         <div class="card-small">
-          <img src="https://tgwos.github.io/ITALIANFARM/5807439531530194108.jpg">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
         </div>
         <div class="small-label">CHANNELS</div>
       </div>
@@ -321,14 +262,14 @@ body{
              'https://t.me/boxcreate22'
            )">
         <div class="card-small">
-          <img src="https://tgwos.github.io/ITALIANFARM/5807439531530194108.jpg">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
         </div>
         <div class="small-label">CREATED BY</div>
       </div>
 
       <div class="small-wrapper">
         <div class="card-small">
-          <img src="https://tgwos.github.io/ITALIANFARM/5807439531530194108.jpg">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
         </div>
         <div class="small-label">NEWS</div>
       </div>
@@ -369,13 +310,6 @@ window.addEventListener("load",()=>{
   setTimeout(()=>{
     document.getElementById("loader").style.display="none";
   },4000);
-});
-
-const logoVideo = document.getElementById("logoVideo");
-const logoStatic = document.getElementById("logoStatic");
-logoVideo.addEventListener("ended",()=>{
-  logoVideo.style.display="none";
-  logoStatic.style.display="block";
 });
 
 const popup = document.getElementById("popup");
