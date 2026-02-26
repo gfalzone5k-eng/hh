@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ROMA BLANCA 99</title>
+<title>ROMA BLANCA 93</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js?v=6"></script>
 
@@ -28,75 +28,18 @@ body{
   overflow-x:hidden;
 }
 
-/* PORTONE */
-#loader{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  overflow:hidden;
-}
-
-.door{
-  position:absolute;
-  top:0;
-  bottom:0;
-  width:50%;
-  background:linear-gradient(to right,#3a2a15,#5a3d1f,#3a2a15);
-  transition:transform 2.5s ease-in-out;
-  z-index:2;
-}
-.door.left{left:0;}
-.door.right{right:0;}
-
-.loader-content{
-  position:relative;
-  z-index:1;
-  text-align:center;
-}
-
-.loader-video{
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  border:6px double var(--gold);
-  object-fit:cover;
-  box-shadow:0 0 30px rgba(212,175,55,.8);
-}
-
-#loader-text{
-  margin-top:20px;
-  font-size:26px;
-  letter-spacing:6px;
-  color:var(--gold);
-}
-
-/* COLONNE */
-.column{
-  position:fixed;
-  top:0;
-  bottom:0;
-  width:60px;
-  background:linear-gradient(to right,#cfcac0,#f5f2ea,#cfcac0);
-  z-index:-1;
-  box-shadow:inset 0 0 20px rgba(212,175,55,.3);
-}
-.column.left{left:0;}
-.column.right{right:0;}
-
-/* LAYOUT */
+/* CONTAINER */
 .container{
-  padding:24px 70px 120px;
+  padding:24px 16px 120px;
+  width:100%;
+  max-width:500px;
+  margin:0 auto;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:22px;
 }
 
-/* HEADER */
 .header{
   display:flex;
   flex-direction:column;
@@ -106,20 +49,16 @@ body{
 }
 
 .logo-video{
-  width:150px;
-  height:150px;
+  width:38vw;
+  height:38vw;
+  max-width:160px;
+  max-height:160px;
   border-radius:50%;
   border:6px double var(--gold);
   object-fit:cover;
   box-shadow:0 0 25px rgba(212,175,55,.6);
 }
 
-.header span{
-  font-size:16px;
-  letter-spacing:3px;
-}
-
-/* PANEL */
 .panel{
   width:100%;
   max-width:420px;
@@ -145,14 +84,13 @@ body{
   font-size:12px;
 }
 
-/* GRID */
+/* GRIGLIA 2x2 */
 .grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(2,1fr);
   gap:18px;
 }
 
-/* CATALOGO */
 .card-catalog{
   grid-column:1/-1;
   height:160px;
@@ -173,35 +111,35 @@ body{
   letter-spacing:6px;
 }
 
-/* SMALL CARDS */
+/* BOTTONI */
 .small-wrapper{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:6px;
+  gap:8px;
   cursor:pointer;
 }
 
 .card-small{
   width:100%;
-  height:110px;
+  height:120px;
   border-radius:16px;
   background:var(--marble);
   border:4px double var(--gold);
+  overflow:hidden;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
 .card-small img{
-  width:90%;
-  height:90%;
+  width:100%;
+  height:100%;
   object-fit:cover;
-  border-radius:10px;
 }
 
 .small-label{
-  padding:5px 12px;
+  padding:6px 14px;
   border-radius:10px;
   font-size:11px;
   letter-spacing:2px;
@@ -249,8 +187,8 @@ body{
 .bottom-bar{
   position:fixed;
   bottom:12px;
-  left:70px;
-  right:70px;
+  left:12px;
+  right:12px;
   height:65px;
   background:var(--blue-deep);
   border-radius:20px;
@@ -258,7 +196,9 @@ body{
   display:flex;
   justify-content:space-around;
   align-items:center;
+  z-index:20;
 }
+
 .bottom-bar svg{
   width:22px;
   height:22px;
@@ -270,27 +210,12 @@ body{
 
 <body>
 
-<div id="loader">
-  <div class="door left"></div>
-  <div class="door right"></div>
-  <div class="loader-content">
-    <video class="loader-video" autoplay muted loop playsinline>
-      <source src="https://tgwos.github.io/ROMABLANCA99/video1.MP4" type="video/mp4">
-    </video>
-    <div id="loader-text">ROMA BLANCA 99</div>
-  </div>
-</div>
-
-<div class="column left"></div>
-<div class="column right"></div>
-
 <div class="container">
-
   <div class="header">
     <video class="logo-video" autoplay muted loop playsinline>
       <source src="https://tgwos.github.io/ROMABLANCA99/video1.MP4" type="video/mp4">
     </video>
-    <span>CATALOGO ROMA BLANCA 99</span>
+    <span>CATALOGO ROMA BLANCA 93</span>
   </div>
 
   <div class="panel">
@@ -301,25 +226,33 @@ body{
       </div>
 
       <div class="small-wrapper"
-           onclick="openPopup('CONTACT','📨 Telegram: @Italianfarm1','https://t.me/Italianfarm1','📞 Signal','https://signal.me/#eu/kRf_X-QX9q6AnKI0IC9lsi2GjAiS7cLKf_MoHkGnHt1U3msPbTJOYJ7C2IOfVkU5')">
-        <div class="card-small"><img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg"></div>
+        onclick="openPopup('CONTACT','📨 Telegram: @Italianfarm1','https://t.me/Italianfarm1','📞 Signal','https://signal.me/#eu/kRf_X-QX9q6AnKI0IC9lsi2GjAiS7cLKf_MoHkGnHt1U3msPbTJOYJ7C2IOfVkU5')">
+        <div class="card-small">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
+        </div>
         <div class="small-label">CONTACTS</div>
       </div>
 
       <div class="small-wrapper"
-           onclick="openPopup('CHANNEL','📢 Telegram: GASCLOUDPRIVE','https://t.me/+TIzcbA_vAMw4ZjU0')">
-        <div class="card-small"><img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg"></div>
+        onclick="openPopup('CHANNEL','📢 Telegram: GASCLOUDPRIVE','https://t.me/+TIzcbA_vAMw4ZjU0')">
+        <div class="card-small">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
+        </div>
         <div class="small-label">CHANNELS</div>
       </div>
 
       <div class="small-wrapper"
-           onclick="openPopup('CREATED BY','👨‍💻 BOX CREATE','https://t.me/boxcreate22')">
-        <div class="card-small"><img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg"></div>
+        onclick="openPopup('CREATED BY','👨‍💻 BOX CREATE','https://t.me/boxcreate22')">
+        <div class="card-small">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
+        </div>
         <div class="small-label">CREATED BY</div>
       </div>
 
       <div class="small-wrapper">
-        <div class="card-small"><img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg"></div>
+        <div class="card-small">
+          <img src="https://tgwos.github.io/ROMABLANCA99/foto1.jpg">
+        </div>
         <div class="small-label">NEWS</div>
       </div>
 
@@ -327,25 +260,19 @@ body{
   </div>
 </div>
 
+<!-- POPUP -->
 <div id="popup" class="popup-overlay" onclick="closePopup()">
   <div class="popup-box" onclick="event.stopPropagation()">
     <div class="popup-title" id="popup-title"></div>
-    <a class="popup-link" id="popup-link-telegram" href="#"></a>
-    <a class="popup-link" id="popup-link-signal" href="#" style="display:none;"></a>
+    <a class="popup-link" id="popup-link-telegram"></a>
+    <a class="popup-link" id="popup-link-signal" style="display:none;"></a>
   </div>
 </div>
 
+<!-- BOTTOM BAR -->
 <div class="bottom-bar">
   <a onclick="tg.openLink('https://t.me/Italianfarm1')">
     <svg viewBox="0 0 24 24"><path d="M22.5 3.5L2.8 10.9c-.9.3-.9 1.6.1 1.9l4.9 1.6 1.9 5.9c.3.9 1.5 1 2 .2l2.8-4.1 5.6 4.1c.8.6 2 .1 2.2-.9l3.4-15.3c.2-.9-.7-1.6-1.7-1.4z"/></svg>
-  </a>
-  <a onclick="tg.openLink('https://instagram.com/INSERT_LINK')">
-    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke-width="2"/>
-    <circle cx="12" cy="12" r="4" fill="none" stroke-width="2"/>
-    <circle cx="17.5" cy="6.5" r="1.2"/></svg>
-  </a>
-  <a onclick="tg.openLink('https://signal.me/#eu/kRf_X-QX9q6AnKI0IC9lsi2GjAiS7cLKf_MoHkGnHt1U3msPbTJOYJ7C2IOfVkU5')">
-    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20"/></svg>
   </a>
 </div>
 
@@ -353,17 +280,6 @@ body{
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
-
-window.addEventListener("load",()=>{
-  setTimeout(()=>{
-    document.querySelector(".door.left").style.transform="translateX(-100%)";
-    document.querySelector(".door.right").style.transform="translateX(100%)";
-  },300);
-
-  setTimeout(()=>{
-    document.getElementById("loader").style.display="none";
-  },3000);
-});
 
 const popup=document.getElementById("popup");
 const popupTitle=document.getElementById("popup-title");
