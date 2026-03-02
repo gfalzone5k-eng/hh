@@ -102,13 +102,23 @@ body{
 .panel{
   width:100%;
   max-width:420px;
-  background:rgba(0,0,0,.92);
-  border-radius:30px;
   padding:26px;
+  border-radius:28px;
+
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(10px);
+
+  border:1.5px solid transparent;
+  background-image:
+    linear-gradient(#000,#000),
+    linear-gradient(135deg,var(--green),var(--white),var(--red));
+
+  background-origin:border-box;
+  background-clip:padding-box,border-box;
+
   box-shadow:
-    0 0 0 2px var(--green),
-    0 0 0 4px var(--white),
-    0 0 0 6px var(--red);
+    0 8px 25px rgba(0,0,0,.6),
+    0 0 25px rgba(0,255,136,.15);
 }
 
 /* ===== GRID ===== */
@@ -122,19 +132,23 @@ body{
 .card-catalog{
   grid-column:1/-1;
   height:180px;
-  border-radius:30px;
+  border-radius:28px;
   cursor:pointer;
+
   background:
     linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.75)),
     url("https://tgwos.github.io/ITALIANFARM/5807439531530194108.jpg")
-    center/contain no-repeat;
+    center/cover no-repeat;
+
+  border:1.5px solid transparent;
+  background-clip:padding-box,border-box;
+  background-origin:border-box;
+
   box-shadow:
-    0 0 12px var(--green),
-    0 0 26px var(--green),
-    0 0 40px var(--red);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    0 8px 30px rgba(0,0,0,.6),
+    0 0 25px rgba(0,255,136,.2);
+
+  transition:.25s ease;
 }
 .card-catalog span{
   font-size:28px;
@@ -156,14 +170,22 @@ body{
   width:100%;
   height:120px;
   border-radius:22px;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(6px);
+
+  border:1.5px solid rgba(255,255,255,.08);
+
   box-shadow:
-    0 0 0 2px var(--green),
-    0 0 0 4px var(--white),
-    0 0 0 6px var(--red);
+    0 6px 18px rgba(0,0,0,.6),
+    0 0 18px rgba(0,255,136,.12);
+
+  transition:.2s ease;
+}
+  .card-small:active{
+  transform:scale(.96);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.6),
+    0 0 12px rgba(255,42,42,.25);
 }
 .card-small img{
   width:90%;
@@ -233,16 +255,21 @@ body{
   bottom:14px;
   left:14px;
   right:14px;
-  height:68px;
-  background:#000;
-  border-radius:26px;
+  height:64px;
+
+  background:rgba(0,0,0,.8);
+  backdrop-filter:blur(12px);
+
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,.08);
+
   display:flex;
   justify-content:space-around;
   align-items:center;
+
   box-shadow:
-    0 0 0 2px var(--green),
-    0 0 0 4px var(--white),
-    0 0 0 6px var(--red);
+    0 10px 30px rgba(0,0,0,.7),
+    0 0 20px rgba(0,255,136,.15);
 }
 .bottom-bar svg{width:22px;height:22px}
 .bottom-bar a:nth-child(1) svg{fill:var(--red)}
