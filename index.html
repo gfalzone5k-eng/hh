@@ -136,7 +136,16 @@ body{
 
   transition:.25s ease;
 }
-
+.card-catalog span{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:6px;
+  color:#fff;
+  text-shadow:
+    0 0 8px rgba(0,255,136,.6),
+    0 0 14px rgba(255,255,255,.4),
+    0 0 18px rgba(255,42,42,.5);
+}
 .card-catalog:active{
   transform:scale(.98);
 }
@@ -242,24 +251,21 @@ body{
 /* ===== BOTTOM BAR ===== */
 .bottom-bar{
   position:fixed;
-  bottom:14px;
-  left:14px;
-  right:14px;
-  height:64px;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  height:60px;
 
-  background:rgba(0,0,0,.8);
-  backdrop-filter:blur(12px);
-
-  border-radius:30px;
-  border:1px solid rgba(255,255,255,.08);
+  background:#0f0f0f;
+  border-radius:40px;
 
   display:flex;
   justify-content:space-around;
   align-items:center;
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,.7),
-    0 0 20px rgba(0,255,136,.15);
+    0 12px 35px rgba(0,0,0,.8);
 }
 .bottom-bar svg{width:22px;height:22px}
 .bottom-bar a:nth-child(1) svg{fill:var(--red)}
