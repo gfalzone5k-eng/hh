@@ -553,6 +553,56 @@ font-weight:600;
 white-space:nowrap;
 
 }
+  /* SECTION TITLE */
+
+.preview-section{
+
+width:100%;
+
+}
+
+.preview-title{
+
+font-size:18px;
+
+font-weight:700;
+
+margin-bottom:8px;
+
+padding-left:2px;
+
+letter-spacing:.2px;
+
+color:#fff;
+
+}
+
+/* SMOOTH IOS SCROLL */
+
+.preview-slider{
+
+scroll-behavior:smooth;
+
+}
+
+/* HOVER EFFECT */
+
+.preview-card{
+
+transition:
+transform .35s cubic-bezier(.2,.8,.2,1),
+box-shadow .35s;
+
+}
+
+.preview-card:hover{
+
+transform:scale(1.05);
+
+box-shadow:
+0 12px 35px rgba(0,0,0,.6);
+
+}
 </style>
 </style>
 </head>
@@ -569,7 +619,24 @@ white-space:nowrap;
 <div class="app-bg"></div>
 
 <div class="container">
+<!-- HEADER LOGO -->
+<div class="header-logo">
+<img src="https://tgwos.github.io/mini-app1/4985865506745158660.jpg">
+</div>
 
+<!-- PRODUCT PREVIEW -->
+<div class="preview-section">
+
+<div class="preview-title">
+Featured
+</div>
+
+<div class="preview-box">
+<div id="preview-slider" class="preview-slider"></div>
+</div>
+
+</div>
+  
   <div class="header">
     <video id="logoVideo" autoplay muted playsinline>
       <source src="https://res.cloudinary.com/dizbl4jib/video/upload/v1771246950/IMG_4055_1_grhlla.mp4" type="video/mp4">
@@ -710,7 +777,78 @@ function closePopup(){
   popup.classList.remove("show");
 }
 </script>
+<script>
 
+let productsData = [];
+
+async function loadProducts(){
+
+const res = await fetch("products.json");
+productsData = await res.json();
+
+const slider = document.getElementById("preview-slider");
+
+productsData.forEach(product => {
+
+const card = document.createElement("div");
+card.className = "preview-card";
+
+card.innerHTML = `
+<img src="${product.previewImage}">
+`;
+
+slider.appendChild(card);
+
+});
+
+duplicateSlider();
+startSlider();
+
+}
+
+function duplicateSlider(){
+
+const slider = document.getElementById("preview-slider");
+
+const cards = [...slider.children];
+
+cards.forEach(card=>{
+
+const clone = card.cloneNode(true);
+
+slider.appendChild(clone);
+
+});
+
+}
+
+function startSlider(){
+
+const slider = document.getElementById("preview-slider");
+
+let speed = 0.35;
+
+function animate(){
+
+slider.scrollLeft += speed;
+
+if(slider.scrollLeft >= slider.scrollWidth/2){
+
+slider.scrollLeft = 0;
+
+}
+
+requestAnimationFrame(animate);
+
+}
+
+animate();
+
+}
+
+loadProducts();
+
+</script>
 </body>
 </html>
 
