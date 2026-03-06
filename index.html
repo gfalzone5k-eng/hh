@@ -274,6 +274,41 @@ border-radius:14px;
 font-size:11px;
 white-space:nowrap;
 }
+  @keyframes ledBorder {
+0% {
+background-position: 0% 50%;
+}
+100% {
+background-position: 300% 50%;
+}
+}
+
+/* classe bordo LED */
+
+.led-border{
+
+position:relative;
+
+border-radius:22px;
+
+background:
+linear-gradient(#0e0e11,#0e0e11) padding-box,
+linear-gradient(
+90deg,
+transparent,
+#ff1a1a,
+#ff4d4d,
+#ff1a1a,
+transparent
+) border-box;
+
+border:2px solid transparent;
+
+background-size:300% 100%;
+
+animation:ledBorder 3s linear infinite;
+
+}
 
 </style>
 </head>
