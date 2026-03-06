@@ -353,14 +353,14 @@ bottom:14px;
 left:14px;
 right:14px;
 
-height:66px;
-
-border-radius:24px;
+height:72px;
 
 display:flex;
 
 justify-content:space-around;
 align-items:center;
+
+border-radius:26px;
 
 border:2px solid transparent;
 
@@ -379,24 +379,47 @@ background-size:300% 100%;
 
 animation:ledBorder 6s linear infinite;
 
-box-shadow:
-0 0 18px rgba(255,0,0,.4);
-
 }
 
 .bottom-bar a{
 
 display:flex;
 
+flex-direction:column;
+
 align-items:center;
 
-gap:6px;
+gap:4px;
 
-font-size:12px;
+font-size:11px;
 
-color:white;
+font-weight:600;
+
+color:#ff1a1a;
 
 text-decoration:none;
+
+transition:.2s;
+
+}
+
+/* icone rosse */
+
+.bottom-bar svg{
+
+width:24px;
+height:24px;
+
+fill:#ff1a1a;
+stroke:#ff1a1a;
+
+}
+
+/* effetto pressione */
+
+.bottom-bar a:active{
+
+transform:scale(.9);
 
 }
 
