@@ -356,13 +356,19 @@ box-shadow:
 }
 
 .bottom a{
-
-color:var(--red);
-
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+font-size:11px;
+color:#ff1a1a;
 text-decoration:none;
+}
 
-font-size:13px;
-
+.bottom svg{
+width:22px;
+height:22px;
+fill:#ff1a1a;
 }
 
 /* POPUP */
@@ -427,12 +433,40 @@ text-decoration:none;
 color:white;
 
 }
+  .fixed-logo{
+
+position:fixed;
+
+top:14px;
+left:50%;
+
+transform:translateX(-50%);
+
+z-index:999;
+
+}
+
+.fixed-logo img{
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+box-shadow:
+
+0 0 15px red,
+0 0 40px rgba(255,0,0,.6);
+
+}
 
 </style>
 </head>
 
 <body>
-
+<div class="fixed-logo">
+<img src="https://tgwos.github.io/mini-app1/4985865506745158660.jpg">
+</div>
 <div class="smoke"></div>
 <div class="energy"></div>
 
@@ -443,8 +477,6 @@ color:white;
 <img src="https://tgwos.github.io/mini-app1/4985865506745158660.jpg">
 
 <h1>GAS CLOUD</h1>
-
-<p>PRIVATE DIGITAL MARKET</p>
 
 </div>
 
@@ -500,9 +532,26 @@ color:white;
 
 <div class="bottom">
 
-<a onclick="tg.openLink('https://t.me/GasCloud2')">Telegram</a>
-<a onclick="tg.openLink('https://instagram.com/gascloud11')">Instagram</a>
-<a onclick="tg.openLink('https://signal.me')">Signal</a>
+<a onclick="tg.openLink('https://t.me/GasCloud2')">
+<svg viewBox="0 0 24 24">
+<path d="M9.04 15.47l-.39 5.5c.56 0 .8-.24 1.08-.52l2.6-2.48 5.38 3.94c.99.55 1.69.26 1.94-.92l3.52-16.5c.33-1.52-.55-2.12-1.51-1.76L1.48 9.2c-1.46.57-1.44 1.38-.25 1.75l5.5 1.72L19.42 4.7c.6-.4 1.15-.18.7.22"/>
+</svg>
+<span>Telegram</span>
+</a>
+
+<a onclick="tg.openLink('https://instagram.com/gascloud11')">
+<svg viewBox="0 0 24 24">
+<path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5.5A4.5 4.5 0 1016.5 12 4.5 4.5 0 0012 7.5zm6.5-.9a1.1 1.1 0 11-1.1-1.1 1.1 1.1 0 011.1 1.1z"/>
+</svg>
+<span>Instagram</span>
+</a>
+
+<a onclick="tg.openLink('https://signal.me')">
+<svg viewBox="0 0 24 24">
+<path d="M12 2a10 10 0 100 20 9.8 9.8 0 004.9-1.3l4.1 1.1-1.1-4.1A10 10 0 0012 2z"/>
+</svg>
+<span>Signal</span>
+</a>
 
 </div>
 
