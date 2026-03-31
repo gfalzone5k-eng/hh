@@ -188,7 +188,27 @@ function aggiornaCarrello() {
     return
   }
 
-  carrello.forEach(p => {
+  const carrelloOrdinato = [...carrello].sort((a, b) => {
+    function getPriorita(prodotto) {
+      const nome = String(prodotto.descrizione ?? '').toUpperCase()
+
+      if (nome.includes('CIALDA')) return 1
+      if (nome.includes('CAPS')) return 2
+      if (nome.includes('SNACK')) return 3
+      return 4
+    }
+
+    const prioritaA = getPriorita(a)
+    const prioritaB = getPriorita(b)
+
+    if (prioritaA !== prioritaB) {
+      return prioritaA - prioritaB
+    }
+
+    return String(a.descrizione ?? '').localeCompare(String(b.descrizione ?? ''))
+  })
+
+  carrelloOrdinato.forEach(p => {
     const codice = String(p.codice_articolo ?? '')
     const descrizione = String(p.descrizione ?? '')
 
