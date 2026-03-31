@@ -1,11 +1,80 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const supabaseUrl = 'https://ftgtvpkmuucjccjxhfxs.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0Z3R2cGttdXVjamNjanhoZnhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4NTQ1NDMsImV4cCI6MjA4NzQzMDU0M30.78OFQ0tfqvVvBcMhZ3rFAsO-oar3o4yAVKZrzc3zldk'
+const supabaseKey = 'LA_TUA_ANON_KEY'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 let prodotti = []
 let carrello = []
+
+const searchInput = document.getElementById('search')
+const carrelloDiv = document.getElementById('carrello')
+const sedeInput = document.getElementById('sede')
+const passwordInput = document.getElementById('password')
+const bottoneInvia = document.getElementById('inviaOrdine')
+const textarea = document.getElementById('descrizioneOrdine')
+
+const warningModal = document.getElementById('warningModal')
+const warningMessage = document.getElementById('warningMessage')
+const warningCancel = document.getElementById('warningCancel')
+const warningProceed = document.getElementById('warningProceed')
+const toastWrap = document.getElementById('toastWrap')
+
+let pendingAction = null
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;')
+}
+
+function escapeForId(value) {
+  return String(value).replace(/[^a-zA-Z0-9_-]/g, '_')
+}
+
+function showToast(title, text) {
+  const toast = document.createElement('div')
+  toast.className = 'toast'
+  toast.innerHTML = `
+    <div class="toast-title">${escapeHtml(title)}</div>
+    <div class="toast-text">${escapeHtml(text)}</div>
+  `
+  toastWrap.appendChild(toast)
+
+  setTimeout(() => {
+    toast.remove()
+  }, 3200)
+}
+
+function openWarningModal(message, onProceed) {
+  pendingAction = onProceed
+  warningMessage.textContent = message
+  warningModal.classList.add('show')
+}
+
+function closeWarningModal() {
+  pendingAction = null
+  warningModal.classList.remove('show')
+  warningMessage.textContent = ''
+}
+
+warningCancel.addEventListener('click', closeWarningModal)
+
+warningProceed.addEventListener('click', () => {
+  if (typeof pendingAction === 'function') {
+    pendingAction()
+  }
+  closeWarningModal()
+})
+
+warningModal.addEventListener('click', (e) => {
+  if (e.target === warningModal) {
+    closeWarningModal()
+  }
+})
 
 async function caricaProdotti() {
   const { data, error } = await supabase
@@ -23,15 +92,6 @@ async function caricaProdotti() {
   mostraProdotti(prodotti)
 }
 
-function escapeHtml(value) {
-  return String(value ?? '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;')
-}
-
 function mostraProdotti(lista) {
   const container = document.getElementById('prodotti')
   container.innerHTML = ''
@@ -44,31 +104,27 @@ function mostraProdotti(lista) {
   lista.forEach(prod => {
     const codice = String(prod.codice_articolo ?? '')
     const descrizione = String(prod.descrizione ?? '')
+    const avviso = String(prod.avviso_ordine ?? '').trim()
 
     const div = document.createElement('div')
     div.className = 'product-card'
     div.innerHTML = `
-      <strong>${escapeHtml(codice)}</strong>
-      <div>${escapeHtml(descrizione)}</div>
+      <div class="product-code">${escapeHtml(codice)}</div>
+      <div class="product-desc">${escapeHtml(descrizione)}</div>
+      ${avviso ? `<div style="margin-top:8px;font-size:13px;color:#b45309;">⚠️ Articolo con avviso</div>` : ''}
 
       <div class="product-actions">
         <input type="number" min="1" value="1" class="qty-input" id="q-${escapeForId(codice)}">
-        <button type="button" data-codice="${escapeHtml(codice)}">Aggiungi</button>
+        <button type="button">Aggiungi</button>
       </div>
     `
 
-    const button = div.querySelector('button')
-    button.addEventListener('click', () => aggiungi(codice))
-
+    div.querySelector('button').addEventListener('click', () => aggiungi(codice))
     container.appendChild(div)
   })
 }
 
-function escapeForId(value) {
-  return String(value).replace(/[^a-zA-Z0-9_-]/g, '_')
-}
-
-document.getElementById('search').addEventListener('input', function (e) {
+searchInput.addEventListener('input', function (e) {
   const valore = e.target.value.toLowerCase().trim()
 
   if (valore === '') {
@@ -78,10 +134,11 @@ document.getElementById('search').addEventListener('input', function (e) {
 
   const parole = valore.split(/\s+/)
 
-  const filtrati = prodotti.filter(function (p) {
+  const filtrati = prodotti.filter((p) => {
     const testoCompleto = (
       String(p.codice_articolo ?? '') + ' ' +
-      String(p.descrizione ?? '')
+      String(p.descrizione ?? '') + ' ' +
+      String(p.avviso_ordine ?? '')
     ).toLowerCase()
 
     return parole.every(parola => testoCompleto.includes(parola))
@@ -90,7 +147,7 @@ document.getElementById('search').addEventListener('input', function (e) {
   mostraProdotti(filtrati)
 })
 
-function aggiungi(codice) {
+function aggiungiAlCarrello(codice) {
   const prodotto = prodotti.find(p => String(p.codice_articolo) === String(codice))
   if (!prodotto) return
 
@@ -106,14 +163,28 @@ function aggiungi(codice) {
   }
 
   aggiornaCarrello()
+  showToast('Articolo aggiunto', `${prodotto.descrizione} inserito nel carrello`)
+}
+
+function aggiungi(codice) {
+  const prodotto = prodotti.find(p => String(p.codice_articolo) === String(codice))
+  if (!prodotto) return
+
+  const avviso = String(prodotto.avviso_ordine ?? '').trim()
+
+  if (avviso) {
+    openWarningModal(avviso, () => aggiungiAlCarrello(codice))
+    return
+  }
+
+  aggiungiAlCarrello(codice)
 }
 
 function aggiornaCarrello() {
-  const div = document.getElementById('carrello')
-  div.innerHTML = ''
+  carrelloDiv.innerHTML = ''
 
   if (carrello.length === 0) {
-    div.innerHTML = '<p class="empty-state">Il carrello è vuoto.</p>'
+    carrelloDiv.innerHTML = '<p class="empty-state">Il carrello è vuoto.</p>'
     return
   }
 
@@ -125,15 +196,15 @@ function aggiornaCarrello() {
     item.className = 'cart-item'
     item.innerHTML = `
       <div class="cart-item-info">
-        <strong>${escapeHtml(codice)}</strong><br>
-        ${escapeHtml(descrizione)}<br>
-        Quantità: ${escapeHtml(p.quantita)}
+        <div class="cart-item-code">${escapeHtml(codice)}</div>
+        <div>${escapeHtml(descrizione)}</div>
+        <div>Quantità: ${escapeHtml(p.quantita)}</div>
       </div>
-      <button type="button">❌</button>
+      <button type="button" class="danger-btn">❌</button>
     `
 
     item.querySelector('button').addEventListener('click', () => rimuovi(codice))
-    div.appendChild(item)
+    carrelloDiv.appendChild(item)
   })
 }
 
@@ -143,8 +214,8 @@ function rimuovi(codice) {
 }
 
 document.getElementById('inviaOrdine').addEventListener('click', function () {
-  const sede = document.getElementById('sede').value.trim()
-  const descrizioneOrdine = document.getElementById('descrizioneOrdine').value.trim()
+  const sede = sedeInput.value.trim()
+  const descrizioneOrdine = textarea.value.trim()
 
   if (!sede) {
     alert("Inserisci la sede prima di inviare l'ordine")
@@ -173,25 +244,21 @@ document.getElementById('inviaOrdine').addEventListener('click', function () {
     'template_1joanb4',
     templateParams
   )
-    .then(function () {
-      alert('Ordine inviato con successo ✅')
-      carrello = []
-      document.getElementById('sede').value = ''
-      document.getElementById('password').value = ''
-      document.getElementById('descrizioneOrdine').value = ''
-      aggiornaCarrello()
-      verificaCampi()
-      resetTextarea()
-    })
-    .catch(function (error) {
-      alert('Errore invio ordine ❌')
-      console.log(error)
-    })
+  .then(function () {
+    carrello = []
+    sedeInput.value = ''
+    passwordInput.value = ''
+    textarea.value = ''
+    aggiornaCarrello()
+    verificaCampi()
+    resetTextarea()
+    showToast('Ordine inviato', 'L’ordine è stato inviato con successo')
+  })
+  .catch(function (error) {
+    alert('Errore invio ordine ❌')
+    console.log(error)
+  })
 })
-
-const sedeInput = document.getElementById('sede')
-const passwordInput = document.getElementById('password')
-const bottoneInvia = document.getElementById('inviaOrdine')
 
 bottoneInvia.disabled = true
 
@@ -203,8 +270,6 @@ function verificaCampi() {
 
 sedeInput.addEventListener('input', verificaCampi)
 passwordInput.addEventListener('input', verificaCampi)
-
-const textarea = document.getElementById('descrizioneOrdine')
 
 function resetTextarea() {
   textarea.style.height = 'auto'
