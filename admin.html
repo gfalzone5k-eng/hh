@@ -1,20 +1,415 @@
-<div class="card">
-        <h2>Aggiungi / modifica articolo</h2>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Articoli</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1e40af;
+      --danger: #dc2626;
+      --danger-hover: #b91c1c;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --border: #e2e8f0;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: linear-gradient(90deg, #1e293b, #0f172a);
+      color: white;
+      padding: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .back-btn {
+      background: white;
+      color: #0f172a;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-family: 'Inter', sans-serif;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+    }
+
+    .danger {
+      background: var(--danger);
+    }
+
+    .danger:hover {
+      background: var(--danger-hover);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .success {
+      color: #15803d;
+    }
+
+    .error {
+      color: #dc2626;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .articoli-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .articolo-row {
+      display: grid;
+      grid-template-columns: 180px 1fr auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .muted {
+      color: #64748b;
+    }
+
+    @media (max-width: 900px) {
+      .articolo-row {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title">Pannello Admin</div>
+    <a href="./index.html" class="back-btn">← Torna agli ordini</a>
+  </header>
+
+  <div class="container">
+
+    <div class="card" id="loginBox">
+      <h2>Accesso Admin</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="adminPassword" placeholder="Password">
+      <button id="loginBtn">Accedi</button>
+      <div id="loginStatus" class="status"></div>
+    </div>
+
+    <div id="adminPanel" class="hidden">
+      <div class="card">
+        <h2>Aggiungi o modifica articolo</h2>
+
         <input type="text" id="codiceArticolo" placeholder="Codice articolo">
         <input type="text" id="descrizioneArticolo" placeholder="Descrizione articolo">
-        <button id="salvaArticoloBtn">Salva articolo</button>
-        <button id="logoutBtn" type="button">Logout</button>
+
+        <div class="top-actions">
+          <button id="salvaBtn">Salva articolo</button>
+          <button id="annullaBtn" class="hidden" type="button">Annulla modifica</button>
+          <button id="logoutBtn" class="danger" type="button">Logout</button>
+        </div>
+
         <div id="formStatus" class="status"></div>
       </div>
 
       <div class="card">
-        <h2>Elenco articoli</h2>
-        <div id="listaArticoli"></div>
+        <h2>Articoli nel database</h2>
+        <div id="listaArticoli" class="articoli-lista"></div>
       </div>
     </div>
 
   </div>
 
-  <script type="module" src="./admin.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+    const supabaseUrl = 'https://ftgtvpkmuucjccjxhfxs.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0Z3R2cGttdXVjamNjanhoZnhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4NTQ1NDMsImV4cCI6MjA4NzQzMDU0M30.78OFQ0tfqvVvBcMhZ3rFAsO-oar3o4yAVKZrzc3zldk'
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    const ADMIN_USERNAME = 'admin'
+    const ADMIN_PASSWORD = 'INTOADMIN'
+
+    const loginBox = document.getElementById('loginBox')
+    const adminPanel = document.getElementById('adminPanel')
+    const usernameInput = document.getElementById('username')
+    const passwordInput = document.getElementById('adminPassword')
+    const loginBtn = document.getElementById('loginBtn')
+    const loginStatus = document.getElementById('loginStatus')
+
+    const codiceInput = document.getElementById('codiceArticolo')
+    const descrizioneInput = document.getElementById('descrizioneArticolo')
+    const salvaBtn = document.getElementById('salvaBtn')
+    const annullaBtn = document.getElementById('annullaBtn')
+    const logoutBtn = document.getElementById('logoutBtn')
+    const formStatus = document.getElementById('formStatus')
+    const listaArticoli = document.getElementById('listaArticoli')
+
+    let modificaCorrente = null
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;')
+    }
+
+    function isLoggedIn() {
+      return sessionStorage.getItem('adminLogged') === 'true'
+    }
+
+    function showLogin() {
+      loginBox.classList.remove('hidden')
+      adminPanel.classList.add('hidden')
+    }
+
+    function showAdmin() {
+      loginBox.classList.add('hidden')
+      adminPanel.classList.remove('hidden')
+    }
+
+    function setStatus(element, message, type = '') {
+      element.textContent = message
+      element.className = 'status'
+      if (type) {
+        element.classList.add(type)
+      }
+    }
+
+    function resetForm() {
+      codiceInput.value = ''
+      descrizioneInput.value = ''
+      modificaCorrente = null
+      annullaBtn.classList.add('hidden')
+      setStatus(formStatus, '')
+    }
+
+    async function caricaArticoli() {
+      listaArticoli.innerHTML = 'Caricamento articoli...'
+
+      const { data, error } = await supabase
+        .from('articoli')
+        .select('*')
+        .order('codice_articolo', { ascending: true })
+
+      if (error) {
+        console.error(error)
+        listaArticoli.innerHTML = '<div class="muted">Errore nel caricamento articoli.</div>'
+        return
+      }
+
+      if (!data || data.length === 0) {
+        listaArticoli.innerHTML = '<div class="muted">Nessun articolo presente.</div>'
+        return
+      }
+
+      listaArticoli.innerHTML = ''
+
+      data.forEach(articolo => {
+        const codice = String(articolo.codice_articolo ?? '')
+        const descrizione = String(articolo.descrizione ?? '')
+
+        const row = document.createElement('div')
+        row.className = 'articolo-row'
+        row.innerHTML = `
+          <div><strong>${escapeHtml(codice)}</strong></div>
+          <div>${escapeHtml(descrizione)}</div>
+          <button type="button" class="modifica-btn">Modifica</button>
+          <button type="button" class="danger elimina-btn">Elimina</button>
+        `
+
+        row.querySelector('.modifica-btn').addEventListener('click', () => {
+          codiceInput.value = codice
+          descrizioneInput.value = descrizione
+          modificaCorrente = codice
+          annullaBtn.classList.remove('hidden')
+          setStatus(formStatus, `Stai modificando l'articolo ${codice}`, 'success')
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        })
+
+        row.querySelector('.elimina-btn').addEventListener('click', async () => {
+          const conferma = confirm(`Vuoi eliminare l'articolo ${codice}?`)
+          if (!conferma) return
+
+          const { error: deleteError } = await supabase
+            .from('articoli')
+            .delete()
+            .eq('codice_articolo', codice)
+
+          if (deleteError) {
+            console.error(deleteError)
+            setStatus(formStatus, 'Errore durante l’eliminazione', 'error')
+            return
+          }
+
+          setStatus(formStatus, 'Articolo eliminato correttamente', 'success')
+          if (modificaCorrente === codice) {
+            resetForm()
+          }
+          await caricaArticoli()
+        })
+
+        listaArticoli.appendChild(row)
+      })
+    }
+
+    loginBtn.addEventListener('click', async () => {
+      const username = usernameInput.value.trim()
+      const password = passwordInput.value
+
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLogged', 'true')
+        setStatus(loginStatus, 'Accesso effettuato', 'success')
+        showAdmin()
+        await caricaArticoli()
+      } else {
+        setStatus(loginStatus, 'Username o password errati', 'error')
+      }
+    })
+
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('adminLogged')
+      usernameInput.value = ''
+      passwordInput.value = ''
+      resetForm()
+      showLogin()
+    })
+
+    annullaBtn.addEventListener('click', () => {
+      resetForm()
+    })
+
+    salvaBtn.addEventListener('click', async () => {
+      const codice = codiceInput.value.trim()
+      const descrizione = descrizioneInput.value.trim()
+
+      if (!codice || !descrizione) {
+        setStatus(formStatus, 'Inserisci codice e descrizione', 'error')
+        return
+      }
+
+      const { error } = await supabase
+        .from('articoli')
+        .upsert(
+          [{
+            codice_articolo: codice,
+            descrizione: descrizione
+          }],
+          { onConflict: 'codice_articolo' }
+        )
+
+      if (error) {
+        console.error(error)
+        setStatus(formStatus, 'Errore durante il salvataggio', 'error')
+        return
+      }
+
+      setStatus(
+        formStatus,
+        modificaCorrente ? 'Articolo modificato correttamente' : 'Articolo aggiunto correttamente',
+        'success'
+      )
+
+      resetForm()
+      await caricaArticoli()
+    })
+
+    if (isLoggedIn()) {
+      showAdmin()
+      caricaArticoli()
+    } else {
+      showLogin()
+    }
+  </script>
 </body>
 </html>
