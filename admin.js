@@ -5,8 +5,8 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Protezione semplice lato frontend
-const ADMIN_USERNAME = 'admin'
-const ADMIN_PASSWORD = 'INTOADMIN'
+const ADMIN_USERNAME = 'MARCO'
+const ADMIN_PASSWORD = '1'
 
 const loginBox = document.getElementById('loginBox')
 const adminPanel = document.getElementById('adminPanel')
