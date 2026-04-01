@@ -74,6 +74,88 @@ warningModal.addEventListener('click', (e) => {
   if (e.target === warningModal) {
     closeWarningModal()
   }
+})import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+const supabaseUrl = 'https://ftgtvpkmuucjccjxhfxs.supabase.co'
+const supabaseKey = 'METTI_QUI_LA_TUA_ANON_KEY'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+let prodotti = []
+let carrello = []
+
+const searchInput = document.getElementById('search')
+const carrelloDiv = document.getElementById('carrello')
+const sedeInput = document.getElementById('sede')
+const passwordInput = document.getElementById('password')
+const bottoneInvia = document.getElementById('inviaOrdine')
+const textarea = document.getElementById('descrizioneOrdine')
+
+const warningModal = document.getElementById('warningModal')
+const warningMessage = document.getElementById('warningMessage')
+const warningCancel = document.getElementById('warningCancel')
+const warningProceed = document.getElementById('warningProceed')
+
+const orderSummaryModal = document.getElementById('orderSummaryModal')
+const orderSummaryContent = document.getElementById('orderSummaryContent')
+const summaryClose = document.getElementById('summaryClose')
+const confirmOrderBtn = document.getElementById('confirmOrderBtn')
+
+const toastWrap = document.getElementById('toastWrap')
+
+let pendingAction = null
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;')
+}
+
+function escapeForId(value) {
+  return String(value).replace(/[^a-zA-Z0-9_-]/g, '_')
+}
+
+function showToast(title, text) {
+  const toast = document.createElement('div')
+  toast.className = 'toast'
+  toast.innerHTML = `
+    <div class="toast-title">${escapeHtml(title)}</div>
+    <div class="toast-text">${escapeHtml(text)}</div>
+  `
+  toastWrap.appendChild(toast)
+
+  setTimeout(() => {
+    toast.remove()
+  }, 3200)
+}
+
+function openWarningModal(message, onProceed) {
+  pendingAction = onProceed
+  warningMessage.textContent = message
+  warningModal.classList.add('show')
+}
+
+function closeWarningModal() {
+  pendingAction = null
+  warningModal.classList.remove('show')
+  warningMessage.textContent = ''
+}
+
+warningCancel.addEventListener('click', closeWarningModal)
+
+warningProceed.addEventListener('click', () => {
+  if (typeof pendingAction === 'function') {
+    pendingAction()
+  }
+  closeWarningModal()
+})
+
+warningModal.addEventListener('click', (e) => {
+  if (e.target === warningModal) {
+    closeWarningModal()
+  }
 })
 
 async function caricaProdotti() {
@@ -111,8 +193,7 @@ function mostraProdotti(lista) {
     div.innerHTML = `
       <div class="product-code">${escapeHtml(codice)}</div>
       <div class="product-desc">${escapeHtml(descrizione)}</div>
-      ${avviso ? `<div style="margin-top:8px;font-size:13px;color:#b45309;">⚠️ Articolo con avviso</div>` : ''}
-
+      ${avviso ? `<div class="product-warning-badge">⚠️ Articolo con avviso</div>` : ''}
       <div class="product-actions">
         <input type="number" min="1" value="1" class="qty-input" id="q-${escapeForId(codice)}">
         <button type="button">Aggiungi</button>
@@ -146,6 +227,27 @@ searchInput.addEventListener('input', function (e) {
 
   mostraProdotti(filtrati)
 })
+
+function getPriorita(prodotto) {
+  const nome = String(prodotto.descrizione ?? '').toUpperCase()
+
+  if (nome.includes('CIALDA')) return 1
+  if (nome.includes('CAPS') || nome.includes('SNACK')) return 2
+  return 3
+}
+
+function getCarrelloOrdinato() {
+  return [...carrello].sort((a, b) => {
+    const prioritaA = getPriorita(a)
+    const prioritaB = getPriorita(b)
+
+    if (prioritaA !== prioritaB) {
+      return prioritaA - prioritaB
+    }
+
+    return String(a.descrizione ?? '').localeCompare(String(b.descrizione ?? ''))
+  })
+}
 
 function aggiungiAlCarrello(codice) {
   const prodotto = prodotti.find(p => String(p.codice_articolo) === String(codice))
@@ -188,25 +290,7 @@ function aggiornaCarrello() {
     return
   }
 
-  const carrelloOrdinato = [...carrello].sort((a, b) => {
-    function getPriorita(prodotto) {
-      const nome = String(prodotto.descrizione ?? '').toUpperCase()
-
-      if (nome.includes('CIALDA')) return 1
-      if (nome.includes('CAPS')) return 2
-      if (nome.includes('SNACK')) return 3
-      return 4
-    }
-
-    const prioritaA = getPriorita(a)
-    const prioritaB = getPriorita(b)
-
-    if (prioritaA !== prioritaB) {
-      return prioritaA - prioritaB
-    }
-
-    return String(a.descrizione ?? '').localeCompare(String(b.descrizione ?? ''))
-  })
+  const carrelloOrdinato = getCarrelloOrdinato()
 
   carrelloOrdinato.forEach(p => {
     const codice = String(p.codice_articolo ?? '')
@@ -233,7 +317,119 @@ function rimuovi(codice) {
   aggiornaCarrello()
 }
 
-document.getElementById('inviaOrdine').addEventListener('click', function () {
+function apriRiepilogoOrdine() {
+  const sede = sedeInput.value.trim()
+  const descrizioneOrdine = textarea.value.trim()
+  const carrelloOrdinato = getCarrelloOrdinato()
+
+  if (!sede) {
+    alert("Inserisci la sede prima di procedere")
+    return
+  }
+
+  if (carrelloOrdinato.length === 0) {
+    alert('Carrello vuoto')
+    return
+  }
+
+  let html = `
+    <div class="summary-box">
+      <div class="summary-section">
+        <div class="summary-label">Sede</div>
+        <div class="summary-value">${escapeHtml(sede)}</div>
+      </div>
+
+      <div class="summary-section">
+        <div class="summary-label">Descrizione ordine</div>
+        <div class="summary-value">${escapeHtml(descrizioneOrdine || 'Nessuna descrizione')}</div>
+      </div>
+
+      <div class="summary-section">
+        <div class="summary-label">Articoli</div>
+        <div class="summary-items">
+  `
+
+  carrelloOrdinato.forEach((p) => {
+    const codice = String(p.codice_articolo ?? '')
+    const descrizione = String(p.descrizione ?? '')
+    const qtyId = `summary-q-${escapeForId(codice)}`
+
+    html += `
+      <div class="summary-item">
+        <div class="summary-item-top">
+          <div>
+            <div class="summary-item-code">${escapeHtml(codice)}</div>
+            <div class="summary-item-desc">${escapeHtml(descrizione)}</div>
+          </div>
+        </div>
+
+        <div class="summary-item-actions">
+          <label for="${qtyId}">Quantità</label>
+          <input type="number" min="1" value="${escapeHtml(p.quantita)}" id="${qtyId}">
+          <button type="button" class="secondary-btn" data-action="update" data-codice="${escapeHtml(codice)}">Aggiorna quantità</button>
+          <button type="button" class="danger-btn" data-action="remove" data-codice="${escapeHtml(codice)}">Elimina</button>
+        </div>
+      </div>
+    `
+  })
+
+  html += `
+        </div>
+      </div>
+    </div>
+  `
+
+  orderSummaryContent.innerHTML = html
+  orderSummaryModal.classList.add('show')
+
+  orderSummaryContent.querySelectorAll('[data-action="update"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const codice = btn.dataset.codice
+      const input = document.getElementById(`summary-q-${escapeForId(codice)}`)
+      const nuovaQuantita = Math.max(1, parseInt(input?.value, 10) || 1)
+
+      const articolo = carrello.find(p => String(p.codice_articolo) === String(codice))
+      if (!articolo) return
+
+      articolo.quantita = nuovaQuantita
+      aggiornaCarrello()
+      apriRiepilogoOrdine()
+    })
+  })
+
+  orderSummaryContent.querySelectorAll('[data-action="remove"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const codice = btn.dataset.codice
+      carrello = carrello.filter(p => String(p.codice_articolo) !== String(codice))
+      aggiornaCarrello()
+
+      if (carrello.length === 0) {
+        chiudiRiepilogoOrdine()
+        return
+      }
+
+      apriRiepilogoOrdine()
+    })
+  })
+}
+
+function chiudiRiepilogoOrdine() {
+  orderSummaryModal.classList.remove('show')
+  orderSummaryContent.innerHTML = ''
+}
+
+function generaTestoOrdine() {
+  const carrelloOrdinato = getCarrelloOrdinato()
+  let testo = ''
+
+  carrelloOrdinato.forEach(p => {
+    testo += `${String(p.codice_articolo)} - ${p.descrizione} - Quantità: ${p.quantita}\n`
+  })
+
+  return testo
+}
+
+function inviaOrdineFinale() {
   const sede = sedeInput.value.trim()
   const descrizioneOrdine = textarea.value.trim()
 
@@ -247,17 +443,14 @@ document.getElementById('inviaOrdine').addEventListener('click', function () {
     return
   }
 
-  let testo = ''
-
-  carrello.forEach(p => {
-    testo += `${String(p.codice_articolo)} - ${p.descrizione} - Quantità: ${p.quantita}\n`
-  })
-
   const templateParams = {
-    message: testo,
+    message: generaTestoOrdine(),
     sede: sede,
     descrizione: descrizioneOrdine || 'Nessuna descrizione'
   }
+
+  confirmOrderBtn.disabled = true
+  confirmOrderBtn.textContent = 'Invio in corso...'
 
   emailjs.send(
     'service_utzs75y',
@@ -265,6 +458,7 @@ document.getElementById('inviaOrdine').addEventListener('click', function () {
     templateParams
   )
   .then(function () {
+    chiudiRiepilogoOrdine()
     carrello = []
     sedeInput.value = ''
     passwordInput.value = ''
@@ -278,7 +472,11 @@ document.getElementById('inviaOrdine').addEventListener('click', function () {
     alert('Errore invio ordine ❌')
     console.log(error)
   })
-})
+  .finally(function () {
+    confirmOrderBtn.disabled = false
+    confirmOrderBtn.textContent = 'Invia Ordine'
+  })
+}
 
 bottoneInvia.disabled = true
 
@@ -290,6 +488,32 @@ function verificaCampi() {
 
 sedeInput.addEventListener('input', verificaCampi)
 passwordInput.addEventListener('input', verificaCampi)
+
+bottoneInvia.addEventListener('click', function () {
+  const sede = sedeInput.value.trim()
+
+  if (!sede) {
+    alert("Inserisci la sede prima di procedere")
+    return
+  }
+
+  if (carrello.length === 0) {
+    alert('Carrello vuoto')
+    return
+  }
+
+  apriRiepilogoOrdine()
+})
+
+summaryClose.addEventListener('click', chiudiRiepilogoOrdine)
+
+confirmOrderBtn.addEventListener('click', inviaOrdineFinale)
+
+orderSummaryModal.addEventListener('click', (e) => {
+  if (e.target === orderSummaryModal) {
+    chiudiRiepilogoOrdine()
+  }
+})
 
 function resetTextarea() {
   textarea.style.height = 'auto'
